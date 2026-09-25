@@ -2,6 +2,11 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.3.0 „Herna“ — 2026-09-25
+- **Herna** (Domov, od začátku): kočky si v ní hrají a ty si můžeš zahrát **pexeso** — 16 kartiček s obrázky věcí, které už v osadě znáš.
+- Jednou denně za dohrané pexeso **mince** (čím méně tahů, tím víc) a za výkon do 14 tahů **hvězdička**. Hrát můžeš kdykoli dál jen pro radost.
+- Úspěch „Sloní paměť“ (pexeso do 12 tahů).
+
 ## 4.2.0 „Sbírka“ — 2026-09-25
 - **Osada → Sbírka**: všech 87 věcí ve hře v jedné mřížce. Objevené (vyrobené, koupené, nalezené) jsou barevné se jménem, neobjevené jen jako tajemné siluety „???“.
 - **Barvy koček**: které z 13 barev srsti už ve tvé osadě žily (i ty ze salonu).

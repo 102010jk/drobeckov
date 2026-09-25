@@ -7,6 +7,7 @@ function recount() {
   G.res = {}; G.incStore = 0;
   for (const b of BLIST) { b.inc = {}; b.outRes = {}; b.farmer = 0; b.builders = 0; }
   for (const c of G.cats) reserveTask(c.task);
+  if (typeof FUN_BUSY !== 'undefined') { FUN_BUSY.clear(); for (const c of G.cats) if (c.task && c.task.kind === 'rest') FUN_BUSY.add(c.task.b); }
 }
 function reserveTask(k) {
   if (!k) return;

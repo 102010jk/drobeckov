@@ -9,12 +9,12 @@ function walkable(x, y) {
 }
 function walkCost(t) { return t.gr === 'road' || t.gr === 'asfalt' ? 0.7 : t.gr === 'path' || t.gr === 'bridge' ? 1 : 2; }
 /* scratch buffers sized to the owned bounding box (+margin) */
-let PFW = 0, PFH = 0, PFX = 0, PFY = 0, PFG = null, PFC = null, PFK = null;
+let PFW = 0, PFH = 0, PFX = 0, PFY = 0, PFG = null, PFC = null, PFK = null, PFS = null, PFGEN = 0;   // PFS/PFK: generation stamps (no clearing per search)
 function pfEnsure() {
   const bb = G.bb, w = bb.x1 - bb.x0 + 3, h = bb.y1 - bb.y0 + 3;
   if (w !== PFW || h !== PFH || PFX !== bb.x0 - 1 || PFY !== bb.y0 - 1) {
     PFW = w; PFH = h; PFX = bb.x0 - 1; PFY = bb.y0 - 1;
-    PFG = new Float32Array(w * h); PFC = new Int32Array(w * h); PFK = new Uint8Array(w * h);
+    PFG = new Float32Array(w * h); PFC = new Int32Array(w * h); PFK = new Uint32Array(w * h); PFS = new Uint32Array(w * h); PFGEN = 0;
   }
 }
 function findPath(sx, sy, tx, ty) {
@@ -26,18 +26,19 @@ function findPath(sx, sy, tx, ty) {
   pfEnsure();
   const W = PFW, H = PFH, lx = x => x - PFX, ly = y => y - PFY;
   if (lx(sx) < 0 || ly(sy) < 0 || lx(sx) >= W || ly(sy) >= H) return null;
-  PFG.fill(1e9); PFC.fill(-1); PFK.fill(0);
+  const gen = ++PFGEN;
+  const gOf = i => (PFS[i] === gen ? PFG[i] : 1e9);
   const start = ly(sy) * W + lx(sx), goal = ly(ty) * W + lx(tx);
   const heap = [];
   const push = (f, i) => { heap.push([f, i]); let k = heap.length - 1; while (k > 0) { const p = (k - 1) >> 1; if (heap[p][0] <= heap[k][0]) break; [heap[p], heap[k]] = [heap[k], heap[p]]; k = p; } };
   const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length) { heap[0] = last; let k = 0; for (;;) { const l = k * 2 + 1, r = l + 1; let m = k; if (l < heap.length && heap[l][0] < heap[m][0]) m = l; if (r < heap.length && heap[r][0] < heap[m][0]) m = r; if (m === k) break; [heap[m], heap[k]] = [heap[k], heap[m]]; k = m; } } return top; };
-  PFG[start] = 0; push(0, start);
+  PFS[start] = gen; PFG[start] = 0; PFC[start] = -1; push(0, start);
   let found = false;
   while (heap.length) {
     const [, i] = pop();
     if (i === goal) { found = true; break; }
-    if (PFK[i]) continue;
-    PFK[i] = 1;
+    if (PFK[i] === gen) continue;
+    PFK[i] = gen;
     const x = i % W, y = (i / W) | 0;
     for (let d = 0; d < 4; d++) {
       const nx = x + (d === 0 ? 1 : d === 1 ? -1 : 0), ny = y + (d === 2 ? 1 : d === 3 ? -1 : 0);
@@ -45,10 +46,10 @@ function findPath(sx, sy, tx, ty) {
       const gx = nx + PFX, gy = ny + PFY;
       if (!walkable(gx, gy)) continue;
       const n = ny * W + nx, ng = PFG[i] + walkCost(tile(gx, gy));
-      if (ng < PFG[n]) { PFG[n] = ng; PFC[n] = i; push(ng + (Math.abs(gx - tx) + Math.abs(gy - ty)) * 0.7, n); }
+      if (ng < gOf(n)) { PFS[n] = gen; PFG[n] = ng; PFC[n] = i; push(ng + (Math.abs(gx - tx) + Math.abs(gy - ty)) * 0.7, n); }
     }
   }
-  if (!found && PFC[goal] < 0) return null;
+  if (!found && (PFS[goal] !== gen || PFC[goal] < 0)) return null;
   const path = []; let c = goal;
   while (c !== start && c >= 0) { path.push({ x: (c % W) + PFX, y: ((c / W) | 0) + PFY }); c = PFC[c]; }
   path.reverse();

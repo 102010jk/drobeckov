@@ -54,7 +54,8 @@ MORNING_HOOKS.push(() => { for (const b of BLIST) if (b.type === 'lazne' && b.bu
 const _recomputeCozy2 = recomputeCozy;
 recomputeCozy = function () { _recomputeCozy2(); for (const b of BLIST) if (b.type === 'lazne' && b.built && (b.soap > 0 || b.bathed)) COZY += 6; };
 const _moodTarget3 = moodTarget;
-moodTarget = function (c) { let m = _moodTarget3(c); if (BLIST.some(b => b.type === 'lazne' && b.built && b.soap > 0)) m += 3; return clamp(m, 0, 100); };
+let lazneT = -1, lazneOn = false;
+moodTarget = function (c) { let m = _moodTarget3(c); if (G.t - lazneT > 2 || G.t < lazneT) { lazneT = G.t; lazneOn = BLIST.some(b => b.type === 'lazne' && b.built && b.soap > 0); } if (lazneOn) m += 3; return clamp(m, 0, 100); };
 
 Object.assign(DRAW, {
   lisovna(g, X, Y, b, S, night) {

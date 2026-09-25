@@ -43,10 +43,13 @@ function think(c) {
     if (task.kind === 'haul') task.n = Math.min(j.n, cap);
     if (startTask(c, task)) { j.n -= task.kind === 'haul' ? task.n : 1; reserveTask(task); return; }
   }
-  const fun = BLIST.filter(b => b.built && (B[b.type].rest || B[b.type].play) && !G.cats.some(o => o !== c && o.task && o.task.b === b.id));
+  const fun = funSpots().filter(b => !FUN_BUSY.has(b.id));
   if (fun.length && Math.random() < 0.5) { const f = pick(fun); if (startTask(c, { kind: 'rest', b: f.id, t: rand(5, 9) })) return; }
   startTask(c, { kind: 'idle', t: rand(2.5, 5) });
 }
+/* rest & play spots, and which of them are taken (refreshed with the job board) */
+let FUN_LIST = [], FUN_V = -1; const FUN_BUSY = new Set();
+function funSpots() { if (FUN_V !== BLIST) { FUN_V = BLIST; FUN_LIST = BLIST.filter(b => b.built && (B[b.type].rest || B[b.type].play)); } return FUN_LIST; }
 function startTask(c, k) {
   const [cx, cy] = ctile(c);
   let target = null, tx, ty, dest;

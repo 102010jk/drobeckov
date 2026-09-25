@@ -36,6 +36,11 @@ Z vesnice velkoměstem. Začátek hry (Farma, Řemesla, Hornictví) zůstává s
 ### Grafika a testovací světy
 - Nové sprity: radnice, hotel, obchodní dům, kino, knihovna, veterina, park, depo, rafinérie, zastávka, semafor a nákladní auto.
 - Testovací světy **Město a doprava**, **Dopravní zácpa** a **Metropole: 1 000 koček**. Debug menu má přepínače přehledů a měření výkonu naživo.
+## 3.12.0 „Na rybách“ — 2026-09-25
+- **Rybaření**: v detailu Rybářského mola můžeš jednou denně **chytat ryby sám** (5 pokusů). Kočka sedí na molu, splávek se houpe — a když zmizí pod vodou, klikni **Zabrat!** Moc brzo nebo moc pozdě a ryba uteče.
+- Úlovky: rybky, velké ryby (3 kusy), mořské ryby, stará bota (pro smích) a vzácně **zlatá rybka** (+150 mincí a 2 ★).
+- Úspěchy „Zlatá rybka“ a „Trpělivý rybář“.
+
 ## 3.11.0 „Kočičí sny“ — 2026-09-25
 - **Přání koček**: každá kočka si občas něco přeje — **oblíbené jídlo**, **klobouček**, **novou ozdobu** v osadě nebo **pohlazení**. Nad hlavou jí problikává bublina s přáním a v záložce Kočky je seznam všech přání (klikem skočíš na kočku).
 - Hladová kočka si sama dojde pro jídlo, po kterém touží, když je ve skladu.

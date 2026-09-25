@@ -145,7 +145,7 @@ STEP_HOOKS.push(() => {
   const x = st ? (st.x + 1) * TS : e.cats[0].x, y = st ? (st.y + st.h) * TS + 6 : e.cats[0].y;
   for (const c of e.cats) { c.x = x + rand(-8, 8); c.y = y; resetCatTransient(c); c.inside = false; c.sleeping = false; c.energy = Math.max(30, c.energy - 20); c.mood = Math.min(100, c.mood + 12); c.xp = c.xp || {}; c.xp.vyprava = (c.xp.vyprava || 0) + 40 * EXP_KINDS[e.kind].dur; G.cats.push(c); emote(c, 'star', 4); }
   const res = expLoot(e);
-  if (res.stray && freeBeds() > 0) { const s = newCat(randi(0, SKINS.length - 1), pick(Object.keys(TRAITS)), null, x, y); res.out.push('nová kamarádka ' + s.name + '!'); }
+  if (res.stray && freeBeds() > 0) { const s = newCat(pick(RAND_SKINS), pick(Object.keys(TRAITS)), null, x, y); res.out.push('nová kamarádka ' + s.name + '!'); }
   G.stats.expeditions = (G.stats.expeditions || 0) + 1;
   G.expedition = null;
   assignHomes(); jobsDirty = true; onBuildingsChanged();

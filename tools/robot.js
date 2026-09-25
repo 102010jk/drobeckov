@@ -32,6 +32,12 @@ const ROBOT = (() => {
     for (const o of G.orders.slice()) if (canDeliver(o)) { deliverOrder(o.id); }
     try { festDeliver(); } catch (e) { /* not ready */ }
     if (G.wishes) G.wishes.forEach((w, i) => { if (w.done && !w.claimed) ACTIONS.wish(i); });
+    if (G.letters) G.letters.forEach((l, i) => { if (!l.done && canLetter(l)) ACTIONS.letter(i); });
+    for (const tr of (G.traders || [])) for (const w of (tr.wants || [])) {
+      if (w.qty <= 0) continue;
+      if (!(G.tradePrep || {})[w.item] && (G.stock[w.item] || 0) >= 3) ACTIONS.prep(w.item + ':' + Math.min(w.qty, G.stock[w.item]));
+      const hub = typeof tradeHub === 'function' && tradeHub(tr); if (hub && (hub.inp[w.item] || 0) > 0) { const t0 = toast; toast = () => {}; ACTIONS.tsell(tr.id + ':' + w.item); toast = t0; }
+    }
     for (const k in G.stock) if (G.stock[k] > 25 && ITEMS[k] && FOODS && !FOODS[k]) G.sell[k] = true; else if (G.stock[k] < 8) G.sell[k] = false;
     // follow the advisor like a sensible player would
     for (const pr of advProblems()) {
@@ -41,7 +47,7 @@ const ROBOT = (() => {
         const free = G.cats.find(c => !c.job && !(c.kitten > G.t)) || G.cats.find(c => c.job && G.bld[c.job] && ['trziste', 'drevorubec'].includes(G.bld[c.job].type) && (G.stock.drevo || 0) > 10);
         if (b && free) { if (free.job) unassign(free.id); assignWorker(b, free.id); say('assign ' + free.name + ' -> ' + b.type); }
       }
-      if (kind === 'cozy' && G.coins > (B[PLAN[step]] ? B[PLAN[step]].cost : 0) + 60) { const s = spotFor('kvetiny'); if (s) place('kvetiny', s[0], s[1]); }
+      if (kind === 'cozy' && G.coins > 40) { const s = spotFor('kvetiny'); if (s) place('kvetiny', s[0], s[1]); }
       if (kind === 'full' && G.coins > 200) { const t = isUnlockedB('sklad') ? 'sklad' : 'spizirna'; const s = spotFor(t); if (s && !BLIST.some(b => b.type === t && !b.built)) { place(t, s[0], s[1]); say('build ' + t + ' (full)'); } }
       if (kind === 'wood') { const s = spotFor('drevorubec'); if (s) place('drevorubec', s[0], s[1]); }
     }

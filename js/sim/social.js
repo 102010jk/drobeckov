@@ -106,3 +106,35 @@ wildClick = function (px, py) {
 ACH.push(['meteor', 'Chytač hvězd', () => (G.stats.meteors || 0) >= 5], ['kamaradi', 'Nerozluční', () => G.fr && Object.values(G.fr).some(v => v >= 10)]);
 { const hv = HELP.find(p => p.id === 'hvezdy'); if (hv) hv.t += `<p><b>Padající hvězdy:</b> v některé letní (a vzácně podzimní) noci padají hvězdy. Klikni na ně — každá chycená = hvězdička ★.</p>`; }
 { const kc = HELP.find(p => p.id === 'kocky'); if (kc) kc.t += `<p><b>Kamarádi:</b> kočky, které spolu bydlí nebo pracují, se skamarádí. Nejlepší kamarádi mají lepší náladu, hlavně když jsou blízko sebe. Uvidíš je v detailu kočky i s rodiči a koťaty.</p>`; }
+
+/* ---------- homes near work: cats move closer to their workplace ---------- */
+function homeDist(c, h) { const j = c.job && G.bld[c.job]; const x = j ? j.x + j.w / 2 : c.x / TS, y = j ? j.y + j.h / 2 : c.y / TS; return Math.abs(h.x + h.w / 2 - x) + Math.abs(h.y + h.h / 2 - y); }
+assignHomes = function () {
+  const houses = BLIST.filter(b => B[b.type].beds && b.built);
+  const count = {}; for (const c of G.cats) if (c.home) count[c.home] = (count[c.home] || 0) + 1;
+  for (const c of G.cats) {
+    if (c.home && G.bld[c.home]) continue;
+    c.home = 0;
+    let best = null, bd = 1e9;
+    for (const h of houses) { if ((count[h.id] || 0) >= bedsOf(h)) continue; const d = homeDist(c, h); if (d < bd) { bd = d; best = h; } }
+    if (best) { c.home = best.id; count[best.id] = (count[best.id] || 0) + 1; }
+  }
+};
+MORNING_HOOKS.push(() => {
+  const houses = BLIST.filter(b => B[b.type].beds && b.built); if (houses.length < 2) return;
+  const count = {}; for (const c of G.cats) if (c.home) count[c.home] = (count[c.home] || 0) + 1;
+  let moved = 0;
+  const workers = G.cats.filter(c => c.job && c.home && G.bld[c.home] && !(c.kitten > G.t));
+  for (const c of workers) {   // free beds closer to work
+    const d0 = homeDist(c, G.bld[c.home]); let best = null, bd = d0 - 6;
+    for (const h of houses) { if (h.id === c.home || (count[h.id] || 0) >= bedsOf(h)) continue; const d = homeDist(c, h); if (d < bd) { bd = d; best = h; } }
+    if (best) { count[c.home]--; c.home = best.id; count[best.id] = (count[best.id] || 0) + 1; moved++; }
+  }
+  const swap = workers.length > 300 ? workers.slice().sort((p, q) => homeDist(q, G.bld[q.home]) - homeDist(p, G.bld[p.home])).slice(0, 300) : workers;   // big towns: only the longest walks
+  for (let i = 0; i < swap.length; i++) for (let j = i + 1; j < swap.length; j++) {   // swap homes when both win
+    const a = swap[i], b = swap[j]; if (a.home === b.home) continue;
+    const ha = G.bld[a.home], hb = G.bld[b.home]; if (!ha || !hb) continue;
+    if (homeDist(a, hb) + homeDist(b, ha) < homeDist(a, ha) + homeDist(b, hb) - 8) { const t = a.home; a.home = b.home; b.home = t; moved += 2; }
+  }
+  if (moved) toast(`${moved} ${moved === 1 ? 'kočka se přestěhovala' : moved < 5 ? 'kočky se přestěhovaly' : 'koček se přestěhovalo'} blíž k práci.`);
+});

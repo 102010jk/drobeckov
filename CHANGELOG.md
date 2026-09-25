@@ -2,6 +2,14 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.4.0 „Dobroty“ — 2026-09-25
+- **Slepičárna** (od začátku) — slepičky za pšenici snáší **vejce**.
+- **Sýrárna** (Řemesla a obchod) — z mléka dělá **sýr** (jídlo i zboží).
+- **Rajčata** — třetí semínko, které přinese výprava.
+- **Pizzerie** — mouka + sýr + rajčata → **pizza**, nejsytější jídlo ve hře a hit u obchodníků.
+- **Palačinky** v Kuchyňce (mouka, mléko, vejce, džem) — na jaře se prodávají dráž.
+- Sousedé a kuchaři z karavan chtějí nové dobroty, nový úspěch „Pizzaiolo“.
+
 ## 3.3.0 „Svátky“ — 2026-09-25
 - **Velikonoční hledání vajíček** (2. jarní den): Babička Ježková schová po osadě 8 malovaných vajíček. Každé najdi a klikni na něj — za všechna dostaneš 2 ★ a klobouček **Zaječí ouška**.
 - **Dýňová noc** (3. podzimní noc): po osadě poletují hodná **strašidýlka**. Klikni na ně a dají ti bonbón (mince). Za všechna **Dýňová čepička** a 2 ★.

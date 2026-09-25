@@ -93,6 +93,7 @@ for (const [k, v] of [['lisovna', 6], ['mydlarna', 6], ['lazne', 1], ['stan', 2]
 { const pek = B.pole; if (pek && pek.desc) pek.desc += ' Nové plodiny přinášejí výpravy.'; }
 
 /* ---------- expeditions ---------- */
+const EXP_SEEDS = ['slunecnice', 'levandule'];
 const EXP_KINDS = [
   { n: 'Krátká výprava', d: 'půl dne · 1 kočka · 4 jídla', dur: 0.5, cats: 1, food: 4 },
   { n: 'Dlouhá výprava', d: '1 den · 2 kočky · 10 jídel', dur: 1, cats: 2, food: 10 },
@@ -127,8 +128,7 @@ ACTIONS.expedition = k => {
 function expLoot(e) {
   const k = e.kind, era = eraOf(), out = [], g = G.flags;
   const coins = Math.round(randi(60, 140) * (k + 1) * (1 + era * 0.5)); G.coins += coins; G.stats.earned += coins; out.push(coins + ' mincí');
-  const seedOrder = ['slunecnice', 'levandule'];
-  const newSeed = seedOrder.find(s => !g['seed_' + s]);
+  const newSeed = EXP_SEEDS.find(s => !g['seed_' + s]);
   if (newSeed && (G.stats.expeditions === 0 || k >= 1 || Math.random() < 0.5)) { g['seed_' + newSeed] = true; out.push('semínka: ' + CROPS[newSeed].n + '!'); }
   const pool = ['koreni', 'kakao', 'med', 'jablka', 'vlna', 'mapa'].concat(era >= 2 ? ['zlato', 'mapa'] : []).filter(i => ITEMS[i]);
   for (let i = 0; i < 1 + k; i++) { const it = pick(pool), n = it === 'mapa' || it === 'zlato' ? 1 + (k > 1 ? 1 : 0) : randi(3, 6) * (k + 1); addStock(it, n); out.push(n + '× ' + itemName(it).toLowerCase()); }
@@ -159,7 +159,7 @@ B.stan.inspect = b => {
   if (e) { const K = EXP_KINDS[e.kind], p = 1 - (e.back - G.t) / (K.dur * DAY); return `<h4>${K.n}</h4><p>${e.cats.map(c => c.name).join(', ')} jsou na cestě.</p><div class="kv"><span>Cesta</span>${bar(p * 100)}</div>`; }
   let h = `<h4>Vyslat výpravu</h4><p class="muted">Kočky na výpravě nepracují. Přinesou mince, zboží, <b>semínka nových plodin</b>, plánky ozdob, hvězdičky — a někdy i novou kočku. Jídlo máš: ${foodStock()}.</p>`;
   EXP_KINDS.forEach((K, i) => { const why = expWhy(i); h += `<div class="upg"><span><b>${K.n}</b><br><small>${K.d}</small></span><button class="btn small chamfer ${why ? 'locked' : ''}" data-act="expedition" data-arg="${i}">Vyslat</button></div>${why ? `<small class="muted">${why}</small>` : ''}`; });
-  const seeds = ['slunecnice', 'levandule'].filter(s => G.flags['seed_' + s]);
+  const seeds = EXP_SEEDS.filter(s => G.flags['seed_' + s]);
   if (seeds.length) h += `<p>Objevená semínka: ${seeds.map(s => itemIcon(s, 1) + ' ' + CROPS[s].n).join(', ')} — nastav je na poli.</p>`;
   return h;
 };

@@ -9,11 +9,22 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, normalize, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { exec } from 'node:child_process';
+import { appendFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = +(process.env.DROBECKOV_PORT || 5191);
 const GAME_URL = `http://localhost:${PORT}/`;
-const log = (...a) => process.stderr.write('[drobeckov-mcp] ' + a.join(' ') + '\n');
+const LOG_FILE = join(tmpdir(), 'drobeckov-mcp.log');
+const log = (...a) => {
+  const line = `[drobeckov-mcp ${process.pid}] ${a.join(' ')}\n`;
+  process.stderr.write(line);
+  try { appendFileSync(LOG_FILE, new Date().toISOString() + ' ' + line); } catch (e) { /* ignore */ }
+};
+/* never die on a stray error — a dead stdio server shows up in the client as "Transport closed" */
+process.on('uncaughtException', e => log('uncaught:', (e && e.stack) || e));
+process.on('unhandledRejection', e => log('unhandled rejection:', (e && e.stack) || e));
+process.stdout.on('error', e => log('stdout error:', e.message));
 
 /* ---------------- tools ---------------- */
 const num = (d) => ({ type: 'number', description: d });
@@ -90,7 +101,7 @@ function sendToGame(cmd, args, timeoutMs) {
     flush();
   });
 }
-function flush() { while (queue.length && pollers.length) { const res = pollers.shift(); res.writeHead(200, { 'content-type': 'application/json' }).end(JSON.stringify(queue.shift())); } }
+function flush() { while (queue.length && pollers.length) { const res = pollers.shift(); if (res.writableEnded || res.destroyed) continue; try { res.writeHead(200, { 'content-type': 'application/json' }).end(JSON.stringify(queue.shift())); } catch (e) { log('poll write failed', e.message); } } }
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css', '.png': 'image/png', '.json': 'application/json', '.md': 'text/plain; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
 const body = (req) => new Promise(r => { let d = ''; req.on('data', c => d += c); req.on('end', () => r(d)); });
 const server = http.createServer(async (req, res) => {
@@ -119,6 +130,7 @@ const server = http.createServer(async (req, res) => {
 });
 server.on('error', (e) => { if (e.code === 'EADDRINUSE') { owner = false; log(`port ${PORT} busy — forwarding calls to the running instance`); } else log('http error', e.message); });
 server.listen(PORT, '127.0.0.1', () => log('game served at', GAME_URL));
+log('started', process.argv.slice(2).join(' ') || '(stdio)');
 
 function openBrowser() {
   const cmd = process.platform === 'win32' ? `start "" "${GAME_URL}"` : process.platform === 'darwin' ? `open "${GAME_URL}"` : `xdg-open "${GAME_URL}"`;

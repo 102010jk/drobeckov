@@ -91,3 +91,13 @@ simTick = function (realDt, speed) {
   while (dt > 1e-6) { const s = Math.min(stepMax, dt); simStep(s); dt -= s; }
   return mult;
 };
+
+/* ---------- live numbers for the debug tab ---------- */
+const PERF = { ms: 0, steps: 0, lod: 0 };
+const _simTickP = simTick;
+simTick = function (realDt, speed) {
+  const t0 = performance.now(), s0 = LOD.skipped, r = _simTickP(realDt, speed);
+  PERF.ms = PERF.ms * 0.9 + (performance.now() - t0) * 0.1; PERF.lod = LOD.skipped - s0;
+  PERF.steps = Math.ceil(realDt * (r || 0) / (G.cats.length > 700 ? 0.1 : G.cats.length > 300 ? 0.075 : 0.05));
+  return r;
+};

@@ -11,7 +11,9 @@ Nic se neinstaluje — funguje v každém moderním prohlížeči (i ve škole).
 - Kočky s povahami, náladou, spánkem a jídlem, které samy nosí suroviny mezi dílnami
 - Farmářské řetězce: pšenice → mouka → chléb, džemy, perník, dorty…
 - Sousedé se srdíčky, zakázky, tržní stánek, sezóny se slavnostmi, zima bez úrody
-- Pět ér: Farma → Řemesla a obchod → Hornictví a přístav → Průmysl → Věda a vesmír
+- Šest ér: Farma → Řemesla a obchod → Hornictví a přístav → Průmysl → Město a doprava → Věda a vesmír
+- Velkoměsto: silnice s auty, nákladní depo, autobusy, semafory, čtvrti, radnice s vyhláškami, letiště — a stovky až tisíce koček
+- Grafy vývoje osady a přehledy přes mapu (ruch, provoz, zácpy, hodnota pozemků…)
 - Továrny, do kterých se dá vejít (pásy, stroje, pracovní místa), elektřina a automatizace
 - Výzkum, vzducholodě, raketa ve třech stupních a vesmírná stanice
 - Výpravy za obzor, nové plodiny, vylepšování budov, koťátka, kamarádství, kloboučky
@@ -31,6 +33,7 @@ Nic se neinstaluje — funguje v každém moderním prohlížeči (i ve škole).
 | kapátko (stejná stavba) | Q |
 | vrátit poslední stavbu | Ctrl+Z |
 | fotka osady | P |
+| přehledy přes mapu (ruch, provoz, čtvrti…) | H |
 | debug menu a testovací světy | F9 nebo klávesa vlevo od 1 |
 
 ## Spuštění lokálně

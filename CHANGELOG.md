@@ -2,6 +2,41 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.0.0 „Velkoměsto“ — 2026-09-25
+Z vesnice velkoměstem. Začátek hry (Farma, Řemesla, Hornictví) zůstává stejný, novinky přicházejí od éry Průmysl.
+
+### Stovky až tisíce koček
+- Simulace je zhruba 4× rychlejší: 1 000 koček zabere 4–7 ms na krok (dřív přes 18 ms), 2 000 koček kolem 9 ms.
+- Budovy jsou v prostorové mřížce, útulnost, ruch a nejlepší kamarádi se počítají jednou a pamatují, hledání cest nemaže při každém hledání celou mapu a kočky mimo obrazovku, které jen pracují nebo spí, se počítají méně často.
+
+### Nová éra „Město a doprava“
+- Mezi Průmyslem a Vědou a vesmírem (podmínka: 30 plechů, 20 000 mincí a 18 koček). Starší uložené hry se samy převedou.
+- **Nákladní depo**: nákladní auta si berou dlouhé cesty dřív než kočky a uvezou 12 kusů. Potřebují dispečera a bionaftu, po výzkumu **Elektromobily** jezdí na proud.
+- **Rafinérie**: slunečnicový olej → bionafta.
+- **Autobusové zastávky**: kočky, které to mají daleko, jedou autobusem mezi zastávkami.
+- **Semafory** řídí křižovatky. Bez nich auta dávají přednost tomu, kdo už v křižovatce je, a ve velkém provozu vznikají zácpy.
+- **Radnice** s vyhláškami: Noční klid, Trh o víkendu, MHD zdarma, Zelené město, Den bez aut.
+- **Čtvrti**: každý blok 16×16 je obytný, průmyslový, obchodní nebo smíšený a má svůj bonus.
+- **Služby**: hotel, obchodní dům, kino, knihovna, veterina a městský park. Pokrývají okruh kolem sebe, kočky, které v něm bydlí, jsou spokojenější.
+
+### Grafy a přehledy
+- **Příručka → Grafy**: kočky, mince, výdělek za den, výroba, nálada a doprava den po dni. Obsahuje tabulku a hodnotu při najetí myší.
+- **Přehledy přes mapu** (tlačítko Přehledy nebo klávesa H): ruch, útulnost, provoz, zácpy, dojíždění, služby, hodnota pozemků, čtvrti.
+
+### Logické systémy
+- **Limity výroby**: dílna přestane vyrábět, když je ve skladu dost jejího výrobku. Jde to nastavit i všem stejným budovám naráz.
+- **Třídička** v továrně: vybraná věc odbočí, ostatní jedou rovně.
+
+### Opravy
+- Továrny se nezaseknou, když má stroj plno jedné suroviny: přebytek jede dál a hra upozorní na ucpaný pás.
+- Astronaut po startu rakety opravdu odletí.
+- Ctrl+Z nefunguje na návštěvě u kamaráda ani po načtení jiné hry.
+- Horní lišta se na menších obrazovkách nezalamuje.
+
+### Grafika a testovací světy
+- Nové sprity: radnice, hotel, obchodní dům, kino, knihovna, veterina, park, depo, rafinérie, zastávka, semafor a nákladní auto.
+- Testovací světy **Město a doprava**, **Dopravní zácpa** a **Metropole: 1 000 koček**. Debug menu má přepínače přehledů a měření výkonu naživo.
+
 ## 3.8.0 „Velkoměsto“ — 2026-09-25
 - **Asfaltová silnice** (Stavět → Cesty, od éry Průmysl): obrubníky, přerušovaná čára uprostřed, přechody u křižovatek, v zimě zasněžená. Kočky po ní běhají 2,5× rychleji.
 - **Auta**: po silnicích jezdí osobní auta, taxíky, dodávky a autobusy (s kočičím řidičem). Jezdí vpravo, drží odstup, na křižovatkách zatáčejí, na konci silnice se otočí a v noci svítí. Vlastní pixelové sprity ve složce `assets/auta/`.

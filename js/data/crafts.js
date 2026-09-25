@@ -5,7 +5,7 @@ const ERAS = [
   { n: 'Řemesla a obchod', d: 'Prkna, cihly, sklo, látky, tržní náměstí a obchodníci z daleka.', ok: () => G.stats.earned >= 1200 || G.cats.length >= 5 || G.stats.fests >= 1, hint: 'vydělej 1 200 mincí, měj 5 koček nebo splň slavnost' },
   { n: 'Hornictví a přístav', d: 'Doly, tavírny, slitiny, přístav a lodě.', ok: () => G.stats.earned >= 4500 && (G.stats.made.cihly || 0) >= 20, hint: 'vydělej 4 500 mincí a vyrob 20 cihel' },
   { n: 'Průmysl', d: 'Továrny s pásy a stroji uvnitř.', ok: () => (G.stats.made.ocel || 0) >= 15 && G.cats.length >= 10, hint: 'vyrob 15 oceli a měj 10 koček' },
-  { n: 'Město a doprava', d: 'Asfaltové silnice, nákladní auta, autobusy, radnice a čtvrti.', ok: () => (G.stats.made.plech || 0) >= 20 && G.cats.length >= 18, hint: 'vyrob 20 plechů a měj 18 koček' },
+  { n: 'Město a doprava', d: 'Asfaltové silnice, nákladní auta, autobusy, radnice a čtvrti.', ok: () => (G.stats.made.plech || 0) >= 30 && G.stats.earned >= 20000 && G.cats.length >= 18, hint: 'vyrob 30 plechů, vydělej 20 000 mincí a měj 18 koček' },
   { n: 'Věda a vesmír', d: 'Škola, vědci, elektřina a nakonec raketa.', ok: () => G.stats.earned >= 40000 && G.cats.length >= 26, hint: 'vydělej 40 000 mincí a měj 26 koček' }
 ];
 const eraOf = () => (G ? G.era || 0 : 0);

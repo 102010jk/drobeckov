@@ -1,7 +1,12 @@
 'use strict';
 /* ============ advisor: one friendly hint about the most pressing problem ============ */
 const ADV_MUTE = {};
-function staffOf(b) { let n = 0; for (const c of G.cats) if (c.job === b.id) n++; return n; }
+let STAFF = null, STAFF_T = -1;
+function staffOf(b) {   // counts are rebuilt at most once per game tick
+  if (STAFF_T !== G.t || !STAFF) { STAFF = {}; STAFF_T = G.t; for (const c of G.cats) if (c.job) STAFF[c.job] = (STAFF[c.job] || 0) + 1; }
+  return STAFF[b.id] || 0;
+}
+{ const _aw = assignWorker, _un = unassign; assignWorker = function (b, id) { STAFF = null; return _aw(b, id); }; unassign = function (id) { STAFF = null; return _un(id); }; }
 function advProblems() {
   const P = [], hungry = G.cats.filter(c => c.food < 25).length, food = FOODS.reduce((a, k) => a + (G.stock[k] || 0), 0);
   const firstB = t => BLIST.find(b => b.type === t && b.built);

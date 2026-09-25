@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.0.2 — 2026-09-25
+- Rádce a přehled budov ve Skladu počítají pracovníky jen jednou za okamžik — ve velkých městech (1 000 koček) už nezpůsobují krátké záseky.
+- Ověřeno v testu Metropole: všechny doplňky z verzí 2.5–3.13 (přání, kamarádi, přání koček, noviny…) zaberou dohromady pod 0,2 ms na krok.
+
 ## 4.0.1 „Záložka Osada“ — 2026-09-25
 - Nová záložka **Osada** s živými stránkami: **Noviny, Grafy, Deník, Statistiky, Úspěchy a Kloboučky**. Příručka teď obsahuje jen návody a je přehlednější.
 - Když vyjdou nové noviny, bliká záložka Osada.

@@ -18,6 +18,15 @@ function showMenu(view) {
     const code = exportSlot(view.slice(7));
     h += `<div class="form"><label for="expText">Kód uložené hry — zkopíruj si ho (např. do poznámek) a ve škole ho vlož přes Import.</label><textarea id="expText" rows="6" readonly>${code}</textarea>
       <div class="row"><button class="btn chamfer" data-m="copy">Zkopírovat</button><button class="btn alt chamfer" data-m="back">Zpět</button></div><p class="muted" id="impMsg">${Math.round(code.length / 1024)} KB</p></div>`;
+  } else if (view === 'settings') {
+    const opt = (v, cur, t) => `<option value="${v}" ${String(cur) === String(v) ? 'selected' : ''}>${t}</option>`;
+    h += `<div class="form settings"><label for="sMus">Hudba <small id="sMusV">${Math.round(SET.music * 100)} %</small></label><input type="range" id="sMus" min="0" max="1" step="0.05" value="${SET.music}">
+      <label for="sSfx">Zvuky <small id="sSfxV">${Math.round(SET.sfx * 100)} %</small></label><input type="range" id="sSfx" min="0" max="1" step="0.05" value="${SET.sfx}">
+      <label for="sUi">Velikost písma a panelů</label><select id="sUi">${opt(0.85, SET.ui, 'Malá')}${opt(1, SET.ui, 'Normální')}${opt(1.15, SET.ui, 'Větší')}${opt(1.3, SET.ui, 'Velká')}</select>
+      <label for="sSave">Automatické ukládání</label><select id="sSave">${opt(30, SET.autosave, 'Každých 30 s')}${opt(60, SET.autosave, 'Každou minutu')}${opt(180, SET.autosave, 'Každé 3 minuty')}${opt(0, SET.autosave, 'Vypnuto (jen ráno a ručně)')}</select>
+      <label class="chk"><input type="checkbox" id="sLow" ${SET.lowfx ? 'checked' : ''}> Úsporné efekty <small>(méně částic — pro slabší počítače)</small></label>
+      <label class="chk"><input type="checkbox" id="sFps" ${SET.fps30 ? 'checked' : ''}> Omezit na 30 snímků/s <small>(šetří baterku a slabé počítače)</small></label>
+      <div class="row"><button class="btn chamfer" data-m="back">Hotovo</button></div></div>`;
   } else {
     h += '<div class="row">';
     if (started) h += `<button class="btn chamfer" data-m="resume">Pokračovat</button><button class="btn alt chamfer" data-m="save">Uložit</button><button class="btn alt chamfer" data-m="saveas">Uložit jako novou</button>`;
@@ -33,12 +42,23 @@ function showMenu(view) {
       }
       h += '</div>';
     }
-    h += `<div class="row"><button class="link" data-m="import">Importovat kód</button><button class="link" data-m="help">Nápověda</button><a class="link" href="https://github.com/102010jk/drobeckov/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Co je nového</a></div>`;
+    h += `<div class="row"><button class="link" data-m="import">Importovat kód</button><button class="link" data-m="help">Nápověda</button><button class="link" data-m="settings">Nastavení</button><a class="link" href="https://github.com/102010jk/drobeckov/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Co je nového</a></div>`;
     h += `<p class="help">Táhni myší = posun · kolečko = zoom · klik = vybrat/postavit · pravé tlačítko/Esc = zrušit · mezerník = pauza · 1–3 = rychlost · X = zbourat · L = pozemky</p>`;
   }
   el.innerHTML = h + '</div>';
+  if (view === 'settings') {
+    const on = (id, ev, fn) => { const e = $(id); if (e) e.addEventListener(ev, () => { fn(e); saveSettings(); }); };
+    on('sMus', 'input', e => { SET.music = +e.value; $('sMusV').textContent = Math.round(SET.music * 100) + ' %'; Sound.applyVol(); });
+    on('sSfx', 'input', e => { SET.sfx = +e.value; $('sSfxV').textContent = Math.round(SET.sfx * 100) + ' %'; Sound.applyVol(); Sound.click(); });
+    on('sUi', 'change', e => { SET.ui = +e.value; applyUiScale(); });
+    on('sSave', 'change', e => { SET.autosave = +e.value; });
+    on('sLow', 'change', e => { SET.lowfx = e.checked; });
+    on('sFps', 'change', e => { SET.fps30 = e.checked; });
+  }
   const f = $('impFile'); if (f) f.addEventListener('change', () => { const file = f.files[0]; if (!file) return; const rd = new FileReader(); rd.onload = () => { $('impText').value = rd.result; }; rd.readAsText(file); });
 }
+function applyUiScale() { document.body.style.fontSize = (15 * (SET.ui || 1)) + 'px'; if (typeof fitCanvas === 'function') setTimeout(fitCanvas, 0); }
+applyUiScale();
 function hideMenu() { $('menu').hidden = true; }
 function startPlaying() {
   hideMenu(); started = true;
@@ -52,6 +72,7 @@ function menuAction(m) {
   if (m === 'new') return showMenu('new');
   if (m === 'back') return showMenu();
   if (m === 'import') return showMenu('import');
+  if (m === 'settings') return showMenu('settings');
   if (m === 'help') { hideMenu(); if (!started) startPlaying(); UI.tab = 'help'; UI.sel = null; renderPane(true); return; }
   if (m === 'save') { if (saveGame()) toast('Uloženo.'); return showMenu(); }
   if (m === 'saveas') { if (saveGame(true)) toast('Uloženo jako nová hra.'); return showMenu(); }

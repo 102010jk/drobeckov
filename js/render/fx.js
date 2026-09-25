@@ -3,7 +3,7 @@
 let PARTS = [], POPS = [], AMB = [], SMOKE = [];
 function addPart(x, y, vx, vy, col, life, o) {
   o = o || {};
-  if (PARTS.length > 400) return;
+  if (PARTS.length > (SET.lowfx ? 120 : 400) || (SET.lowfx && Math.random() < 0.5)) return;
   PARTS.push({ x, y, vx, vy, col, life, max: life, g: o.g == null ? 140 : o.g, k: o.k || 'px', drag: o.drag || 0, sz: o.sz || 1 });
 }
 function sparkle(x, y, col, n, spread) { for (let i = 0; i < n; i++) addPart(x + rand(-spread, spread), y + rand(-spread, spread), rand(-12, 12), rand(-26, -6), col, rand(0.4, 0.8), { g: 0, k: 'spark', drag: 1.5 }); }
@@ -24,7 +24,7 @@ let ambT = 0;
 function updateFX(dt, gdt) {
   const S = seasonIdx(), kind = G.weather === 'rain' ? 'rain' : G.weather === 'snow' ? 'snow' : SEASONS[S].amb;
   const area = VW * VH / (480 * 288);
-  const cap = Math.round((kind === 'rain' ? 70 : kind === 'snow' ? 45 : kind === 'motes' ? 22 : 26) * clamp(area, 0.6, 3));
+  const cap = Math.round((kind === 'rain' ? 70 : kind === 'snow' ? 45 : kind === 'motes' ? 22 : 26) * clamp(area, 0.6, 3) * (SET.lowfx ? 0.35 : 1));
   ambT -= dt;
   if (ambT <= 0 && AMB.length < cap) { ambT = (kind === 'rain' ? 0.02 : kind === 'snow' ? 0.1 : 0.25) / clamp(area, 0.6, 3); spawnAmb(kind, false); }
   for (let i = AMB.length - 1; i >= 0; i--) {

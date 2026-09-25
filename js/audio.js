@@ -19,7 +19,7 @@ const Sound = (() => {
     master = ac.createGain(); master.gain.value = on ? 0.8 : 0;
     const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 4;
     master.connect(comp); comp.connect(ac.destination);
-    sfx = ac.createGain(); sfx.gain.value = 0.55; sfx.connect(master);
+    sfx = ac.createGain(); sfx.gain.value = 0.55 * SET.sfx / 0.8; sfx.connect(master);
     mus = ac.createGain(); mus.gain.value = 0; mus.connect(master);
     const len = Math.floor(ac.sampleRate * 1.2);
     nbuf = ac.createBuffer(1, len, ac.sampleRate);
@@ -82,9 +82,10 @@ const Sound = (() => {
     init,
     get on() { return on; },
     toggle() { on = !on; store.set('dk_sound', on); if (master) master.gain.setTargetAtTime(on ? 0.8 : 0, ac.currentTime, 0.05); return on; },
-    music(level) { musOn = level > 0; if (ac) mus.gain.setTargetAtTime(level * 0.85, ac.currentTime, 0.6); },
+    music(level) { musOn = level > 0; if (ac) mus.gain.setTargetAtTime(level * 0.85 * SET.music / 0.8, ac.currentTime, 0.6); },
+    applyVol() { if (!ac) return; sfx.gain.setTargetAtTime(0.55 * SET.sfx / 0.8, ac.currentTime, 0.05); if (musOn) mus.gain.setTargetAtTime((night ? 0.45 : 1) * 0.85 * SET.music / 0.8, ac.currentTime, 0.2); },
     setSeason(i) { prog = SEASONS[i].music; },
-    setNight(n) { night = n; if (ac && musOn) mus.gain.setTargetAtTime((n ? 0.45 : 1) * 0.85, ac.currentTime, 1.5); },
+    setNight(n) { night = n; if (ac && musOn) mus.gain.setTargetAtTime((n ? 0.45 : 1) * 0.85 * SET.music / 0.8, ac.currentTime, 1.5); },
     click() { tone(1100, 0.05, { type: 'square', vol: 0.025, lp: 4000 }); },
     place() { tone(180, 0.12, { type: 'triangle', slide: 120, vol: 0.14 }); noise(0.08, { freq: 900, vol: 0.06 }); },
     nope() { tone(220, 0.14, { type: 'square', slide: 160, vol: 0.04, lp: 1200 }); },

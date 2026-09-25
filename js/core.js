@@ -41,6 +41,9 @@ const store = {
   put(k, s) { try { localStorage.setItem(k, s); return true; } catch (e) { return false; } },
   del(k) { try { localStorage.removeItem(k); } catch (e) { /* blocked */ } }
 };
+/* player settings (per browser) */
+const SET = Object.assign({ music: 0.8, sfx: 0.8, lowfx: false, fps30: false, autosave: 60, ui: 1 }, store.get('dk_settings', {}));
+const saveSettings = () => store.set('dk_settings', SET);
 function hex2rgb(h) { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
 function mk(w, h) {
   const c = document.createElement('canvas');

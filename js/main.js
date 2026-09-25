@@ -134,7 +134,9 @@ $('soundBtn').addEventListener('click', () => { Sound.init(); const on = Sound.t
 
 /* ============ loop ============ */
 let last = performance.now(), saveT = 60, nightState = null, evictT = 10;
+let skipF = false;
 function frame(now) {
+  if (SET.fps30 && (skipF = !skipF)) { requestAnimationFrame(frame); return; }
   const dt = Math.min(0.1, (now - last) / 1000); last = now;
   let mult = 0;
   try {
@@ -143,7 +145,7 @@ function frame(now) {
     render(dt);
     UI.frame(dt);
   } catch (err) { console.error(err); }
-  saveT -= dt; if (saveT <= 0 && started) { saveT = 60; saveGame(); }
+  saveT -= dt; if (saveT <= 0 && started) { saveT = SET.autosave || 60; if (SET.autosave) saveGame(); }
   evictT -= dt; if (evictT <= 0) { evictT = 10; evictChunks(Math.floor(CAM.x / TS / CH), Math.floor(CAM.y / TS / CH)); }
   const n = isNight(); if (n !== nightState) { nightState = n; Sound.setNight(n); }
   requestAnimationFrame(frame);

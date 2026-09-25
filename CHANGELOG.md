@@ -2,6 +2,27 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.7.0 „Kamarádi a padající hvězdy“ — 2026-09-25
+### Kočky
+- **Kamarádství** — kočky, které spolu bydlí nebo pracují, se skamarádí. Nejlepší kamarádi mají lepší náladu (hlavně když jsou blízko sebe) a posílají si srdíčka.
+- Detail kočky ukazuje **nejlepšího kamaráda, rodiče a koťata** (kliknutím na jméno skočíš na danou kočku).
+
+### Noc
+- **Padající hvězdy** — v některé letní (vzácně podzimní) noci padají hvězdy. Klikni na ně a získáš hvězdičku ★ (až 6 za noc).
+
+### Nastavení (Menu → Nastavení)
+- Hlasitost **hudby** a **zvuků** zvlášť.
+- **Velikost písma a panelů** (malá / normální / větší / velká).
+- **Automatické ukládání** — 30 s, 1 min, 3 min, nebo vypnuto.
+- **Úsporné efekty** a **omezení na 30 snímků/s** — pro slabší školní počítače a notebooky na baterku.
+- Nastavení si pamatuje každý prohlížeč zvlášť.
+
+### Telefony a tablety
+- Na úzké obrazovce je mapa vyšší a minimapa menší.
+
+### Úspěchy
+- Chytač hvězd, Nerozluční.
+
 ## 2.6.0 „Přání a hvězdičky“ — 2026-09-25
 ### Přání dne
 - Každé ráno má **Babička Ježková tři přání** (nahoře v záložce Zakázky): vyrob něco, pohlaď kočky, doruč zakázku, vydělej mince, dostav stavbu, prodej zboží, pohlaď divoké zvířátko…

@@ -170,4 +170,6 @@ process.stdin.on('data', (chunk) => {
   buf += chunk; let i;
   while ((i = buf.indexOf('\n')) >= 0) { const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1); if (!line) continue; let m; try { m = JSON.parse(line); } catch (e) { continue; } handle(m).catch(e => log('handler error', e.message)); }
 });
-process.stdin.on('end', () => process.exit(0));
+const SERVE_ONLY = process.argv.includes('--serve');   // standalone: just serve the game + bridge, no MCP client attached
+process.stdin.on('end', () => { if (!SERVE_ONLY) process.exit(0); });
+if (SERVE_ONLY) process.stdin.pause();

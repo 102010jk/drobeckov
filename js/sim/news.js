@@ -40,7 +40,7 @@ EXTRA_TABS.help = () => {
 };
 /* a small badge on the Příručka tab when fresh news arrive */
 let newsT = 0;
-STEP_HOOKS.push(dt => { newsT -= dt; if (newsT > 0) return; newsT = 1; const t = document.querySelector('#tabs [data-tab="help"]'); if (t) t.classList.toggle('ping', !!(G.news && !G.newsRead)); });
+STEP_HOOKS.push(dt => { newsT -= dt; if (newsT > 0) return; newsT = 1; const t = document.querySelector('#tabs [data-tab="osada"]'); if (t) t.classList.toggle('ping', !!(G.news && !G.newsRead)); });
 
 /* ---------- cosiest-town contest at the end of every season ---------- */
 function contestScore() {
@@ -66,3 +66,22 @@ function contestHTML() {
     ${last ? `<p>Minule (${SEASONS[last.season].name.toLowerCase()}, rok ${last.year}): ${'★'.repeat(last.stars)} · odměna ${last.prize} mincí</p>` : ''}</div>`;
 }
 ACH.push(['soutez', 'Nejútulnější osada', () => (G.stats.bestContest || 0) >= 5]);
+
+/* ---------- "Osada" tab: live pages moved out of the handbook ---------- */
+const OSADA_PAGES = ['noviny', 'denik', 'stats', 'uspechy', 'hats'];
+let osadaPage = 'noviny';
+ACTIONS.opage = id => { osadaPage = id; };
+function osadaChips() { return '<div class="chips">' + OSADA_PAGES.map(id => { const p = HELP.find(x => x.id === id); return p ? `<button class="chip-btn ${osadaPage === id ? 'on' : ''}" data-act="opage" data-arg="${id}">${p.n}</button>` : ''; }).join('') + '</div>'; }
+const _helpTabO = EXTRA_TABS.help;
+EXTRA_TABS.help = () => {
+  if (OSADA_PAGES.includes(helpPage)) helpPage = 'zaklady';
+  return _helpTabO().replace(/<div class="chips">[\s\S]*?<\/div>/, m => m.replace(new RegExp(`<button class="chip-btn[^"]*" data-act="help" data-arg="(${OSADA_PAGES.join('|')})">[^<]*</button>`, 'g'), ''));
+};
+EXTRA_TABS.osada = () => {
+  const keep = helpPage; helpPage = osadaPage;
+  let h = _helpTabO();
+  helpPage = keep;
+  return h.replace(/<div class="chips">[\s\S]*?<\/div>/, osadaChips());
+};
+{ const tabs = document.getElementById('tabs'); if (tabs && !tabs.querySelector('[data-tab="osada"]')) { const b = document.createElement('button'); b.dataset.tab = 'osada'; b.textContent = 'Osada'; tabs.appendChild(b); } }
+STEP_HOOKS.push(() => { if (UI.tab === 'osada' && osadaPage === 'noviny' && G.news) G.newsRead = true; });

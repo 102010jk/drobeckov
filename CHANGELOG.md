@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.0.1 „Záložka Osada“ — 2026-09-25
+- Nová záložka **Osada** s živými stránkami: **Noviny, Deník, Statistiky, Úspěchy a Kloboučky**. Příručka teď obsahuje jen návody a je přehlednější.
+- Když vyjdou nové noviny, bliká záložka Osada.
+
 ## 4.0.0 „Velkoměsto“ — 2026-09-25
 Z vesnice velkoměstem. Začátek hry (Farma, Řemesla, Hornictví) zůstává stejný, novinky přicházejí od éry Průmysl.
 

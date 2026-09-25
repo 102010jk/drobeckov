@@ -101,7 +101,7 @@ inspectCat = function (c) {
   else h += ` <button class="link" data-act="rename" data-arg="${c.id}">Přejmenovat</button>`;
   const owned = Object.keys(G.hats || {}).filter(k => G.hats[k] > 0);
   h += `<h4>Klobouček</h4><div class="inv">${c.hat ? `${hatIcon(c.hat)} <button class="link" data-act="hatset" data-arg="${c.id}:">sundat</button>` : '<small>žádný</small>'} ${owned.map(k => `<button class="tog" data-act="hatset" data-arg="${c.id}:${k}">${hatIcon(k)}</button>`).join('')}</div>`;
-  if (!owned.length && !c.hat) h += '<p class="muted">Kloboučky se kupují v Příručce → Kloboučky.</p>';
+  if (!owned.length && !c.hat) h += '<p class="muted">Kloboučky se kupují v záložce Osada → Kloboučky.</p>';
   return h;
 };
 

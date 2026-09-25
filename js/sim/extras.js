@@ -66,7 +66,7 @@ function wishesHTML() {
     const p = wishProg(w);
     h += `<div class="wish ${w.claimed ? 'claimed' : w.done ? 'ok' : ''}"><span>${WISH[w.kind].n(w)}</span><small>${w.claimed ? 'hotovo ✓' : Math.max(0, p) + '/' + w.n}</small>${w.done && !w.claimed ? `<button class="btn small chamfer" data-act="wish" data-arg="${i}">${icon('coin', 1)} ${w.coins} + ★</button>` : `<small>${icon('coin', 1)} ${w.coins} + ★</small>`}</div>`;
   });
-  return h + '<small class="muted">Nová přání každé ráno. Hvězdičky utratíš v Příručce → Kloboučky.</small></div>';
+  return h + '<small class="muted">Nová přání každé ráno. Hvězdičky utratíš v záložce Osada → Kloboučky.</small></div>';
 }
 const _paneOrders = paneOrders;
 paneOrders = function () { return wishesHTML() + _paneOrders(); };
@@ -301,7 +301,7 @@ HELP.push({ id: 'ovladani', n: 'Ovládání', t: `<p><b>Myš:</b> levé tlačít
 <p><b>Klávesy:</b> WASD / šipky = posun · + / − = zoom · mezerník = pauza · 1 2 3 = rychlost · X = bourání · L = pozemky · P = fotka osady · Esc = zpět / menu.</p>
 <p><b>V továrně:</b> R = otočit pás · Esc nebo pravé tlačítko = zrušit nástroj / odejít.</p>` },
 { id: 'hvezdy', n: 'Přání a hvězdičky', t: `<p>Každé ráno má Babička Ježková <b>tři přání</b> (záložka Zakázky nahoře). Za každé splněné dostaneš mince a <b>hvězdičku ★</b>, za všechna tři ještě jednu navíc.</p>
-<p>Hvězdičky utratíš v Příručce → Kloboučky za vzácné kloboučky a plány ozdob (Zvonkohra, Hvězdná lampa, Zlatá kočičí socha).</p>
+<p>Hvězdičky utratíš v záložce Osada → Kloboučky za vzácné kloboučky a plány ozdob (Zvonkohra, Hvězdná lampa, Zlatá kočičí socha).</p>
 <p><b>Divoká zvířátka</b> občas přijdou na kraj osady — klikni na ně a něco ti přinesou. Ptačí budky je lákají. Vzácně přijde i <b>zatoulané koťátko</b> — když máš volný pelíšek, zůstane.</p>
 <p><b>Sezónní ozdoby</b> (Sněhulák, Dýňová lucerna, Májka, Slunečník) dávají velkou útulnost ve své sezóně.</p>
 <p>Po startu první rakety posílej <b>zásobovací rakety</b> na Vesmírnou stanici Mňau — každá = hodně mincí a 3 hvězdičky.</p>` });

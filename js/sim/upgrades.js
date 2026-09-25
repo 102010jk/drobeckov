@@ -75,7 +75,7 @@ paneStore = function () {
     if (cls === 'bad' || (d.workers && !staffOf(b) && !d.nodoor)) bad.push([b, cls === 'bad' ? txt : 'Nemá pracovníka']);
   }
   h += '<h4>Budovy s problémem</h4>';
-  h += bad.length ? bad.slice(0, 12).map(([b, t]) => `<button class="srow link-row" data-act="selb" data-arg="${b.id}"><span class="sn">${B[b.type].n}</span><small class="poor">${t}</small></button>`).join('') : '<p class="muted">Všechno běží. 🐾</p>';
+  h += bad.length ? bad.slice(0, 12).map(([b, t]) => `<button class="srow link-row" data-act="selb" data-arg="${b.id}"><span class="sn">${B[b.type].n}</span><small class="poor">${t}</small></button>`).join('') : '<p class="muted">Všechno běží.</p>';
   h += '<h4>Všechny budovy</h4><div class="inv">' + Object.keys(groups).sort((a, b) => groups[b].length - groups[a].length).map(t => `<button class="tog" data-act="selb" data-arg="${groups[t][0].id}" title="${B[t].n}">${B[t].n} <b>${groups[t].length}</b></button>`).join(' ') + '</div>';
   return h;
 };

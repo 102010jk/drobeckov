@@ -81,7 +81,7 @@ function newLetter() {
   if (!opts.length) return false;
   const nb = pick(opts), i = G.lq[nb] || 0;
   G.letters.push({ nb, i, done: false, t: G.t });
-  toast('Přišel dopis od: ' + NEIGH[nb].n + ' ✉'); Sound.meow(); UI.dirty = true;
+  toast('Přišel dopis od: ' + NEIGH[nb].n + ''); Sound.meow(); UI.dirty = true;
   return true;
 }
 MORNING_HOOKS.push(() => { if (dayIdx() >= 1 && Math.random() < 0.6) newLetter(); });
@@ -102,12 +102,12 @@ ACTIONS.letter = idx => {
 function lettersHTML() {
   const open = (G.letters || []).map((l, i) => [l, i]).filter(([l]) => !l.done);
   if (!open.length) return '';
-  let h = '<h4>Dopisy ✉</h4>';
+  let h = '<h4>Dopisy</h4>';
   for (const [l, i] of open) {
     const L = LETTERS[l.nb][l.i], ok = canLetter(l);
     h += `<div class="order letter"><div class="ohead">${animalIcon(NEIGH[l.nb].sp, 2)}<div><b>${NEIGH[l.nb].n}</b><small>dopis ${l.i + 1}/${LETTERS[l.nb].length}</small></div></div><p class="ltext">„${L.t}“</p><div class="lines">`;
     for (const k in L.need) { const have = G.stock[k] || 0; h += `<span class="line ${have >= L.need[k] ? 'ok' : ''}">${itemIcon(k)}<b>${Math.min(have, L.need[k])}/${L.need[k]}</b><small>${itemName(k)}</small></span>`; }
-    h += `</div><div class="ofoot"><span>${icon('coin', 1)} ${L.coins}${L.stars ? ' · ★ ' + L.stars : ''}${L.gift ? ' · 🎁 ' + L.gift : ''}</span><button class="btn small chamfer ${ok ? '' : 'locked'}" data-act="letter" data-arg="${i}">Poslat</button></div></div>`;
+    h += `</div><div class="ofoot"><span>${icon('coin', 1)} ${L.coins}${L.stars ? ' · ★ ' + L.stars : ''}${L.gift ? ' · dárek: ' + L.gift : ''}</span><button class="btn small chamfer ${ok ? '' : 'locked'}" data-act="letter" data-arg="${i}">Poslat</button></div></div>`;
   }
   return h;
 }

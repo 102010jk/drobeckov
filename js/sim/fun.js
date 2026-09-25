@@ -101,7 +101,7 @@ function raceFrame(now) {
       w.mood = 100; emote(w, 'star', 5);
       if (won) { G.coins += RACE.prize; G.stats.earned += RACE.prize; Sound.unlock(); } else Sound.nope();
       G.stats.races = (G.stats.races || 0) + 1; if (won) G.stats.raceWins = (G.stats.raceWins || 0) + 1;
-      $('raceTxt').innerHTML = won ? `🏆 Vyhrála <b>${w.name}</b>! Tvoje sázka vyšla: +${RACE.prize} mincí.` : `Vyhrála <b>${w.name}</b>. Tvoje favoritka to nestihla — příště!`;
+      $('raceTxt').innerHTML = won ? `Hurá! Vyhrála <b>${w.name}</b>! Tvoje sázka vyšla: +${RACE.prize} mincí.` : `Vyhrála <b>${w.name}</b>. Tvoje favoritka to nestihla — příště!`;
       $('raceRow').innerHTML = '<button class="btn chamfer" data-m="resume">Zpět do osady</button>';
       journal(`Kočičí závod vyhrála ${w.name}.`);
     }

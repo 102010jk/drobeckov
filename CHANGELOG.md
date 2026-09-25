@@ -2,6 +2,13 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.10.0 „Ohňostroj“ — 2026-09-25
+- **Ohňostroj**: nahoře v záložce Kočky ho koupíš a odpálíš (jen za tmy). Rakety vyletí nad osadu a rozprsknou se do barevných kruhů a hvězd; všechny kočky mají radost (+10 nálada).
+- **Papírna** umí vyrobit ohňostroj z papíru a uhlí — pak ho odpálíš zdarma ze skladu.
+- **Silvestr**: poslední zimní noc se nad údolím sám rozzáří velký ohňostroj.
+- Barevná emoji v textech nahrazena pixelovými ikonkami (na některých počítačích se zobrazovala jako čtverečky).
+- Nový úspěch „Nebe v plamenech“.
+
 ## 3.9.1 „Blíž k práci“ — 2026-09-25
 - Kočky se **samy stěhují blíž ke své práci**: nová kočka dostane nejbližší volný pelíšek u dílny, kde pracuje, a každé ráno se kočky přestěhují nebo prohodí domky, když tím zkrátí cestu. Balanční robot ukázal, že kočky někdy chodily do práce i 3 herní hodiny tam a 3 zpátky.
 - **Rádce** upozorní, když kočka dojíždí přes půl údolí, a poradí postavit domek blíž nebo cestu.

@@ -15,11 +15,23 @@ nástroji serveru `drobeckov`, hra běží v prohlížeči uživatele a on se d�
 3. Mluv s uživatelem česky a krátce mu říkej, co děláš a proč.
 
 ## Smyčka hraní
-- `state` → rozhodni se → 1–4 akce (`build`, `assign`, `set_crop`, `deliver_order`…) → `wait` 10–40 s → znovu `state`.
+- `state_brief` (levný) / `state` (plný) → rozhodni se → akce (klidně víc najednou přes `batch`) → **`skip_time`** nebo **`simulate_until`** (okamžité přetočení času, funguje i když je okno na pozadí) → znovu `state_brief`.
+- `wait` čeká v reálném čase — používej ho jen když chceš, aby se uživatel díval, jak kočky běhají.
+- Když čas stojí: `ensure_running`.
 - Souřadnice jsou dlaždice. Místo pro stavbu vždy hledej přes `find_spot` (vrací levý horní roh); `map` ukáže okolí.
 - Stavba nejdřív vznikne jako staveniště — kočky donesou materiál ze skladu a postaví ji. Potřebuje čas (`wait`).
 - Chyby hry (např. „Málo mincí“, „Tenhle pozemek ještě není tvůj“) si přečti a přizpůsob se.
 - `advisor` ve `state` jsou rady hry — řeš je prioritně.
+
+## Užitečné nástroje
+- **Přehledy**: `orders`, `production_status`, `construction_status`, `explain_building`, `recommend_next_actions`, `events` (jen novinky od kurzoru).
+- **Sklad a peníze**: `sell` (hned prodat přebytek), `storage_rules` (např. `{"mrkev":{"sell_excess_over":40},"uhli":{"reserve":30}}`), `trade` (karavany: offers → prepare → sell).
+- **Těžba**: `list_deposits`, `prospect_parcel` (i před koupí), `prospect_deposit` (co by důl na x,y těžil), `find_resource`. Nestav doly naslepo.
+- **Stavby**: `build_many`, `cancel_construction` (plná vratka), `auto_assign`.
+- **Experimenty**: `dry_run` a `simulate_preview` (nanečisto), `checkpoint` save/restore.
+- **Automatizace a paměť**: `rules` (když podmínka → příkazy), `notes` (zápisník v uložené hře).
+- `action_catalog` vypíše všechny názvy pro obecný nástroj `action`.
+- Podmínky (`simulate_until`, `rules`): `storage.ocel >= 15`, `built.dul >= 2 and cats > 8`, `building.42.built == 1`, `hungry > 0`, `storage_used_pct > 90`, `era >= 2`.
 
 ## Jak osada roste (strategie)
 - **Jídlo první**: pole (pšenice) → Mlýn → Pekárna = chléb. Každá kočka sní ~1 chléb denně. Ryby: Rybářské molo na mělké vodě.

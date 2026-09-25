@@ -143,12 +143,13 @@ function aiDescribe(cmd, a) {
 }
 const AI_TAB = Math.random().toString(36).slice(2);
 async function aiLoop() {
-  let hello = true;
+  let hello = true, paused409 = false;
   while (true) {
     let msg = null;
     try {
       const r = await fetch('/bridge/poll?tab=' + AI_TAB + (hello ? '&hello=1' : ''), { cache: 'no-store' }); hello = false;
-      if (r.status === 409) { aiShow('Ovládání převzalo jiné okno se hrou. Tohle okno může zavřít.'); return; }
+      if (r.status === 409) { if (!paused409) aiShow('Ovládání převzalo jiné okno se hrou. Když ho zavřeš, převezme ho zase tohle.'); paused409 = true; await new Promise(res => setTimeout(res, 5000)); continue; }
+      if (paused409) { paused409 = false; aiShow('ovládání je zase tady'); }
       if (r.status === 200) msg = await r.json();
     }
     catch (e) { await new Promise(r => setTimeout(r, 2000)); continue; }

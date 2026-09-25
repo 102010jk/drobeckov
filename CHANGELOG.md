@@ -2,6 +2,16 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.8.0 „AI hraje líp“ — 2026-09-25
+Nové nástroje MCP serveru podle zpětné vazby AI, která hru hrála (teď jich je 55):
+- **Sklad a obchod**: `sell` (hned prodat přebytky), `storage_rules` (rezerva, prodej nad limit, nikdy neprodávat — hlídá se každou herní hodinu a respektuje ho i tržní stánek), `trade` (nabídky karavan, příprava zboží, prodej, nákup), `orders`.
+- **Průzkum**: `list_deposits`, `prospect_deposit` (co by důl těžil), `prospect_parcel` (i před koupí pozemku), `find_resource` — už žádné doly naslepo.
+- **Přehledy a diagnostika**: `production_status`, `construction_status`, `explain_building`, `recommend_next_actions`, `action_catalog`, `state_brief`, `events` (jen novinky).
+- **Čas**: `skip_time` a `simulate_until` přetočí herní čas okamžitě (i s podmínkou „až bude 15 oceli“ nebo „až bude hlad“), `fast_forward_report`, `ensure_running`. V AI režimu hra běží i v okně na pozadí — dřív se tam čas zastavil.
+- **Hromadně a bezpečně**: `batch` (best_effort / sequential / atomic), `build_many`, `auto_assign`, `cancel_construction`, `dry_run` a `simulate_preview` (nanečisto), `checkpoint`.
+- **Paměť a automatizace**: `notes` (zápisník uložený ve hře), `rules` (když podmínka → příkazy).
+- Když je hra otevřená ve dvou oknech a to ovládající se zavře, ovládání samo přejde na druhé okno.
+
 ## 4.7.0 „AI hraje“ — 2026-09-25
 - **MCP server** (`mcp/server.mjs`): hru teď může hrát umělá inteligence (Codex / ChatGPT, Antigravity / Gemini, Claude) živě v prohlížeči. Server otevře hru na `http://localhost:5191` a AI přes 27 nástrojů staví, přiřazuje kočky, mění recepty, plní zakázky, kupuje pozemky, zkoumá technologie a nechává plynout čas.
 - Ve hře je vpravo nahoře cedulka **„AI hraje“** s posledními akcemi, takže na obrazovce vidíš, co dělá.

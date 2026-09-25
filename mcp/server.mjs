@@ -46,12 +46,41 @@ const TOOLS = [
   ['action', 'Advanced: call any in-game UI action by name (e.g. expedition "0", fireworks "buy", autodeliver).', obj({ name: str('action name'), arg: str('argument') }, ['name'])],
   ['focus', 'Move the camera to tile x,y so the human sees it.', obj({ x: num('tile x'), y: num('tile y') }, ['x', 'y'])],
   ['new_game', 'Start a brand new town (saved as a new slot; existing saves stay).', obj({ name: str('town name'), seed: str('world seed'), mode: str('klid, normal, narocny, kreativ') })],
-  ['screenshot', 'PNG screenshot of the game view.', obj()]
+  ['screenshot', 'PNG screenshot of the game view.', obj()],
+  // ---- economy & storage
+  ['state_brief', 'Compact status (day, era, coins, cats, hungry, storage, sites, advisor codes, next era). Cheaper than state.', obj()],
+  ['sell', 'Sell items from storage right away to the fox buyer (half price, affected by market saturation). Give amount or excess_over.', obj({ item: str('item id'), amount: num('how many'), excess_over: num('sell everything above this stock level') }, ['item'])],
+  ['storage_rules', 'Standing storage policy, applied every game hour. rules = {"mrkev":{"sell_excess_over":40},"uhli":{"reserve":30},"ocel":{"never_sell":true}}; null removes a rule.', obj({ rules: { type: 'object', description: 'item -> {reserve, sell_excess_over, sell_all, never_sell} or null' }, clear: { type: 'boolean' } })],
+  ['trade', 'Caravan / ship traders. action=offers lists what they want and sell; prepare item amount (cats carry goods to the market square); sell item; buy item amount.', obj({ action: str('offers | prepare | sell | buy'), item: str('item id'), amount: num('amount') })],
+  ['orders', 'Detailed order board: every line with need/have/missing and whether it can be produced.', obj()],
+  ['list_deposits', 'Known ore deposits on your land and on parcels next to it (resource, parcel, tiles, owned, existing mine).', obj({ resource: str('uhli, zelezo, med, cin, bauxit, zlato, kamen, hlina, pisek'), owned_only: { type: 'boolean' } })],
+  ['prospect_deposit', 'What a 2x2 mine placed at x,y would extract, and whether it can be built there.', obj({ x: num('tile x'), y: num('tile y') }, ['x', 'y'])],
+  ['prospect_parcel', 'Terrain, ores, water and trees inside an 8x8 parcel (also before buying) + price.', obj({ px: num('parcel x'), py: num('parcel y') }, ['px', 'py'])],
+  ['find_resource', 'Nearest tiles with a given ore, owned first.', obj({ resource: str('ore id'), max_distance: num('tiles, default 40') }, ['resource'])],
+  ['cancel_construction', 'Cancel a construction site: full coin refund and delivered materials back.', obj({ building_id: num('site id') }, ['building_id'])],
+  ['construction_status', 'All construction sites: missing materials, what is on the way, carriers, builders, progress, what blocks them.', obj()],
+  ['production_status', 'All producing buildings: recipe, inputs/outputs, workers, missing inputs, blocked or not.', obj()],
+  ['explain_building', 'Why a building does or does not work: missing inputs, workers, their commute, full storage.', obj({ building_id: num('id') }, ['building_id'])],
+  ['recommend_next_actions', 'Ranked hints what to do next, with suggested commands.', obj({ limit: num('default 6') })],
+  ['action_catalog', 'List of all names for the generic action tool with their arguments.', obj()],
+  ['auto_assign', 'Fill empty workplaces with unemployed cats (food first). Keeps one free cat unless rebalance=true.', obj({ rebalance: { type: 'boolean' } })],
+  ['build_many', 'Build the same thing several times on valid spots near a point.', obj({ type: str('building type'), count: num('max 30'), near_x: num('tile x'), near_y: num('tile y') }, ['type'])],
+  ['batch', 'Run many commands in one call: commands=[{"tool":"assign","cat_id":7,"building_id":18},{"tool":"set_recipe","building_id":18,"recipe":"ocel"}]. mode: best_effort (default), sequential (stop at first error), atomic (all or nothing).', obj({ commands: { type: 'array', items: { type: 'object' } }, mode: str('best_effort | sequential | atomic') }, ['commands'])],
+  ['dry_run', 'Try commands on a copy of the world (optionally simulate then_hours after) and report costs, stock changes and errors. Nothing is kept.', obj({ commands: { type: 'array', items: { type: 'object' } }, then_hours: num('game hours to simulate after') }, ['commands'])],
+  ['skip_time', 'Instantly simulate game hours (no real-time waiting; works even if the window is in the background). stop_on: hunger, storage_full, construction_done, new_cat, era_change, no_materials, order_deliverable, morning.', obj({ game_hours: num('1-480'), stop_on: { type: 'array', items: { type: 'string' } } })],
+  ['simulate_until', 'Simulate until a condition holds, e.g. "storage.ocel >= 15", "built.dul >= 2 and cats > 8", "building.42.built == 1". Terms: storage.X, made.X, built.TYPE, building.ID.built, coins, cats, era, day, hungry, free_beds, coziness, mood, storage_used_pct, sites, orders_deliverable, tech.X, parcels.', obj({ condition: str('condition'), conditions: { type: 'array', items: { type: 'string' }, description: 'stop at the first that holds' }, max_game_days: num('1-30') })],
+  ['simulate_preview', 'Simulate N game days on a copy of the world and report the result (coins, cats, stock, problems, events). Nothing is kept.', obj({ game_days: num('max 10') })],
+  ['fast_forward_report', 'Skip N game days and return a short timeline every interval_hours.', obj({ game_days: num('max 20'), interval_hours: num('default 12') })],
+  ['ensure_running', 'Close dialogs, leave factory interiors, set speed and verify that game time really moves.', obj({ speed: num('1,2,4') })],
+  ['events', 'Incremental event feed (banners, toasts, sales, rules) since a cursor; returns the new cursor.', obj({ since: num('cursor from last call'), types: { type: 'array', items: { type: 'string' } } })],
+  ['checkpoint', 'Named save points for experiments. action: list | save | restore | delete.', obj({ action: str('list | save | restore | delete'), name: str('name') })],
+  ['notes', 'Your own notebook stored in the save. action: add (text, tags, x, y, pinned) | list (tags, resolved) | update (note_id, text, resolved, pinned) | delete (note_id).', obj({ action: str('add | list | update | delete'), text: str('text'), tags: { type: 'array', items: { type: 'string' } }, x: num('tile x'), y: num('tile y'), note_id: num('id'), resolved: { type: 'boolean' }, pinned: { type: 'boolean' } })],
+  ['rules', 'If-then automation checked every game hour: action add (condition like simulate_until, then = batch commands, once, cooldown_hours) | list | remove (rule_id). once=true makes a one-time todo.', obj({ action: str('add | list | remove'), condition: str('condition'), then: { type: 'array', items: { type: 'object' } }, once: { type: 'boolean' }, cooldown_hours: num('default 6'), rule_id: num('id') })]
 ].map(([name, description, inputSchema]) => ({ name, description: description + ' Only for playing the Drobečkov game when the user explicitly asked for it.', inputSchema }));
 
 /* ---------------- bridge (browser side) ---------------- */
 const queue = [], waiting = new Map(), pollers = [];
-let lastPoll = 0, owner = true, activeTab = null;
+let lastPoll = 0, owner = true, activeTab = null, activeSeen = 0;
 function sendToGame(cmd, args, timeoutMs) {
   return new Promise((resolve, reject) => {
     const id = Math.random().toString(36).slice(2);
@@ -69,8 +98,8 @@ const server = http.createServer(async (req, res) => {
   if (url.pathname === '/bridge/poll') {
     const tab = url.searchParams.get('tab') || 'x';
     if (url.searchParams.get('hello')) activeTab = tab;          // the newest window takes control
-    if (activeTab && tab !== activeTab) return res.writeHead(409).end();
-    activeTab = tab; lastPoll = Date.now();
+    if (activeTab && tab !== activeTab && Date.now() - activeSeen < 15000) return res.writeHead(409).end();   // another window is in control
+    activeTab = tab; activeSeen = lastPoll = Date.now();
     pollers.push(res); flush();
     const t = setTimeout(() => { const i = pollers.indexOf(res); if (i >= 0) { pollers.splice(i, 1); res.writeHead(204).end(); } }, 25000);
     res.on('close', () => { clearTimeout(t); const i = pollers.indexOf(res); if (i >= 0) pollers.splice(i, 1); });
@@ -112,7 +141,7 @@ async function runTool(name, args = {}) {
     for (let i = 0; i < 40 && Date.now() - lastPoll > 30000; i++) await new Promise(r => setTimeout(r, 500));
     return Date.now() - lastPoll < 30000 ? { ok: true, note: 'Hra je otevřená v prohlížeči a připojená.', url: GAME_URL } : { ok: false, note: 'Prohlížeč se neotevřel — otevři ručně ' + GAME_URL };
   }
-  const extra = name === 'wait' ? Math.min(120, args.seconds || 10) * 1000 : 0;
+  const extra = name === 'wait' ? Math.min(120, args.seconds || 10) * 1000 : ['skip_time', 'simulate_until', 'simulate_preview', 'fast_forward_report', 'dry_run'].includes(name) ? 100000 : 0;
   return sendToGame(name, args, 20000 + extra);
 }
 

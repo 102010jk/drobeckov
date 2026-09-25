@@ -167,7 +167,7 @@ STEP_HOOKS.push(dt => {
         const [x, y] = pick(E), night = darkness() > 0.4;
         const stray = freeBeds() > 0 && Math.random() < 0.06;
         const kind = stray ? 'kote' : night ? pick(['jezek', 'jezek', 'liska', 'jezevec']) : pick(WILD_KINDS);
-        WILD.push({ kind, x: x * TS + 8, y: y * TS + 12, tx: x * TS + 8, ty: y * TS + 12, life: rand(0.3, 0.6) * DAY, face: 1, skin: randi(0, SKINS.length - 1), wait: 0 });
+        WILD.push({ kind, x: x * TS + 8, y: y * TS + 12, tx: x * TS + 8, ty: y * TS + 12, life: rand(0.3, 0.6) * DAY, face: 1, skin: pick(RAND_SKINS), wait: 0 });
         if (stray) toast('Na kraji osady mňouká zatoulané koťátko…');
       }
     }

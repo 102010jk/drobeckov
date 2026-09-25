@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.9.0 „Zábava“ — 2026-09-25
+- **Závodní dráha** (Ozdoby): jednou denně uspořádáš **kočičí závod**. Vsadíš 50 mincí na favoritku — když vyhraje, bereš 50 × počet závodnic. Rychlotlapky a odpočaté, veselé kočky běhají rychleji. Závod se odehraje v malém okně s běžícími kočkami.
+- **Kočičí salon** (Domov, Řemesla a obchod): v detailu kočky jí za 40 mincí změníš **barvu srsti** — včetně 4 nových salonních barev: růžová, mátová, nebeská a půlnoční.
+- Úspěchy „Vítěz závodu“ a „Duhová osada“ (8 různých barev koček).
 ## 3.8.0 „Velkoměsto“ — 2026-09-25
 - **Asfaltová silnice** (Stavět → Cesty, od éry Průmysl): obrubníky, přerušovaná čára uprostřed, přechody u křižovatek, v zimě zasněžená. Kočky po ní běhají 2,5× rychleji.
 - **Auta**: po silnicích jezdí osobní auta, taxíky, dodávky a autobusy (s kočičím řidičem). Jezdí vpravo, drží odstup, na křižovatkách zatáčejí, na konci silnice se otočí a v noci svítí. Vlastní pixelové sprity ve složce `assets/auta/`.

@@ -63,3 +63,16 @@ MORNING_HOOKS.push(() => { G.fwNight = seasonIdx() === 3 && dayInSeason() === SD
 STEP_HOOKS.push(() => { if (G.fwNight && darkness() > 0.45 && !FW.length) { G.fwNight = false; launchFireworks(16); banner('Šťastný nový rok!', 'Celé údolí slaví s ohňostrojem.'); } });
 ACH.push(['ohnostroj', 'Nebe v plamenech', () => (G.stats.fireworks || 0) >= 3]);
 { const p = HELP.find(x => x.id === 'sezony'); if (p) p.t += `<p><b>Ohňostroj:</b> v záložce Kočky ho koupíš a odpálíš (jen za tmy) — všechny kočky mají radost. Vyrábí ho i Papírna z papíru a uhlí (uhlí dává milíř nebo důl). Poslední zimní noc je Silvestr s velkým ohňostrojem zdarma.</p>`; }
+
+/* ---------- nature ambience (birds, crickets, rain, wind, waves) ---------- */
+let ambT2 = 0;
+setInterval(() => {
+  if (!G || !started || typeof Sound.ambient !== 'function' || document.hidden) return;
+  const S = seasonIdx(), dk = darkness(), h = hour();
+  if (G.weather === 'rain') Sound.ambient('rain', G.storm ? 1.6 : 1);
+  else if (S === 3) Sound.ambient('wind');
+  else if (dk > 0.4) { if (S === 1 || S === 2) Sound.ambient('crickets', S === 1 ? 1 : 0.4); }
+  else if (h > 5 && h < 11) Sound.ambient('birds', S === 0 ? 1.4 : 0.8);
+  else if (dk < 0.1) Sound.ambient('birds', 0.25);
+  if ((ambT2 = (ambT2 + 1) % 8) === 0) { const t = tile(Math.floor(CAM.x / TS), Math.floor(CAM.y / TS)); if (t && t.gr === 'deep') Sound.ambient('waves'); }
+}, 250);

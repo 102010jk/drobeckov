@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.1.0 „Zvuky přírody“ — 2026-09-25
+- **Ptáci** zpívají ráno (nejvíc na jaře), za letních a podzimních nocí **cvrčí cvrčci**, v dešti **šumí déšť** (v bouřce víc), v zimě **fouká vítr** a u moře je slyšet **příboj**.
+- Dá se vypnout v Menu → Nastavení → Zvuky přírody. Hlasitost řídí posuvník Zvuky.
+
 ## 4.0.3 „Pohodlné zakázky“ — 2026-09-25
 - **Doručovat automaticky**: zaškrtávátko v Zakázkách — zakázka se odešle sama, jakmile je všechno ve skladu. Už žádné propadlé zakázky jen proto, že jsi zapomněl kliknout.
 - **Odmítnout zakázku**: u každé zakázky je odkaz „odmítnout“ — nechtěná zakázka zmizí a brzy přijde jiná.

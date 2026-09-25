@@ -126,6 +126,16 @@ const Sound = (() => {
       g.gain.setValueAtTime(0.3, t0 + 0.25); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.5);
       o.connect(f); f.connect(g); g.connect(sfx); o.start(t0); o.stop(t0 + 0.55);
     },
-    chop() { noise(0.07, { freq: 1200, q: 2, vol: 0.08 }); tone(140, 0.08, { type: 'triangle', vol: 0.06 }); }
+    chop() { noise(0.07, { freq: 1200, q: 2, vol: 0.08 }); tone(140, 0.08, { type: 'triangle', vol: 0.06 }); },
+    /* nature ambience: called ~4× a second with the current scene */
+    ambient(kind, amount) {
+      if (!ac || !on || ac.state !== 'running' || SET.nature === false) return;
+      const a = amount == null ? 1 : amount;
+      if (kind === 'birds' && Math.random() < 0.18 * a) { const f = 2200 + Math.random() * 1800; for (let i = 0, n = 2 + Math.floor(Math.random() * 3); i < n; i++) tone(f * (1 + Math.random() * 0.15), 0.07, { type: 'sine', vol: 0.012, slide: f * (1.3 + Math.random() * 0.4), delay: i * 0.09 }); }
+      else if (kind === 'crickets' && Math.random() < 0.5 * a) { const f = 4200 + Math.random() * 400; for (let i = 0; i < 3; i++) tone(f, 0.025, { type: 'square', vol: 0.004, lp: 6000, delay: i * 0.05 }); }
+      else if (kind === 'rain') noise(0.35, { ft: 'lowpass', freq: 1400 + Math.random() * 600, q: 0.3, vol: 0.022 * a });
+      else if (kind === 'wind' && Math.random() < 0.3 * a) noise(1.2, { ft: 'bandpass', freq: 300 + Math.random() * 300, q: 0.7, vol: 0.02 });
+      else if (kind === 'waves' && Math.random() < 0.15 * a) noise(1.6, { ft: 'lowpass', freq: 700, q: 0.4, vol: 0.02 });
+    }
   };
 })();

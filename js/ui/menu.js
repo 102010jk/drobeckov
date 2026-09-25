@@ -25,6 +25,7 @@ function showMenu(view) {
       <label for="sSfx">Zvuky <small id="sSfxV">${Math.round(SET.sfx * 100)} %</small></label><input type="range" id="sSfx" min="0" max="1" step="0.05" value="${SET.sfx}">
       <label for="sUi">Velikost písma a panelů</label><select id="sUi">${opt(0.85, SET.ui, 'Malá')}${opt(1, SET.ui, 'Normální')}${opt(1.15, SET.ui, 'Větší')}${opt(1.3, SET.ui, 'Velká')}</select>
       <label for="sSave">Automatické ukládání</label><select id="sSave">${opt(30, SET.autosave, 'Každých 30 s')}${opt(60, SET.autosave, 'Každou minutu')}${opt(180, SET.autosave, 'Každé 3 minuty')}${opt(0, SET.autosave, 'Vypnuto (jen ráno a ručně)')}</select>
+      <label class="chk"><input type="checkbox" id="sNat" ${SET.nature !== false ? 'checked' : ''}> Zvuky přírody <small>(ptáci, cvrčci, déšť, vítr)</small></label>
       <label class="chk"><input type="checkbox" id="sLow" ${SET.lowfx ? 'checked' : ''}> Úsporné efekty <small>(méně částic — pro slabší počítače)</small></label>
       <label class="chk"><input type="checkbox" id="sFps" ${SET.fps30 ? 'checked' : ''}> Omezit na 30 snímků/s <small>(šetří baterku a slabé počítače)</small></label>
       <div class="row"><button class="btn chamfer" data-m="back">Hotovo</button></div></div>`;
@@ -54,6 +55,7 @@ function showMenu(view) {
     on('sUi', 'change', e => { SET.ui = +e.value; applyUiScale(); });
     on('sSave', 'change', e => { SET.autosave = +e.value; });
     on('sLow', 'change', e => { SET.lowfx = e.checked; });
+    on('sNat', 'change', e => { SET.nature = e.checked; });
     on('sFps', 'change', e => { SET.fps30 = e.checked; });
   }
   const f = $('impFile'); if (f) f.addEventListener('change', () => { const file = f.files[0]; if (!file) return; const rd = new FileReader(); rd.onload = () => { $('impText').value = rd.result; }; rd.readAsText(file); });

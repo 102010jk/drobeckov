@@ -230,7 +230,7 @@ function updateCat(c, dt) {
   const dh = dt / DAY * 24;
   if (c.sleeping) c.energy = Math.min(100, c.energy + (c.inside ? 14 : 8) * dh);
   else c.energy = Math.max(0, c.energy - (c.trait === 'spac' ? 7.5 : 5.5) * dh);
-  c.food = Math.max(0, c.food - (c.trait === 'mlsoun' ? 2.6 : 1.8) * dh);
+  c.food = Math.max(0, c.food - (c.trait === 'mlsoun' ? 2.6 : 1.8) * dh * (typeof modeVal === 'function' ? modeVal('hunger', 1) : 1));
   c.mt = (c.mt || 0) - dt;
   if (c.mt <= 0) { c.mt = 0.5 + Math.random() * 0.3; c.mtgt = moodTarget(c); }
   const tg = c.mtgt != null ? c.mtgt : c.mood;

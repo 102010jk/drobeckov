@@ -9,6 +9,7 @@ function showMenu(view) {
   if (view === 'new') {
     h += `<div class="form"><label for="nName">Název osady</label><input id="nName" maxlength="28" value="${randomTownName()}">
       <label for="nSeed">Semínko světa <small>(prázdné = náhodné, stejné semínko = stejný svět)</small></label><input id="nSeed" maxlength="24" placeholder="např. 1234 nebo kočka">
+      <label for="nMode">Herní režim</label><select id="nMode">${Object.keys(MODES).map(k => `<option value="${k}" ${k === 'normal' ? 'selected' : ''}>${MODES[k].n}</option>`).join('')}</select><small class="muted">${Object.keys(MODES).filter(k => k !== 'normal').map(k => `<b>${MODES[k].n}:</b> ${MODES[k].d}`).join('<br>')}</small>
       <div class="row"><button class="btn chamfer" data-m="create">Založit osadu</button><button class="btn alt chamfer" data-m="back">Zpět</button></div></div>`;
   } else if (view === 'import') {
     h += `<div class="form"><label for="impText">Vlož kód uložené hry (začíná „DK2:“)</label><textarea id="impText" rows="5"></textarea>
@@ -37,7 +38,7 @@ function showMenu(view) {
       for (const s of idx.slots) {
         const cur = G && s.id === G.slot && started;
         h += `<div class="slot ${cur ? 'cur' : ''}">${s.thumb ? `<img src="${s.thumb}" width="72" height="48" alt="">` : '<span class="nothumb"></span>'}
-          <div class="st"><b>${s.name}</b><small>${SEASONS[s.season] ? SEASONS[s.season].name : ''}, rok ${s.year} · ${s.cats} koček · ${fmt(s.coins)} mincí · ${fmtTime(s.playTime)}</small><small>${new Date(s.savedAt).toLocaleString('cs-CZ')}</small></div>
+          <div class="st"><b>${s.name}</b><small>${s.mode && s.mode !== 'normal' && MODES[s.mode] ? MODES[s.mode].n + ' · ' : ''}${SEASONS[s.season] ? SEASONS[s.season].name : ''}, rok ${s.year} · ${s.cats} koček · ${s.mode === 'kreativ' ? '∞' : fmt(s.coins)} mincí · ${fmtTime(s.playTime)}</small><small>${new Date(s.savedAt).toLocaleString('cs-CZ')}</small></div>
           <div class="sb">${cur ? '<small>hraješ</small>' : `<button class="link" data-m="load:${s.id}">Načíst</button>`}<button class="link" data-m="export:${s.id}">Export</button><button class="link ${menuConfirm === s.id ? 'poor' : ''}" data-m="del:${s.id}">${menuConfirm === s.id ? 'Opravdu?' : 'Smazat'}</button></div></div>`;
       }
       h += '</div>';
@@ -78,7 +79,7 @@ function menuAction(m) {
   if (m === 'saveas') { if (saveGame(true)) toast('Uloženo jako nová hra.'); return showMenu(); }
   if (m === 'create') {
     const name = ($('nName').value || '').trim() || randomTownName(), seed = ($('nSeed').value || '').trim();
-    newGame({ name, seed }); saveGame(true); banner('Vítej v osadě ' + G.name, 'Babička Ježková ti poradí první kroky.');
+    newGame({ name, seed, mode: ($('nMode') && $('nMode').value) || 'normal' }); saveGame(true); banner('Vítej v osadě ' + G.name, 'Babička Ježková ti poradí první kroky.');
     return startPlaying();
   }
   if (m === 'doimport') { const err = importText($('impText').value); if (err) { $('impMsg').textContent = err; return; } toast('Hra načtena.'); return startPlaying(); }

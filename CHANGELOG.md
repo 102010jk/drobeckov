@@ -2,6 +2,15 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.2.0 „Herní režimy“ — 2026-09-25
+Při zakládání nové osady si vybereš **herní režim**:
+- **Klidný** — kočky méně hladoví, začínáš se 700 mincemi, zakázky platí o 20 % víc a pozemky jsou levnější.
+- **Normální** — tak, jak je hra myšlená.
+- **Náročný** — jen 250 mincí, kočky víc hladoví, dražší pozemky a zakázky platí méně.
+- **Kreativní** — **neomezené mince**, všechny éry, výzkumy, plánky i semínka odemčené, **stavby jsou hned hotové**, vylepšení zdarma a kočky nehladoví. Na volné stavění (úspěchy se v něm neplní).
+
+Režim je vidět u uložené hry v menu.
+
 ## 3.1.1 „Hra i bez internetu“ — 2026-09-25
 - **Offline režim**: po prvním načtení hra funguje i bez připojení (třeba ve škole na slabé Wi-Fi). Nové verze se stáhnou samy, když je internet.
 - **Instalace jako aplikace**: v Chromu/Edgi ikonka „Nainstalovat“ v adresním řádku → Drobečkov se otevře ve vlastním okně s kočičí ikonkou.

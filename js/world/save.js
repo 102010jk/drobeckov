@@ -122,7 +122,7 @@ function deserialize(s) {
 function slotIndex() { const i = store.get(IDX_KEY, null); return i && Array.isArray(i.slots) ? i : { slots: [], last: null }; }
 function writeIndex(i) { store.set(IDX_KEY, i); }
 function slotMeta() {
-  return { id: G.slot, name: G.name, savedAt: Date.now(), season: seasonIdx(), day: dayInSeason(), year: yearIdx(), cats: G.cats.length, coins: Math.floor(G.coins), playTime: Math.floor(G.playTime), thumb: minimapThumb() };
+  return { id: G.slot, name: G.name, savedAt: Date.now(), season: seasonIdx(), day: dayInSeason(), year: yearIdx(), cats: G.cats.length, coins: Math.floor(G.coins), mode: G.mode || 'normal', playTime: Math.floor(G.playTime), thumb: minimapThumb() };
 }
 let lastSaveOK = true;
 function saveGame(asNew) {

@@ -31,6 +31,7 @@ Nic se neinstaluje — funguje v každém moderním prohlížeči (i ve škole).
 | kapátko (stejná stavba) | Q |
 | vrátit poslední stavbu | Ctrl+Z |
 | fotka osady | P |
+| debug menu a testovací světy | F9 nebo klávesa vlevo od 1 |
 
 ## Spuštění lokálně
 ```bash

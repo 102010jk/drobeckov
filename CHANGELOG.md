@@ -2,6 +2,29 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.6.0 „Ladicí dílna“ — 2026-09-25
+### Debug menu
+- Zapneš ho klávesou **F9** nebo klávesou **vlevo od 1** (na české klávesnici „;“), případně v **Menu → Nastavení → Debug menu**. Objeví se nová záložka **Debug**.
+- **Mince a sklad**: +1 000 / +10 000 / +100 000 mincí, naplnit nebo vyprázdnit sklad.
+- **Postup**: další éra, odemknout vše, sousedé +1 ♥, dostavět všechny stavby, dokončit výzkum, raketa rovnou na rampu, pozemky zdarma.
+- **Kočky**: nakrmit a vyspat, přidat 1 nebo 5 koček.
+- **Čas a počasí**: +1 hodina, do rána, +1 den, další sezóna, rychlost 8× a 16×; jasno, déšť, sníh, bouřka, duha.
+- **Události**: zakázka, splnit slavnost, karavana, padající hvězdy, hledání vajíček, strašidýlka, Vánoce.
+- **Svět**: odkrýt mapu, změřit výkon, semínko a počty staveb/koček/chunků.
+
+### Testovací světy
+Hotové osady, které se postaví během chvilky a uloží jako nová hra (tvoje hra zůstane). Všechny jsou ve stejném údolí, takže je vidět, jak osada roste:
+- **Farma** — jaro, pekárna, mlýn, molo a první 4 kočky.
+- **Řemesla a obchod** — pila, cihelna, sklárna, tržní náměstí s karavanou.
+- **Hornictví a přístav** — doly na uhlí, železo a měď, tavírny, slévárna, přístav, maják, dílna s lisem.
+- **Průmysl** — továrna s výrobní linkou, škola, laboratoř, vědci a inženýři.
+- **Věda a vesmír** — elektrárna, větrníky, přistávací věž, zkoumá se raketa.
+- **Endgame** — všechno odemčené, 62 koček, raketa na rampě a astronaut připravený k odpočítávání.
+- **Po startu rakety** — konec hry za námi, satelit ukazuje celý svět.
+- **Kreativní pískoviště** — kreativní režim na velkém pozemku.
+
+Najdeš je v záložce Debug nebo v hlavním menu pod odkazem **Testovací světy** (když je debug zapnutý).
+
 ## 3.5.0 „Návštěvy“ — 2026-09-25
 - **Navštívit kamaráda** (Menu): vlož kód osady od spolužáka a prohlédni si jeho údolí — kočky, stavby, éru. Můžeš hladit jeho kočky, ale nic nezměníš a nic se neuloží. Tlačítkem **Vrátit se domů** jsi zpátky ve své osadě.
 - **Stáhnout soubor**: u Exportu uložíš kód osady do souboru (`.drobeckov.txt`) — třeba na flešku. Import i návštěva umí soubor zase načíst.

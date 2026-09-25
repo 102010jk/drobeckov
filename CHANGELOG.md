@@ -2,6 +2,12 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.11.0 „Kočičí sny“ — 2026-09-25
+- **Přání koček**: každá kočka si občas něco přeje — **oblíbené jídlo**, **klobouček**, **novou ozdobu** v osadě nebo **pohlazení**. Nad hlavou jí problikává bublina s přáním a v záložce Kočky je seznam všech přání (klikem skočíš na kočku).
+- Hladová kočka si sama dojde pro jídlo, po kterém touží, když je ve skladu.
+- Splněné přání = +20 nálada, srdíčka a pár mincí. Nesplněné přání po 1,5 dne vyprchá.
+- Nový úspěch „Plnitel snů“.
+
 ## 3.10.0 „Ohňostroj“ — 2026-09-25
 - **Ohňostroj**: nahoře v záložce Kočky ho koupíš a odpálíš (jen za tmy). Rakety vyletí nad osadu a rozprsknou se do barevných kruhů a hvězd; všechny kočky mají radost (+10 nálada).
 - **Papírna** umí vyrobit ohňostroj z papíru a uhlí — pak ho odpálíš zdarma ze skladu.

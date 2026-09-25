@@ -271,6 +271,8 @@ function renderHUD() {
   $('catsN').textContent = G.cats.length;
   $('townName').textContent = G.name;
   document.querySelectorAll('#speed button').forEach(b => b.classList.toggle('on', +b.dataset.speed === UI.speed));
+  $('powerChip').hidden = !G.tech.elektrina; if (G.tech.elektrina) { setIco($('boltIco'), 'bolt', 2); $('power').textContent = Math.floor(G.power || 0) + '/' + (typeof powerCap === 'function' ? powerCap() : 0); }
+  $('fcChip').hidden = !G.forecast; if (G.forecast) setIco($('fcIco'), G.forecast === 'rain' ? 'rain' : G.forecast === 'snow' ? 'snow' : 'sun', 2);
   $('landBtn').classList.toggle('on', UI.landMode);
   $('landBtn').textContent = G.freeParcels > 0 ? `Pozemky (${G.freeParcels} zdarma)` : 'Pozemky';
 }
@@ -307,7 +309,6 @@ function renderTip() {
   tip.style.top = Math.max(4, sy - 30) + 'px';
 }
 const ORE_NAMES = { uhli: 'uhlí', zelezo: 'železná ruda', med: 'měděná ruda', cin: 'cínová ruda', bauxit: 'bauxit', zlato: 'zlatá ruda', hlina: 'hlína', pisek: 'písek', kamen: 'kámen' };
-const PROFS = { vedec: { n: 'Vědec' }, inzenyr: { n: 'Inženýr' }, astronaut: { n: 'Astronaut' } };
 function catAt(px, py) {
   let best = null, bd = 1e9;
   for (const c of G.cats) { if (c.inside) continue; const dx = px - c.x, dy = py - (c.y - 5); const d = dx * dx + dy * dy; if (Math.abs(dx) <= 8 && dy >= -9 && dy <= 7 && d < bd) { bd = d; best = c; } }

@@ -74,7 +74,10 @@ const CROPS = {
   dyne: { n: 'Dýně', s: [0, 1, 1, 0], grow: 50, yield: 4, lock: ['zaj', 1] }
 };
 const FARM_WORK = 2.5;
-const RAW_SOURCES = {};   // item -> () => boolean: can the player obtain this raw good?
+const RAW_SOURCES = {};
+const TECH = {};
+const hasTech = k => !!(typeof G !== 'undefined' && G && G.tech && G.tech[k]);
+const PROFS = { vedec: { n: 'Vědec' }, inzenyr: { n: 'Inženýr' }, astronaut: { n: 'Astronaut' } };   // item -> () => boolean: can the player obtain this raw good?
 
 /* ============ buildings ============
    terr: allowed ground ('grass' default set = grass/sand/rock), fields only on grass.

@@ -2,6 +2,34 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.4.0 „Věda a vesmír“ — 2026-09-25
+### Věda
+- **Škola** — vyškolí kočku na **Vědce**, **Inženýra** (+40 % v továrnách a hutích) nebo **Astronauta**. Učí se z papíru.
+- **Laboratoř** — vědci zkoumají technologie a spotřebovávají **výzkumné sady**: Zápisník přírodovědce (papírna), Technický výkres (montážní stůl), Elektro sada a Hvězdná mapa (pájecí stůl).
+- Nová záložka **Výzkum** se **stromem technologií**: Elektřina, Optika, Automatizace, Hliník, Křemík, Elektronika, Vzducholodě, Raketové palivo, Inženýři, Raketová technika.
+- Zřícenina hvězdárny urychluje výuku i výzkum, kráter po meteoritu výzkum.
+
+### Elektřina a automatizace
+- **Uhelná elektrárna** a **větrné turbíny** (v dešti a v zimě točí víc). Proud je vidět nahoře v liště.
+- Po výzkumu **Automatizace** jde u každého stroje v továrně zapnout **automat** — běží bez koček, ale bere proud.
+- Nové stroje: **Elektrolyzér** (hliník z bauxitu, raketové palivo), **Pájecí stůl** (obvody, čipy, naváděcí počítač).
+- Nové zboží: hliník, **dural**, křemík, obvody, čipy, čočky, baterie, raketové palivo.
+- **Pouliční lampa**, **Dalekohled**.
+
+### Vzducholodě
+- **Přistávací věž** — přilétají vzducholodě s obchodníky, kteří kupují motory, hračky, šperky a elektroniku za skvělé ceny.
+
+### Vesmír
+- **Kosmodrom** a **raketa ve třech stupních** (trupové panely, raketové motory, palivové nádrže, naváděcí počítače, kapsle s polštářkem).
+- **Start rakety**: odpočítávání, plameny, kouř, ohňostroj a všechny kočky se radují. Závěrečná obrazovka se statistikami osady.
+- Po startu **satelit**: zmizí mraky nad světem a v liště je **předpověď počasí** na zítřek.
+
+### Úspěchy
+- 15 úspěchů (Příručka → Úspěchy), od prvního chleba po kočku ve vesmíru.
+
+### Tutoriál
+- Kapitoly 6 *Věda* a 7 *Ke hvězdám* — celá hra má teď průvodce od prvního mlýna po raketu.
+
 ## 2.3.0 „Továrny“ — 2026-09-25
 ### Továrny, do kterých se dá vejít
 - **Dílna** (na mapě 3×2, uvnitř 8×4) a **Továrna** (na mapě 6×2, uvnitř 12×6, rozšiřitelná až na 20×6).

@@ -129,7 +129,7 @@ function frame(now) {
   const dt = Math.min(0.1, (now - last) / 1000); last = now;
   let mult = 0;
   try {
-    if (started) { keyPan(dt); mult = simTick(dt, UI.speed); }
+    if (started) { keyPan(dt); mult = simTick(dt, UI.speed); if (typeof launchUpdate === 'function') launchUpdate(); }
     updateFX(dt, dt * mult);
     render(dt);
     UI.frame(dt);

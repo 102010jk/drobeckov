@@ -62,12 +62,14 @@ function facTick(b, dt) {
       c.on = false;
       if (!ready) continue;
       busy++;
-      const powered = c.auto && typeof powerOK === 'function' && powerOK();
+      const hasP = typeof powerOK === 'function' && powerOK();
+      if (r.power && !hasP) continue;
+      const powered = c.auto && hasP;
       if (!manned.has(c) && !powered) continue;
       if (!c.cyc) { for (const k in r.in) c.inp[k] -= r.in[k]; c.cyc = true; c.p = 0; }
       c.on = true;
       c.p += dt * (powered && !manned.has(c) ? 1.1 : Math.max(0.6, mul || 1)) / r.t;
-      if (c.p >= 1) { c.cyc = false; c.p = 0; c.out = r.out; c.outN = r.n; G.stats.made[r.out] = (G.stats.made[r.out] || 0) + r.n; if (typeof usePower === 'function' && powered) usePower(); }
+      if (c.p >= 1) { c.cyc = false; c.p = 0; c.out = r.out; c.outN = r.n; G.stats.made[r.out] = (G.stats.made[r.out] || 0) + r.n; if (typeof usePower === 'function' && (powered || r.power)) usePower(); }
     }
   }
   f.busy = busy;
@@ -91,7 +93,7 @@ function facPlace(b, x, y) {
   if (t === 'belt') f.cells[i] = { k: 'belt', d: FUI.rot, it: null, p: 0 };
   else if (t === 'split') f.cells[i] = { k: 'split', d: FUI.rot, it: null, p: 0 };
   else if (t === 'station') f.cells[i] = { k: 'st' };
-  else f.cells[i] = { k: 'm', t, d: FUI.rot, r: MACHINES[t].recipes[0], inp: {}, out: null, outN: 0, p: 0, pass: null };
+  else f.cells[i] = { k: 'm', t, d: FUI.rot, r: MACHINES[t].recipes.find(r => typeof FREC_TECH === 'undefined' || !FREC_TECH[r] || hasTech(FREC_TECH[r])) || MACHINES[t].recipes[0], inp: {}, out: null, outN: 0, p: 0, pass: null };
   Sound.place(); jobsDirty = true; UI.dirty = true;
   tutEvent('fac_' + (MACHINES[t] ? 'machine' : t));
 }
@@ -136,7 +138,7 @@ function paneFactory() {
   const c = FUI.sel >= 0 ? f.cells[FUI.sel] : null;
   if (c && c.k === 'm') {
     const m = MACHINES[c.t];
-    h += `<h4>${m.n}</h4><div class="reclist">` + m.recipes.map(r => `<button class="rec ${c.r === r ? 'on' : ''}" data-act="frec" data-arg="${r}">${frecipeHTML(r)}</button>`).join('') + '</div>';
+    h += `<h4>${m.n}</h4><div class="reclist">` + m.recipes.map(r => { const lk = typeof FREC_TECH !== 'undefined' && FREC_TECH[r] && !hasTech(FREC_TECH[r]); return `<button class="rec ${c.r === r ? 'on' : ''} ${lk ? 'locked' : ''}" data-act="${lk ? 'noop' : 'frec'}" data-arg="${r}">${frecipeHTML(r)}${lk ? '<small>Výzkum: ' + TECH[FREC_TECH[r]].n + '</small>' : ''}${FRECIPES[r].power ? '<small>potřebuje proud</small>' : ''}</button>`; }).join('') + '</div>';
     h += `<div class="kv"><span>Uvnitř</span><span class="inv">${Object.keys(c.inp).filter(k => c.inp[k] > 0).map(k => itemIcon(k) + '<b>' + c.inp[k] + '</b>').join(' ') || '<small>nic</small>'}</span></div>`;
     if (c.cyc) h += `<div class="kv"><span>Hotovo</span>${bar(c.p * 100)}</div>`;
     if (hasTech('automatizace')) h += `<button class="btn small ${c.auto ? '' : 'alt'} chamfer" data-act="fauto">${c.auto ? 'Automat: zapnuto' : 'Zapnout automat (bere proud)'}</button>`;

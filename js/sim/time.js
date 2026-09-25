@@ -20,8 +20,6 @@ function takeStock(k, n) { G.stock[k] = Math.max(0, (G.stock[k] || 0) - n); if (
 const storeRoom = () => capacity() - stockTotal() - G.incStore;
 
 /* ============ relations, research & unlocks ============ */
-const TECH = {};
-const hasTech = k => !!(G && G.tech && G.tech[k]);
 function nbLevel(k) { const xp = G.nb[k] || 0; let lv = 0; for (let i = 1; i < HEART_XP.length; i++) if (xp >= HEART_XP[i]) lv = i; return lv; }
 const tier = () => Object.keys(NEIGH).reduce((a, k) => a + nbLevel(k), 0);
 const xUnlocked = k => nbLevel(XLOCK[k][0]) >= XLOCK[k][1];

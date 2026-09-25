@@ -194,6 +194,8 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
     <span class="chip" title="Místo ve skladech"><img id="boxIco" class="ico" alt=""><b id="store">0/0</b></span>
     <span class="chip" title="Útulnost — přitahuje nové kočky"><img id="cozyIco" class="ico" alt=""><b id="cozy">0</b></span>
     <span class="chip" title="Kočky"><img id="catIco" class="ico" alt=""><b id="catsN">0</b></span>
+    <span class="chip" id="powerChip" title="Proud pro automatické stroje" hidden><img id="boltIco" class="ico" alt=""><b id="power">0</b></span>
+    <span class="chip" id="fcChip" title="Předpověď na zítřek (satelit)" hidden>zítra <img id="fcIco" class="ico" alt=""></span>
     <button class="sq chamfer" id="landBtn" title="Kupovat pozemky (L)">Pozemky</button>
     <span class="sp"></span>
     <span id="speed" role="group" aria-label="Rychlost času">
@@ -226,6 +228,7 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
         <button data-tab="cats">Kočky</button>
         <button data-tab="store">Sklad</button>
         <button data-tab="trade">Obchod</button>
+        <button data-tab="research">Výzkum</button>
         <button data-tab="help">Příručka</button>
       </nav>
       <div id="pane"></div>
@@ -239,10 +242,12 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 <script src="js/data/crafts.js"></script>
 <script src="js/data/industry.js"></script>
 <script src="js/data/factory.js"></script>
+<script src="js/data/science.js"></script>
 <script src="js/art/sprites.js"></script>
 <script src="js/art/buildings.js"></script>
 <script src="js/art/crafts.js"></script>
 <script src="js/art/industry.js"></script>
+<script src="js/art/science.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/world/chunks.js"></script>
 <script src="js/world/land.js"></script>
@@ -268,6 +273,7 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 <script src="js/sim/trade.js"></script>
 <script src="js/sim/harbor.js"></script>
 <script src="js/sim/factory.js"></script>
+<script src="js/sim/science.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

@@ -47,9 +47,10 @@ function buildJobs() {
       for (const item in (b.need || {})) {
         if (b.need[item] > 0) pending = true;
         const rem = b.need[item] - (b.inc[item] || 0), av = avail(item);
-        if (rem > 0 && av > 0) { const st = nearStore(a[0], a[1]); if (st) JOBS.push({ task: { kind: 'haul', from: 'S', to: b.id, item }, n: Math.min(rem, av), pri: 3, sx: st._a[0], sy: st._a[1], len: mdist(st._a[0], st._a[1], a[0], a[1]), from: 0, to: b.id }); }
+        if (rem > 0 && av > 0) { const st = nearStore(a[0], a[1]); if (st) JOBS.push({ task: { kind: 'haul', from: 'S', to: b.id, item }, n: Math.min(rem, av), pri: b.prio ? 4.2 : 3, sx: st._a[0], sy: st._a[1], len: mdist(st._a[0], st._a[1], a[0], a[1]), from: 0, to: b.id }); }
       }
-      if (!pending && b.builders < 2) JOBS.push({ task: { kind: 'build', b: b.id }, n: 2 - b.builders, pri: 2.8, sx: a[0], sy: a[1], len: 0, trait: 'drevar', from: 0, to: b.id });
+      const maxB = b.prio ? 3 : 2;
+      if (!pending && b.builders < maxB) JOBS.push({ task: { kind: 'build', b: b.id }, n: maxB - b.builders, pri: b.prio ? 4 : 2.8, sx: a[0], sy: a[1], len: 0, trait: 'drevar', from: 0, to: b.id });
       continue;
     }
     if (d.field && !b.farmer && fieldNeedsWork(b)) JOBS.push({ task: { kind: 'farm', b: b.id }, n: 1, pri: 2.6, sx: a[0], sy: a[1], len: 0, trait: 'zahradnik', from: 0, to: b.id });

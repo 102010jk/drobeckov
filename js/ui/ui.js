@@ -251,7 +251,8 @@ function renderPane(force) {
   if (UI.interior) h = `<div class="insp">${paneFactory()}</div>`;
   else if (UI.sel) h = `<div class="insp">${paneInspect()}</div>`;
   else h = UI.tab === 'build' ? paneBuild() : UI.tab === 'orders' ? paneOrders() : UI.tab === 'cats' ? paneCats() : UI.tab === 'store' ? paneStore() : (EXTRA_TABS[UI.tab] ? EXTRA_TABS[UI.tab]() : '');
-  if (force || h !== UI.lastPane) { const st = pane.scrollTop; pane.innerHTML = h; pane.scrollTop = st; UI.lastPane = h; renderTut(); }
+  const typing = document.activeElement && pane.contains(document.activeElement) && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+  if ((force && !typing) || (!typing && h !== UI.lastPane)) { const st = pane.scrollTop; pane.innerHTML = h; pane.scrollTop = st; UI.lastPane = h; renderTut(); }
   document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', !UI.sel && b.dataset.tab === UI.tab));
   const ob = document.querySelector('#tabs [data-tab="orders"]');
   if (ob) ob.classList.toggle('ping', G.orders.some(canDeliver));

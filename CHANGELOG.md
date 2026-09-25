@@ -2,6 +2,21 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.8.0 „Pohodlné ovládání“ — 2026-09-25
+### Ovládání
+- **Ctrl+Z** vrátí poslední postavenou stavbu (do 30 s) — i s mincemi a materiálem.
+- **Q = kapátko**: najeď myší na budovu a zmáčkni Q — vybere se stejná stavba.
+- **Stavět přednostně** — tlačítko u rozestavěné budovy; kočky na ni nosí materiál jako první a staví ji až tři.
+- Při psaní do políčka (jméno kočky, název osady, nápis) se už text nepřepisuje.
+
+### Nové
+- **Cedulka** — ozdoba, na kterou napíšeš vlastní nápis (ukáže se po najetí myší).
+- **Hudba roste s osadou**: každá éra přidá do hudby nový motiv (zvonek dílen, hornické brnkání, tiché tikání strojů, hvězdné cinkání).
+
+### Balanc
+- Éra Hornictví: stačí vydělat **4 500** mincí (místo 6 000) + 20 cihel.
+- Éra Věda a vesmír: stačí vydělat **28 000** mincí (místo 40 000) + 20 plechů.
+
 ## 2.7.1 „Rádce a lepší začátek“ — 2026-09-25
 Testoval jsem hru „robotem“, který ji sám hraje od začátku, a opravil místa, kde se dalo zaseknout.
 

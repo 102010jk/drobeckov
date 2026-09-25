@@ -68,6 +68,12 @@ const Sound = (() => {
       tone(mf(n + 12), 0.6, { at: t, type: 'sine', vol: 0.012, dest: mus });
     }
     if (st % 2 === 1) noise(0.03, { at: t, ft: 'highpass', freq: 7500, q: 0.5, vol: 0.01, dest: mus });
+    // era motifs: the valley's music grows with the town
+    const era = typeof eraOf === 'function' ? eraOf() : 0;
+    if (era >= 1 && st === 6 && s % 16 === 6) tone(mf(root + 24 + third), 0.9, { at: t, type: 'sine', vol: 0.03, dest: mus });           // workshop bell
+    if (era >= 2 && st % 4 === 2 && !night) tone(mf(root - 12), 0.18, { at: t, type: 'square', vol: 0.018, dest: mus, lp: 500 });  // mining pluck
+    if (era >= 3 && st === 3) noise(0.06, { at: t, ft: 'bandpass', freq: 1800, q: 4, vol: 0.012, dest: mus });                     // soft machine tick
+    if (era >= 4 && Math.random() < 0.12) tone(mf(root + 36 + [0, 7, 12][Math.floor(Math.random() * 3)]), 0.4, { at: t, type: 'sine', vol: 0.014, dest: mus }); // starry sparkle
   }
   function tick() {
     if (!ac) return;

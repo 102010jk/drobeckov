@@ -84,3 +84,23 @@ Object.assign(DRAW, {
   zasyp(g, X, Y) { R(g, '#5aa8e6', X + 1, Y + 1, 14, 7); R(g, '#72c850', X + 1, Y + 8, 14, 7); R(g, '#a8d4f8', X + 3, Y + 3, 4, 1); shape(g, [[X + 10, Y - 2, 2, 9, '#8a5230'], [X + 8, Y + 6, 6, 4, '#9aa0b4']]); },
   jezirko(g, X, Y) { R(g, '#72c850', X + 1, Y + 1, 14, 14); odisc(g, X + 8, Y + 9, 5, '#5aa8e6'); R(g, '#a8d4f8', X + 5, Y + 7, 3, 1); shape(g, [[X + 12, Y - 3, 2, 9, '#8a5230'], [X + 10, Y + 5, 6, 3, '#9aa0b4']]); }
 });
+
+/* ---------- orders: auto-deliver toggle and declining ---------- */
+ACTIONS.autodeliver = () => { G.autoDeliver = !G.autoDeliver; toast(G.autoDeliver ? 'Zakázky se doručí samy, jakmile bude všechno ve skladu.' : 'Zakázky doručuješ ručně.'); };
+ACTIONS.decline = id => {
+  const o = G.orders.find(x => x.id === +id); if (!o) return;
+  G.orders = G.orders.filter(x => x !== o); G.orderT = Math.min(G.orderT || 30, rand(8, 16));
+  toast('Zakázka odmítnuta. Brzy přijde jiná.'); Sound.click();
+};
+let adT = 0;
+STEP_HOOKS.push(dt => {
+  adT -= dt; if (adT > 0 || !G.autoDeliver || (typeof visiting === 'function' && visiting())) return; adT = 1;
+  for (const o of G.orders.slice()) if (canDeliver(o)) { deliverOrder(o.id); break; }
+});
+const _paneOrdersQ = paneOrders;
+paneOrders = function () {
+  let h = _paneOrdersQ();
+  h = h.replace('<h4>Zakázky na nástěnce</h4>', `<h4>Zakázky na nástěnce</h4><label class="chk autod"><input type="checkbox" data-act="autodeliver" ${G.autoDeliver ? 'checked' : ''}> Doručovat automaticky, jakmile je vše ve skladu</label>`);
+  h = h.replace(/(<button class="btn small chamfer[^"]*" data-act="deliver" data-arg="(\d+)">Doručit<\/button>)/g, '$1 <button class="link" data-act="decline" data-arg="$2" title="Odmítnout zakázku">odmítnout</button>');
+  return h;
+};

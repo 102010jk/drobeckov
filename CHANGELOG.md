@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.0.3 „Pohodlné zakázky“ — 2026-09-25
+- **Doručovat automaticky**: zaškrtávátko v Zakázkách — zakázka se odešle sama, jakmile je všechno ve skladu. Už žádné propadlé zakázky jen proto, že jsi zapomněl kliknout.
+- **Odmítnout zakázku**: u každé zakázky je odkaz „odmítnout“ — nechtěná zakázka zmizí a brzy přijde jiná.
+
 ## 4.0.2 — 2026-09-25
 - Rádce a přehled budov ve Skladu počítají pracovníky jen jednou za okamžik — ve velkých městech (1 000 koček) už nezpůsobují krátké záseky.
 - Ověřeno v testu Metropole: všechny doplňky z verzí 2.5–3.13 (přání, kamarádi, přání koček, noviny…) zaberou dohromady pod 0,2 ms na krok.

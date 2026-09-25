@@ -126,6 +126,12 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 .fhead{display:flex;justify-content:space-between;align-items:baseline;gap:.5em}
 .fhead b{font-size:1.15em;color:#a8423a}
 .fhead small,.freward{color:var(--paper-muted);font-size:.84em}
+.wishes{margin-bottom:.7em}
+.wish{display:grid;grid-template-columns:1fr auto auto;gap:.5em;align-items:center;padding:.25em 0;border-bottom:1px dashed rgba(43,27,43,.2)}
+.wish.ok span{color:#2f7a3a;font-weight:bold}
+.wish.claimed{opacity:.55}
+.wish.claimed span{text-decoration:line-through}
+.stars{color:#c8901a}
 .lines{display:flex;flex-wrap:wrap;gap:.3em;margin:.4em 0}
 .line{display:inline-flex;align-items:center;gap:.25em;border:2px solid var(--line);background:var(--paper);padding:.1em .4em .1em .2em;font-variant-numeric:tabular-nums}
 .line small{color:var(--paper-muted);font-size:.78em}.line.ok{background:var(--mint)}
@@ -275,6 +281,7 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 <script src="js/sim/factory.js"></script>
 <script src="js/sim/science.js"></script>
 <script src="js/sim/cozy.js"></script>
+<script src="js/sim/extras.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

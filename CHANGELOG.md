@@ -2,6 +2,31 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.6.0 „Přání a hvězdičky“ — 2026-09-25
+### Přání dne
+- Každé ráno má **Babička Ježková tři přání** (nahoře v záložce Zakázky): vyrob něco, pohlaď kočky, doruč zakázku, vydělej mince, dostav stavbu, prodej zboží, pohlaď divoké zvířátko…
+- Za splněné přání: mince + **hvězdička ★**. Za všechna tři přání dne bonus.
+
+### Hvězdný obchod
+- Za hvězdičky: vzácné kloboučky (**Svatozář, Čarodějný klobouk, Kosmická helma, Věneček**) a plány ozdob **Zvonkohra, Hvězdná lampa, Zlatá kočičí socha** (+14 útulnost).
+
+### Divoká zvířátka
+- Na kraj osady chodí **ježci, zajíci, lišky, veverky a jezevci** (v noci hlavně ježci a lišky). Klikni na ně — přinesou jablíčko, mrkev, oříšky nebo starou minci.
+- Vzácně přijde **zatoulané koťátko** — když máš volný pelíšek, zůstane u tebe.
+- **Ptačí budka** láká víc zvířátek.
+
+### Sezónní ozdoby
+- **Sněhulák** (jen v zimě, na jaře roztaje), **Dýňová lucerna** (svítí), **Májka**, **Slunečník** — ve své sezóně dávají velkou útulnost.
+
+### Vesmír po startu
+- Kosmodrom teď nakládá **zásobovací rakety** pro **Vesmírnou stanici Mňau**: každá = tisíce mincí a 3 hvězdičky. Po páté raketě je stanice hotová (+10 útulnost).
+
+### Ostatní
+- **Fotka osady**: klávesa **P** uloží obrázek osady (PNG).
+- Nové stránky Příručky: **Ovládání** (všechny klávesy) a **Přání a hvězdičky**.
+- 6 nových úspěchů.
+- Zkušenosti koček rostou rychleji.
+
 ## 2.5.0 „Útulné maličkosti“ — 2026-09-25
 ### Kočky
 - **Koťátka** — když spolu v domku bydlí dvě spokojené kočky (nálada 72+) a je volná postel, ráno se může narodit koťátko. Dva dny je malé a jen si hraje, pak začne pomáhat.

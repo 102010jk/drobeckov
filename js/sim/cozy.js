@@ -160,6 +160,6 @@ EXTRA_TABS.help = () => {
       <h3>Vyrobeno</h3><div class="inv">${Object.entries(s.made).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]).map(([k, n]) => ITEMS[k] ? itemIcon(k, 1) + '<small>' + shortNum(n) + '</small>' : '').join(' ')}</div>
       <h3>Osada</h3><div class="form"><label for="townInp">Název osady</label><input id="townInp" maxlength="28" value="${G.name}"><button class="btn small chamfer" data-act="townrename">Přejmenovat osadu</button></div></div>`;
   }
-  if (helpPage === 'hats') return chips + '<div class="help-page"><h3>Kloboučky pro kočky</h3><p>Kup klobouček a nasaď ho kočce v jejím panelu.</p>' + Object.keys(HATS).map(k => `<div class="srow">${hatIcon(k)}<span class="sn">${HATS[k].n} <small>máš ${(G.hats && G.hats[k]) || 0}</small></span><b></b><span></span><button class="tog buy" data-act="hatbuy" data-arg="${k}">${HATS[k].price}</button></div>`).join('') + '</div>';
+  if (helpPage === 'hats') return chips + '<div class="help-page"><h3>Kloboučky pro kočky</h3><p>Kup klobouček a nasaď ho kočce v jejím panelu.</p>' + Object.keys(HATS).map(k => `<div class="srow">${hatIcon(k)}<span class="sn">${HATS[k].n} <small>máš ${(G.hats && G.hats[k]) || 0}</small></span><b></b><span></span><button class="tog buy" data-act="hatbuy" data-arg="${k}">${HATS[k].stars ? "★ " + HATS[k].stars : HATS[k].price}</button></div>`).join('') + '</div>';
   return _helpTab2();
 };

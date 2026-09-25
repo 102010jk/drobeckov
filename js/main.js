@@ -23,6 +23,7 @@ function clickWorld(px, py, hx, hy) {
     renderPane(true); return;
   }
   if (UI.tool) { tryPlace(hx, hy, false); return; }
+  if (typeof wildClick === 'function' && wildClick(px, py)) return;
   const c = catAt(px, py);
   if (c) { UI.select({ kind: 'c', id: c.id }); petCat(c); renderPane(true); return; }
   const t = tile(hx, hy);

@@ -85,6 +85,7 @@ const TOPOFF = { mlyn: 17, trziste: 17, pekarna: 4, kuchynka: 3, skrabadlo: 10, 
 function plotConnect(b) { const L = bldAt(b.x - 1, b.y), Rr = bldAt(b.x + 1, b.y); b.conL = !!(L && L.type === 'plot'); b.conR = !!(Rr && Rr.type === 'plot'); }
 function anchorFor(type, hx, hy) { const d = B[type], w = d.w || 1, h = d.h || 1; return [hx - Math.floor((w - 1) / 2), hy - (h - 1)]; }
 function render(dt) {
+  if (!VW || !VH || !cvs.width || !cvs.height) return;   // hidden or zero-size view
   if (UI.interior) { renderInterior(dt); return; }
   const t = performance.now() / 1000, S = seasonIdx(), dk = darkness(), night = dk > 0.2;
   fitCanvas(); clampCam(); camView();

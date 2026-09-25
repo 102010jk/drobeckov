@@ -127,6 +127,11 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 .fhead b{font-size:1.15em;color:#a8423a}
 .fhead small,.freward{color:var(--paper-muted);font-size:.84em}
 .wishes{margin-bottom:.7em}
+#advice{position:absolute;left:8px;bottom:8px;max-width:min(62%,28em);display:flex;align-items:center;gap:.5em;padding:.35em .5em;font-size:.82em;z-index:3}
+#advice .adv-ic{flex:none;width:1.4em;height:1.4em;display:grid;place-items:center;background:var(--butter,#ffd23f);color:#2b1b2b;font-weight:700;border:2px solid var(--line)}
+#advice .adv-t{flex:1}
+#advice .adv-x{background:none;border:0;color:inherit;font:inherit;font-size:1.2em;cursor:pointer;padding:0 .2em}
+@media (max-width:520px){#advice{max-width:calc(100% - 96px)}}
 .wish{display:grid;grid-template-columns:1fr auto auto;gap:.5em;align-items:center;padding:.25em 0;border-bottom:1px dashed rgba(43,27,43,.2)}
 .wish.ok span{color:#2f7a3a;font-weight:bold}
 .wish.claimed{opacity:.55}
@@ -229,6 +234,7 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
         <div id="banner" class="otext"><div class="b1"></div><div class="b2"></div></div>
         <div id="toast" class="otext"></div>
         <div id="tip" class="tip" hidden></div>
+        <div id="advice" class="panel chamfer" role="status" hidden></div>
       </div>
     </section>
     <aside id="side" class="panel chamfer">
@@ -287,6 +293,7 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 <script src="js/sim/cozy.js"></script>
 <script src="js/sim/extras.js"></script>
 <script src="js/sim/social.js"></script>
+<script src="js/ui/advisor.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

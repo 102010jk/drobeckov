@@ -26,11 +26,11 @@ const BIOMES = {
 
 /* ============ items ============ */
 const ITEMS = {
-  psenice: { n: 'Pšenice', v: 2 },
-  mrkev: { n: 'Mrkev', v: 3 },
-  jahody: { n: 'Jahody', v: 4 },
-  dyne: { n: 'Dýně', v: 9 },
-  jablka: { n: 'Jablka', v: 4 },
+  psenice: { n: 'Pšenice', v: 2, food: 12 },
+  mrkev: { n: 'Mrkev', v: 3, food: 22 },
+  jahody: { n: 'Jahody', v: 4, food: 18 },
+  dyne: { n: 'Dýně', v: 9, food: 28 },
+  jablka: { n: 'Jablka', v: 4, food: 22 },
   ryby: { n: 'Ryby', v: 5, food: 40 },
   mleko: { n: 'Mléko', v: 4, food: 25 },
   med: { n: 'Med', v: 7 },
@@ -48,6 +48,7 @@ const ITEMS = {
   mrkvovy_dort: { n: 'Mrkvový dort', v: 46 }
 };
 const FOODS = ['konzervy', 'susenky', 'ryby', 'chleb', 'mleko'];
+const RAW_EAT = ['jablka', 'mrkev', 'dyne', 'jahody', 'psenice'];   // emergency snacks when there is no real food
 const DEFAULT_SELL = ['chleb', 'pernik', 'strudl', 'dynovy_kolac', 'dzem', 'most', 'polevka', 'jahodovy_dort', 'mrkvovy_dort'];
 
 /* ============ recipes ============ */

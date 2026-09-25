@@ -7,8 +7,8 @@ function abortTask(c) {
 function endTask(c) { c.task = null; c.path = []; c.dest = null; c.think = rand(0.15, 0.5); }
 function emote(c, e, t) { c.emote = e; c.emoteT = t || 1.6; }
 function eatTask(c) {
-  const item = FOODS.find(k => ITEMS[k] && avail(k) > 0);
-  if (item) return { kind: 'eat', item, stage: 'src' };
+  const item = FOODS.find(k => ITEMS[k] && avail(k) > 0) || (c && c.food < 30 ? RAW_EAT.find(k => avail(k) > 0) : null);
+  if (item) return { kind: 'eat', item, stage: 'src', raw: !FOODS.includes(item) };
   // nothing in the pantry: grab a bite straight from a bakery, fishery…
   if (!c) return null;
   const [cx, cy] = ctile(c); let best = null, bd = 1e9;
@@ -120,7 +120,8 @@ function arrive(c) {
       if (has) {
         if (src) { src.out[k.item]--; if (src.out[k.item] <= 0) delete src.out[k.item]; } else takeStock(k.item, 1);
         c.food = Math.min(100, c.food + ITEMS[k.item].food);
-        c.mood = Math.min(100, c.mood + (c.trait === 'mlsoun' && k.item === 'susenky' ? 12 : 3));
+        if (k.raw) { c.mood = Math.max(0, c.mood - 2); if (!G.flags.rawTip) { G.flags.rawTip = true; banner('Kočky jedí syrovou úrodu', 'Nemají chleba ani ryby. Přiřaď kočku do pekárny, aby měly pořádné jídlo.'); } }
+        if (!k.raw) c.mood = Math.min(100, c.mood + (c.trait === 'mlsoun' && k.item === 'susenky' ? 12 : 3));
         emote(c, c.trait === 'mlsoun' && k.item === 'susenky' ? 'star' : 'heart', 1.4);
       }
       k.stage = 'done'; k.t = 1.2; c.anim = 'sit'; return;

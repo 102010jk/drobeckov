@@ -9,7 +9,7 @@ const randomTownName = () => { const a = pick(TOWN_A), b = pick(TOWN_B); return 
 function freshState(name, seed) {
   return {
     v: 2, name, seed, created: Date.now(), playTime: 0, slot: null,
-    t: 6.4 / 24 * DAY, coins: 250, stock: { drevo: 36, ryby: 12, chleb: 10 }, sell: {},
+    t: 6.4 / 24 * DAY, coins: 400, stock: { drevo: 36, ryby: 12, chleb: 10 }, sell: {},
     mods: {}, owned: [], origin: [0, 0], bld: {}, nid: 1, cats: [], orders: [],
     nb: { jez: 0, zaj: 0, med: 0, sova: 0, lis: 0 }, fest: { key: '', got: {} }, festDone: {}, festFirst: {},
     flags: {}, poiDone: {}, tech: {}, tut: { ch: 0, step: 0, done: {}, skip: false, tips: {} },

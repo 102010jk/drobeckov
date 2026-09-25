@@ -77,7 +77,7 @@ function inNeed(b, item) {
   if (!b.built) return b.need && b.need[item] ? b.need[item] - (b.inc[item] || 0) : 0;
   if (d.inNeed) return d.inNeed(b, item);
   if (d.recipes) { const r = RECIPES[b.recipe]; if (!r || !r.in[item]) return 0; return r.in[item] * 3 - (b.inp[item] || 0) - (b.inc[item] || 0); }
-  if (d.market) { if (!G.sell[item]) return 0; return Math.min(4 - (b.inp[item] || 0) - (b.inc[item] || 0), 8 - sumObj(b.inp) - sumObj(b.inc)); }
+  if (d.market) { if (!G.sell[item] || !sellable(item)) return 0; return Math.min(4 - (b.inp[item] || 0) - (b.inc[item] || 0), 8 - sumObj(b.inp) - sumObj(b.inc)); }
   return 0;
 }
 /* items a building wants delivered (for the job board) */
@@ -85,7 +85,7 @@ function wantedItems(b) {
   const d = B[b.type];
   if (d.wants) return d.wants(b);
   if (d.recipes) return Object.keys((RECIPES[b.recipe] || { in: {} }).in);
-  if (d.market) return Object.keys(G.sell).filter(k => G.sell[k] && (G.stock[k] || 0) > 0);
+  if (d.market) return Object.keys(G.sell).filter(k => G.sell[k] && (G.stock[k] || 0) > 0 && sellable(k));
   return null;
 }
 
@@ -118,6 +118,13 @@ function setRecipe(b, r) {
   b.recipe = r; UI.dirty = true; jobsDirty = true;
 }
 function setCrop(b, c) { if (!cropUnlocked(c)) return; b.crop = c; if (b.st === 1 && b.g < 0.15) b.g = 0; UI.dirty = true; }
+/* the stall keeps back food for the cats and goods promised in orders */
+function sellable(k) {
+  const have = G.stock[k] || 0;
+  if (FOODS.includes(k) && have <= G.cats.length * 2) return false;
+  let owed = 0; for (const o of G.orders) for (const [i, q] of o.lines) if (i === k) owed += q;
+  return have > owed;
+}
 function completeBuilding(b) {
   b.built = true; delete b.need; b.work = 0;
   Sound.built(); sparkle(b.x * TS + b.w * 8, b.y * TS + b.h * 8, '#ffd23f', 12, b.w * 6);

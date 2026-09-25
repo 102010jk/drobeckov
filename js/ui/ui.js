@@ -112,7 +112,7 @@ function paneStore() {
   const keys = Object.keys(ITEMS).filter(k => (G.stock[k] || 0) > 0 || producible(k));
   for (const k of keys) {
     const n = G.stock[k] || 0, pay = Math.max(1, Math.floor(ITEMS[k].v * 0.5 * Math.min(5, n) * (typeof marketMul === 'function' ? marketMul(k) : 1)));
-    h += `<div class="srow ${n ? '' : 'zero'}">${itemIcon(k)}<span class="sn">${ITEMS[k].n}${ITEMS[k].food ? ' <small>jídlo</small>' : ''}</span><b>${n}</b>
+    h += `<div class="srow ${n ? '' : 'zero'}">${itemIcon(k)}<span class="sn">${ITEMS[k].n}${FOODS.includes(k) ? ' <small>jídlo</small>' : RAW_EAT.includes(k) ? ' <small>nouzové jídlo</small>' : ''}</span><b>${n}</b>
       <button class="tog ${G.sell[k] ? 'on' : ''}" data-act="sell" data-arg="${k}">${G.sell[k] ? 'stánek ✓' : 'stánek'}</button>
       <button class="tog buy" data-act="buyout" data-arg="${k}" ${n ? '' : 'disabled'}>${n ? '+' + pay : '—'}</button></div>`;
   }

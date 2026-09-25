@@ -2,6 +2,21 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.7.1 „Rádce a lepší začátek“ — 2026-09-25
+Testoval jsem hru „robotem“, který ji sám hraje od začátku, a opravil místa, kde se dalo zaseknout.
+
+### Nové
+- **Rádce** — cedulka vlevo dole na mapě upozorní na největší problém (hlad, plný sklad, chybí pelíšek, málo útulnosti, budova bez pracovníka, blížící se zima bez zásob) a tlačítkem tě rovnou vezme k řešení. Křížkem ho na den umlčíš.
+
+### Balanc
+- Když není chleba ani ryby, kočky v nouzi **snědí syrovou úrodu** (jablka, mrkev, dýně, jahody, pšenici) — už nemůžou vyhladovět se skladem plným pšenice.
+- **Tržní stánek neprodává poslední jídlo** (nechá kočkám zásobu) ani zboží, které potřebuješ na zakázky z nástěnky.
+- Začínáš se **400 mincemi** (místo 250) — hned si postavíš pole, mlýn, pekárnu i dřevorubce.
+- Nové kočky přicházejí **snáz** (4. kočka při útulnosti 3, každá další +4).
+
+### Pro vývojáře
+- `tools/robot.js` — balanční robot, který hru hraje sám a vypíše report.
+
 ## 2.7.0 „Kamarádi a padající hvězdy“ — 2026-09-25
 ### Kočky
 - **Kamarádství** — kočky, které spolu bydlí nebo pracují, se skamarádí. Nejlepší kamarádi mají lepší náladu (hlavně když jsou blízko sebe) a posílají si srdíčka.

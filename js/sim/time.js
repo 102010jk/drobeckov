@@ -62,7 +62,7 @@ function recomputeCozy() {
   for (const key in G.mods) { const m = G.mods[key]; for (const i in m) { const tr = m[i][1]; if (tr && tr[4] && tr[0] >= 0.5) c += 1; } }
   COZY = Math.floor(c + G.stats.fests * 2 + (G.stats.cozyBonus || 0));
 }
-const needCozy = n => (n < 2 ? 0 : 4 + (n - 2) * 5);
+const needCozy = n => (n < 3 ? 0 : 3 + (n - 3) * 4);
 function cozyNear(x, y, r) {
   let c = 0;
   for (const b of BLIST) { const d = B[b.type]; if (!b.built || !d.cozy || d.beds) continue; if (Math.abs(b.x - x) <= r && Math.abs(b.y - y) <= r) c += d.cozy; }

@@ -109,7 +109,7 @@ ACTIONS.tbuy = arg => {
   }
   const n = Math.min(5, s.qty); if (!n) return;
   if (G.coins < s.price * n) { toast('Málo mincí.'); Sound.nope(); return; }
-  G.coins -= s.price * n; s.qty -= n; hub.out[s.item] = (hub.out[s.item] || 0) + n; jobsDirty = true;
+  G.coins -= s.price * n; s.qty -= n; if (!G.imported) G.imported = {}; G.imported[s.item] = true; hub.out[s.item] = (hub.out[s.item] || 0) + n; jobsDirty = true;
   Sound.coin(); toast(`Koupeno ${n}× ${itemName(s.item).toLowerCase()} — kočky to odnesou do skladu.`);
 };
 function tradeHub(t) { return BLIST.find(b => b.built && (t.kind === 'lod' ? b.type === 'pristav' : b.type === 'namesti')); }

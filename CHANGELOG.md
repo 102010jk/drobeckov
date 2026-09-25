@@ -2,6 +2,25 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.2.0 „Hornictví a přístav“ — 2026-09-25
+### Nová éra: Hornictví a přístav
+- **Důl** — staví se na ložisko ve skalách a těží, co pod ním je: uhlí, železnou, měděnou, cínovou nebo zlatou rudu, bauxit.
+- **Milíř** — pálí dřevo na uhlí, když poblíž není uhelný důl.
+- **Tavírna** — ruda + uhlí → železo, měď, cín, zlato.
+- **Slévárna** — slitiny: **ocel** (železo + uhlí) a **bronz** (měď + cín).
+- **Kovárna** — hřebíky, nářadí a **šperky** (zlato + sklo).
+- **Rybárna** na mořském břehu — loďka loví **mořské ryby** (vydatnější jídlo, +55).
+- **Maják** — v noci otáčí paprskem, lodě připlouvají častěji.
+- **Přístav** — kotví tu **obchodní lodě** (loď doopravdy připluje z moře). Námořníci kupují velká množství a prodávají kakao, koření, cínovou rudu, bauxit, zlatou rudu a plánky ozdob.
+- Nakoupené suroviny se dají dál zpracovat — dovoz odemkne recepty, na které doma nemáš ložiska.
+
+### Cechy a kapitáni
+- Nové zakázky od **Cechu stavitelů**, **Hutního cechu** a **Kapitána Vydřičky** (velké lodní zakázky).
+- Každá pátá doručená zakázka jednomu cechu = věrnostní odměna a vyšší ceny.
+
+### Tutoriál
+- Kapitola 4 *Hornictví a přístav*.
+
 ## 2.1.0 „Řemesla a obchod“ — 2026-09-25
 ### Nová éra: Řemesla a obchod
 - **Éry**: hra teď postupuje po érách (Farma → Řemesla → Hornictví → Průmysl → Věda). Nová éra se otevře, když osada vyroste (mince, kočky, slavnosti).

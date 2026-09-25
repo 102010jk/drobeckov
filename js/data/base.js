@@ -74,6 +74,7 @@ const CROPS = {
   dyne: { n: 'Dýně', s: [0, 1, 1, 0], grow: 50, yield: 4, lock: ['zaj', 1] }
 };
 const FARM_WORK = 2.5;
+const RAW_SOURCES = {};   // item -> () => boolean: can the player obtain this raw good?
 
 /* ============ buildings ============
    terr: allowed ground ('grass' default set = grass/sand/rock), fields only on grass.

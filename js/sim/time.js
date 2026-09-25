@@ -27,7 +27,6 @@ const tier = () => Object.keys(NEIGH).reduce((a, k) => a + nbLevel(k), 0);
 const xUnlocked = k => nbLevel(XLOCK[k][0]) >= XLOCK[k][1];
 const recipeUnlocked = r => { const R_ = RECIPES[r]; if (!R_) return false; if (R_.tech && !hasTech(R_.tech)) return false; return !R_.lock || nbLevel(R_.lock[0]) >= R_.lock[1]; };
 const cropUnlocked = c => !CROPS[c].lock || nbLevel(CROPS[c].lock[0]) >= CROPS[c].lock[1];
-const RAW_SOURCES = {};   // item -> () => boolean, filled by later data files
 function producible(item, depth) {
   if ((depth || 0) > 5) return false;
   if (item === 'drevo') return true;

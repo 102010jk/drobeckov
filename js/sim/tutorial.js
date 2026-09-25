@@ -21,7 +21,13 @@ const TUT = [
   { era: 1, t: 'Postav Tržní náměstí — budou sem jezdit karavany obchodníků.', hl: '[data-arg="namesti"]', ok: () => hasB('namesti'), coins: 100 },
   { era: 1, t: 'Až přijede karavana, v záložce Obchod klikni „připravit“ a pak „prodat“.', hl: '[data-tab="trade"]', ev: 'trade', coins: 120 },
   { era: 1, t: 'Polož kamennou Dlažbu (Stavět → Cesty) — kočky po ní běhají 2,5× rychleji.', ok: () => Object.values(G.mods).some(m => Object.values(m).some(v => v[0] === 7)), coins: 60 },
-  { era: 1, t: 'Hotovo! Tkalcovna šije polštáře do domků a sběratelé prodávají plánky ozdob. Další éra: Hornictví a přístav.', ev: 'next', coins: 150 }
+  { era: 1, t: 'Hotovo! Tkalcovna šije polštáře do domků a sběratelé prodávají plánky ozdob. Další éra: Hornictví a přístav.', ev: 'next', coins: 150 },
+  { ch: 'Kapitola 4 · Hornictví a přístav', era: 2, t: 'Nová éra! Barevné kamínky ve skalách jsou ložiska. Postav na nich Důl (Stavět → Výroba).', hl: '[data-arg="dul"]', ok: () => BLIST.some(b => b.type === 'dul'), coins: 120 },
+  { era: 2, t: 'Kov se taví s uhlím. Když nemáš uhelný důl, postav Milíř — pálí dřevo na uhlí.', ok: () => (G.stats.made.uhli || 0) >= 1, coins: 80 },
+  { era: 2, t: 'Postav Tavírnu a vytav první železo nebo měď.', hl: '[data-arg="tavirna"]', ok: () => (G.stats.made.zelezo || 0) + (G.stats.made.medkov || 0) >= 1, coins: 150 },
+  { era: 2, t: 'Ve Slévárně vyrob ocel (železo + uhlí). Hutní cech za ni dobře platí.', hl: '[data-arg="slevarna"]', ok: () => (G.stats.made.ocel || 0) >= 1, coins: 200 },
+  { era: 2, t: 'Najdi moře a postav Přístav u hluboké vody. Lodě vozí kakao, koření a vzácné rudy.', ok: () => hasB('pristav'), coins: 300 },
+  { era: 2, t: 'Výborně! Další éra — Průmysl — přinese továrny, do kterých se dá vejít.', ev: 'next', coins: 200 }
 ];
 function tutStep() { if (!G || G.tut.skip || G.tut.step >= TUT.length) return null; const s = TUT[G.tut.step]; return (s.era || 0) <= eraOf() ? s : null; }
 function tutAdvance() {

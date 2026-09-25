@@ -2,6 +2,28 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.1.0 „Řemesla a obchod“ — 2026-09-25
+### Nová éra: Řemesla a obchod
+- **Éry**: hra teď postupuje po érách (Farma → Řemesla → Hornictví → Průmysl → Věda). Nová éra se otevře, když osada vyroste (mince, kočky, slavnosti).
+- **Nové suroviny**: prkna, kámen, hlína, cihly, papír, písek, sklo, vlna, látka, polštáře, kakao, koření.
+- **Nové stavby**: Pila, Kamenolom (na skalách), Hliniště (na ložisku hlíny), Pískovna (na pláži), Cihelna, Papírna, Sklárna, Ovčín s ovečkami, Tkalcovna, Velký sklad (+160 místa), Kolárna (vozíky: kočky unesou o 3 víc).
+- **Polštáře do domků** — kočky v domku s polštáři mají lepší náladu.
+- **Dlažba** — kamenná cesta, kočky po ní běhají 2,5× rychleji.
+- **Ozdoby**: Altán, Růžový keř.
+
+### Obchod
+- **Tržní náměstí** + **karavany obchodníků** každé 1–3 dny. Každý obchodník je vygenerovaný (jméno, druh zvířete, řemeslo) a chce jiné zboží za lepší cenu.
+- Nová záložka **Obchod**: „připravit“ = kočky nosí zboží na náměstí, „prodat“ = obchodník ho koupí. Od obchodníků jde **kupovat** suroviny, kakao, koření a **plánky ozdob**.
+- **Plánky od sběratelů**: Lampiony, Kašna, Kočičí strom, Houpačka, Větrníček.
+- **Dynamické ceny**: když stejné zboží prodáváš často, cena klesá (▼) a pomalu se zotavuje. V zimě je větší chuť na perník a polévku (▲).
+- Nové recepty: **Čokoládový dort** (kakao), **Kořeněný perník** (koření).
+
+### Ruch
+- Dílny dělají **ruch** v okolí — kočkám v blízkých domcích kazí náladu. Altány, růže a kašny ho tlumí. Bydlení a výrobu se vyplatí oddělit.
+
+### Tutoriál
+- Kapitola 3 *Řemesla a obchod*.
+
 ## 2.0.0 „Za obzor“ — 2026-09-25
 Velký přepis enginu. Staré uložené hry z 1.0 zůstávají netknuté, 2.0 začíná novou osadou.
 

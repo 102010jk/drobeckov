@@ -38,7 +38,7 @@ function updateVisitors(dt) {
         for (let j = 0; j < n; j++) {
           const keys = Object.keys(s.inp).filter(k => s.inp[k] > 0); if (!keys.length) break;
           const k = pick(keys); s.inp[k]--; if (s.inp[k] <= 0) delete s.inp[k];
-          got += Math.max(1, Math.round(ITEMS[k].v * priceMul())); G.stats.sold++;
+          got += Math.max(1, Math.round(ITEMS[k].v * priceMul() * (typeof marketMul === 'function' ? marketMul(k) : 1))); G.stats.sold++; if (typeof marketSold === 'function') marketSold(k, 1);
         }
         G.coins += got; G.stats.earned += got;
         popText('+' + got, v.x, v.y - 14, '#ffd23f'); Sound.coin();

@@ -202,7 +202,7 @@ function moodTarget(c) {
   m += c.food > 50 ? 10 : c.food < 20 ? -22 : 0;
   m += c.energy > 40 ? 5 : c.energy < 15 ? -15 : 0;
   const h = c.home && G.bld[c.home];
-  if (h) { m += 6 + Math.min(20, cozyNear(h.x, h.y, 3) * 2); if (typeof noiseAt === 'function') m -= noiseAt(h.x + 1, h.y + 1); if (h.pillows) m += 6; } else m -= 18;
+  if (h) { m += 6 + Math.min(20, cozyNear(h.x, h.y, 3) * 2); if (typeof noiseAt === 'function') m -= Math.min(20, noiseAt(h.x + 1, h.y + 1) * 2); if (h.pillows) m += 6; } else m -= 18;
   if (G.t - c.petT < DAY * 0.25) m += 12 * (c.trait === 'mazel' ? 2 : 1);
   if (G.t - c.playT < DAY * 0.5) m += 10;
   if (c.trait === 'spac') m += 8;

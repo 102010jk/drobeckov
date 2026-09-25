@@ -41,6 +41,9 @@ function resetBldTransient(b) { b.inc = {}; b.outRes = {}; b.farmer = 0; b.build
 function isUnlockedB(type) {
   const d = B[type]; if (!d) return false;
   if (d.flag) return !!G.flags[d.flag] && !BLIST.some(b => b.type === type);
+  if (d.bp && !G.flags['bp_' + d.bp]) return false;
+  if (d.era && eraOf() < d.era) return false;
+  if (d.unique && BLIST.some(b => b.type === type)) return false;
   if (d.tech && !hasTech(d.tech)) return false;
   if (d.lock) return nbLevel(d.lock[0]) >= d.lock[1];
   return true;
@@ -48,6 +51,9 @@ function isUnlockedB(type) {
 function lockReason(type) {
   const d = B[type];
   if (d.flag) return G.flags[d.flag] ? 'Už stojí' : 'Dárek ze slavnosti';
+  if (d.bp && !G.flags['bp_' + d.bp]) return 'Plán od sběratele';
+  if (d.era && eraOf() < d.era) return 'Éra: ' + ERAS[d.era].n;
+  if (d.unique && BLIST.some(b => b.type === type)) return 'Už stojí';
   if (d.tech && !hasTech(d.tech)) return 'Výzkum: ' + (TECH[d.tech] ? TECH[d.tech].n : d.tech);
   if (d.lock) return lockText(d.lock);
   return '';

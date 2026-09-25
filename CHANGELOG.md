@@ -2,6 +2,13 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.3.0 „Svátky“ — 2026-09-25
+- **Velikonoční hledání vajíček** (2. jarní den): Babička Ježková schová po osadě 8 malovaných vajíček. Každé najdi a klikni na něj — za všechna dostaneš 2 ★ a klobouček **Zaječí ouška**.
+- **Dýňová noc** (3. podzimní noc): po osadě poletují hodná **strašidýlka**. Klikni na ně a dají ti bonbón (mince). Za všechna **Dýňová čepička** a 2 ★.
+- **Kočičí Vánoce** (3. zimní den): každá kočka dostane dárek (velká radost), osada mince podle počtu koček, **Vánoční čepici** a poprvé i ozdobu **Sněžítko**.
+- Sváteční kloboučky se nedají koupit — jen vyhrát.
+- 2 nové úspěchy.
+
 ## 3.2.1 „Lopata“ — 2026-09-25
 - **Terén**: ve Stavět → Cesty můžeš **zasypat mělkou vodu** (vznikne louka) nebo **vykopat jezírko**. Obojí jde táhnout myší. Jezírko nejde vykopat tam, kde by kočkám odřízlo cestu.
 - Tutoriál má nový krok o **Cestovatelském stanu a výpravách**.

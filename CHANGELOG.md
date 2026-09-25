@@ -2,6 +2,11 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.4.0 „Kočičí řeči“ — 2026-09-25
+- **Kočky mluví**: v detailu kočky je její věta podle toho, jak se má — hlad, únava, nálada, práce, nejlepší kamarádka, oblíbené jídlo, přání, klobouček, počasí, sezóna (a astronautka vypráví o vesmíru).
+- **Narozeniny koček**: každá kočka má svůj den v roce (v jejím detailu). Když je ten den ve skladu dort, koláč, perník nebo palačinky, slaví celá osada.
+- Úspěch „Všechno nejlepší!“.
+
 ## 4.3.0 „Herna“ — 2026-09-25
 - **Herna** (Domov, od začátku): kočky si v ní hrají a ty si můžeš zahrát **pexeso** — 16 kartiček s obrázky věcí, které už v osadě znáš.
 - Jednou denně za dohrané pexeso **mince** (čím méně tahů, tím víc) a za výkon do 14 tahů **hvězdička**. Hrát můžeš kdykoli dál jen pro radost.

@@ -32,7 +32,7 @@ function showVisitBar() {
   let el = $('visitBar');
   if (!el) { el = document.createElement('div'); el.id = 'visitBar'; el.className = 'panel chamfer'; $('view').appendChild(el); el.addEventListener('click', e => { if (e.target.closest('[data-visit="home"]')) endVisit(); }); }
   el.hidden = false;
-  el.innerHTML = `<span>🏡 Na návštěvě v osadě <b>${G.name}</b> · ${G.cats.length} koček · ${BLIST.length} staveb · éra ${ERAS[eraOf()].n}</span><button class="btn small chamfer" data-visit="home">Vrátit se domů</button>`;
+  el.innerHTML = `<span>Na návštěvě v osadě <b>${G.name}</b> · ${G.cats.length} koček · ${BLIST.length} staveb · éra ${ERAS[eraOf()].n}</span><button class="btn small chamfer" data-visit="home">Vrátit se domů</button>`;
 }
 /* nothing changes and nothing saves while visiting */
 const _saveGameV = saveGame;

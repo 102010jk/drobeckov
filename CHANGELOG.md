@@ -36,6 +36,18 @@ Z vesnice velkoměstem. Začátek hry (Farma, Řemesla, Hornictví) zůstává s
 ### Grafika a testovací světy
 - Nové sprity: radnice, hotel, obchodní dům, kino, knihovna, veterina, park, depo, rafinérie, zastávka, semafor a nákladní auto.
 - Testovací světy **Město a doprava**, **Dopravní zácpa** a **Metropole: 1 000 koček**. Debug menu má přepínače přehledů a měření výkonu naživo.
+## 3.11.0 „Kočičí sny“ — 2026-09-25
+- **Přání koček**: každá kočka si občas něco přeje — **oblíbené jídlo**, **klobouček**, **novou ozdobu** v osadě nebo **pohlazení**. Nad hlavou jí problikává bublina s přáním a v záložce Kočky je seznam všech přání (klikem skočíš na kočku).
+- Hladová kočka si sama dojde pro jídlo, po kterém touží, když je ve skladu.
+- Splněné přání = +20 nálada, srdíčka a pár mincí. Nesplněné přání po 1,5 dne vyprchá.
+- Nový úspěch „Plnitel snů“.
+
+## 3.10.0 „Ohňostroj“ — 2026-09-25
+- **Ohňostroj**: nahoře v záložce Kočky ho koupíš a odpálíš (jen za tmy). Rakety vyletí nad osadu a rozprsknou se do barevných kruhů a hvězd; všechny kočky mají radost (+10 nálada).
+- **Papírna** umí vyrobit ohňostroj z papíru a uhlí — pak ho odpálíš zdarma ze skladu.
+- **Silvestr**: poslední zimní noc se nad údolím sám rozzáří velký ohňostroj.
+- Barevná emoji v textech nahrazena pixelovými ikonkami (na některých počítačích se zobrazovala jako čtverečky).
+- Nový úspěch „Nebe v plamenech“.
 
 ## 3.9.1 „Blíž k práci“ — 2026-09-25
 - Kočky se **samy stěhují blíž ke své práci**: nová kočka dostane nejbližší volný pelíšek u dílny, kde pracuje, a každé ráno se kočky přestěhují nebo prohodí domky, když tím zkrátí cestu. Balanční robot ukázal, že kočky někdy chodily do práce i 3 herní hodiny tam a 3 zpátky.

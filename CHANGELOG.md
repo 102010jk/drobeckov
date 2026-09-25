@@ -2,6 +2,11 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.5.0 „Návštěvy“ — 2026-09-25
+- **Navštívit kamaráda** (Menu): vlož kód osady od spolužáka a prohlédni si jeho údolí — kočky, stavby, éru. Můžeš hladit jeho kočky, ale nic nezměníš a nic se neuloží. Tlačítkem **Vrátit se domů** jsi zpátky ve své osadě.
+- **Stáhnout soubor**: u Exportu uložíš kód osady do souboru (`.drobeckov.txt`) — třeba na flešku. Import i návštěva umí soubor zase načíst.
+- Ve Statistikách je vidět **semínko světa** — pošli ho kamarádovi a bude mít stejné údolí.
+
 ## 3.4.0 „Dobroty“ — 2026-09-25
 - **Slepičárna** (od začátku) — slepičky za pšenici snáší **vejce**.
 - **Sýrárna** (Řemesla a obchod) — z mléka dělá **sýr** (jídlo i zboží).

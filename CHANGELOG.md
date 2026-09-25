@@ -2,6 +2,11 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.13.0 „Noviny“ — 2026-09-25
+- **Drobečkovské noviny** (Příručka → Noviny): každé ráno nové číslo — hlavní zpráva ze včerejška, další události, **počasí na dnešek**, stav osady, nejšťastnější kočka dne, jestli je na náměstí obchodník, a **kočičí vtip**. Když vyjde nové číslo, záložka Příručka zabliká.
+- **Soutěž o nejútulnější osadu**: poslední den každé sezóny sousedé ohodnotí osadu 1–5 hvězdami (útulnost na kočku, nálada koček, počet různých ozdob). Odměna až 800 mincí a hvězdičky. V novinách vidíš, kolik hvězd bys dostal dnes.
+- Úspěch „Nejútulnější osada“ (5 hvězd v soutěži).
+
 ## 3.12.0 „Na rybách“ — 2026-09-25
 - **Rybaření**: v detailu Rybářského mola můžeš jednou denně **chytat ryby sám** (5 pokusů). Kočka sedí na molu, splávek se houpe — a když zmizí pod vodou, klikni **Zabrat!** Moc brzo nebo moc pozdě a ryba uteče.
 - Úlovky: rybky, velké ryby (3 kusy), mořské ryby, stará bota (pro smích) a vzácně **zlatá rybka** (+150 mincí a 2 ★).

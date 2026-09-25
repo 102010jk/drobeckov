@@ -54,7 +54,7 @@ DRAW.mestsky_dum = (g, X, Y, b, S, night) => {   // fallback for assets/budovy/m
 
 /* ---------- cars ---------- */
 const CARS = [], CAR_KINDS = [['cervene', 3], ['modre', 3], ['taxi', 2], ['dodavka', 2], ['autobus', 1]];
-const CAR_COL = { cervene: '#e8484e', modre: '#3a74c8', taxi: '#ffd23f', dodavka: '#f6f1ec', autobus: '#3a9a78' };
+const CAR_COL = { nakladak: '#e8962a', cervene: '#e8484e', modre: '#3a74c8', taxi: '#ffd23f', dodavka: '#f6f1ec', autobus: '#3a9a78' };
 let ROADS = [], roadsV = -1, carT = 0;
 const isRoad = (x, y) => tile(x, y).gr === 'asfalt';
 function roadList() {
@@ -63,7 +63,22 @@ function roadList() {
   const bb = G.bb; for (let y = bb.y0; y <= bb.y1; y++) for (let x = bb.x0; x <= bb.x1; x++) if (isRoad(x, y)) ROADS.push([x, y]);
   return ROADS;
 }
+/* vehicles with a route (trucks, buses) follow it; the rest wander */
+function routeDir(c) {
+  const r = c.route, a = r[c.ri], b = r[c.ri + 1];
+  return FDX.findIndex((dx, i) => dx === b[0] - a[0] && FDY[i] === b[1] - a[1]);
+}
+function setRoute(c, route) {
+  c.route = route; c.ri = 0; c.p = 0; c.stop = false;
+  if (!route || route.length < 2) { c.route = null; if (c.onArrive) c.onArrive(c); return; }
+  c.x = route[0][0]; c.y = route[0][1]; c.d = routeDir(c);
+}
+const JUNCTION = (x, y) => isRoad(x, y) && (isRoad(x - 1, y) + isRoad(x + 1, y) + isRoad(x, y - 1) + isRoad(x, y + 1)) >= 3;
+const lightAt = (x, y) => { for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) { const b = bldAt(x + i, y + j); if (b && b.type === 'semafor' && b.built) return true; } return false; };
+const greenAxis = () => Math.floor(G.t / 4) % 2;   // 0: left–right drives, 1: up–down drives
+const TRAFFIC = new Map();   // tile → how long vehicles waited there (for the heat map)
 function nextDir(c) {
+  if (c.route) { c.ri++; if (c.ri >= c.route.length - 1) { c.route = null; c.stop = true; c.p = 0; if (c.onArrive) c.onArrive(c); return c.d; } return routeDir(c); }
   const opts = [0, 1, 2, 3].filter(d => d !== (c.d + 2) % 4 && isRoad(c.x + FDX[d], c.y + FDY[d]));
   if (!opts.length) return (c.d + 2) % 4;
   return opts.includes(c.d) && Math.random() < 0.6 ? c.d : pick(opts);
@@ -75,28 +90,38 @@ function spawnCar(list, x, y) {
   CARS.push({ x, y, d: pick(dirs), p: 0, k: weighted(CAR_KINDS), v: rand(2.2, 3.2) });
 }
 function moveCar(c, dt) {
+  if (c.stop || c.dead) return;
   if (!isRoad(c.x, c.y)) { c.dead = true; return; }
   const nx = c.x + FDX[c.d], ny = c.y + FDY[c.d];
+  // junctions: traffic lights, or give way to whoever is already crossing
+  if (c.p > 0.55 && JUNCTION(nx, ny)) {
+    let wait = false;
+    if (lightAt(nx, ny)) wait = (c.d % 2) !== greenAxis() && c.p < 0.7;
+    else for (const o of CARS) if (o !== c && o.x === nx && o.y === ny && (o.d % 2) !== (c.d % 2) && !o.stop) { wait = true; break; }
+    if (wait) { const k = (nx + 32768) * 65536 + (ny + 32768); TRAFFIC.set(k, (TRAFFIC.get(k) || 0) + dt); return; }
+  }
   // keep a distance to the car in front in the same lane
   let gap = 9;
   for (const o of CARS) if (o !== c && o.d === c.d) {
     if (o.x === c.x && o.y === c.y && o.p > c.p) gap = Math.min(gap, o.p - c.p);
     else if (o.x === nx && o.y === ny) gap = Math.min(gap, 1 + o.p - c.p);
   }
-  if (gap < (c.k === 'autobus' ? 1.3 : 0.9)) return;
+  if (gap < (c.k === 'autobus' ? 1.3 : 0.9)) { const k = (c.x + 32768) * 65536 + (c.y + 32768); TRAFFIC.set(k, (TRAFFIC.get(k) || 0) + dt); return; }
   c.p += dt * c.v * (c.k === 'autobus' ? 0.75 : 1);
   if (c.p < 1) return;
-  if (!isRoad(nx, ny)) { c.d = (c.d + 2) % 4; c.p = 0; return; }
+  if (!isRoad(nx, ny)) { if (c.route) { c.route = null; c.stop = true; c.p = 0; if (c.onArrive) c.onArrive(c); return; } c.d = (c.d + 2) % 4; c.p = 0; return; }
   c.x = nx; c.y = ny; c.p -= 1; c.d = nextDir(c);
 }
 STEP_HOOKS.push(dt => {
   const list = roadList();
-  if (!list.length) { CARS.length = 0; return; }
+  if (!list.length) { for (const c of CARS) if (c.onDead) c.onDead(c); CARS.length = 0; return; }
   const target = Math.min(120, Math.floor(list.length / 6) * (G.carMul || 1)) * (isNight() ? 0.35 : 1);
   carT -= dt;
-  if (carT <= 0) { carT = 0.35; if (CARS.length < target) spawnCar(list); else if (CARS.length > target + 2) CARS.splice(randi(0, CARS.length - 1), 1); }
+  const wander = CARS.filter(c => !c.job && !c.bus).length;
+  if (carT <= 0) { carT = 0.35; if (wander < target) spawnCar(list); else if (wander > target + 2) { const i = CARS.findIndex(c => !c.job && !c.bus); if (i >= 0) CARS.splice(i, 1); } }
   for (const c of CARS) moveCar(c, dt);
-  for (let i = CARS.length - 1; i >= 0; i--) if (CARS[i].dead) CARS.splice(i, 1);
+  for (let i = CARS.length - 1; i >= 0; i--) if (CARS[i].dead) { if (CARS[i].onDead) CARS[i].onDead(CARS[i]); CARS.splice(i, 1); }
+  for (const [k, v] of TRAFFIC) { const n = v * 0.995; if (n < 0.05) TRAFFIC.delete(k); else TRAFFIC.set(k, n); }
 });
 function carPos(c) {
   const fx = c.x + FDX[c.d] * c.p, fy = c.y + FDY[c.d] * c.p, lane = 3;

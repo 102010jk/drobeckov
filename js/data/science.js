@@ -76,7 +76,7 @@ Object.assign(B, {
   dalekohled: { n: 'Dalekohled', cat: 'ozdoby', w: 1, h: 1, cost: 250, mat: { cocka: 2, medkov: 2 }, instant: 1, cozy: 4, nodoor: 1, tech: 'optika', desc: '+4 útulnost. Kočky se v noci dívají na hvězdy.' },
   kovova_lampa: { n: 'Pouliční lampa', cat: 'ozdoby', w: 1, h: 1, cost: 60, mat: { zelezo: 1, sklo: 1 }, instant: 1, cozy: 2, light: 44, nodoor: 1, tech: 'elektrina', desc: 'Velké světlo. +2 útulnost.' },
   vez: { n: 'Přistávací věž', cat: 'vyroba', w: 2, h: 2, cost: 1600, mat: { ocel: 20, dural: 6, prkna: 10 }, work: 26, unique: 1, tech: 'vzducholod', desc: 'Přilétají sem vzducholodě s obchodníky z celého světa.' },
-  kosmodrom: { n: 'Kosmodrom', cat: 'vyroba', w: 5, h: 5, cost: 8000, mat: { ocel: 60, cihly: 60, dural: 20 }, work: 60, unique: 1, era: 4, tech: 'raketa',
+  kosmodrom: { n: 'Kosmodrom', cat: 'vyroba', w: 5, h: 5, cost: 8000, mat: { ocel: 60, cihly: 60, dural: 20 }, work: 60, unique: 1, era: 5, tech: 'raketa',
     desc: 'Tady se postaví raketa ve třech stupních. Pak už jen odpočítávání…' }
 });
 const ROCKET_STAGES = [

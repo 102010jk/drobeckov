@@ -40,9 +40,9 @@ const TUT = [
   { era: 3, t: 'Postav Laboratoř a přiřaď jí vědce.', ok: () => BLIST.some(b => b.type === 'laborator' && b.built && b.workers.length), coins: 200 },
   { era: 3, t: 'Papírna teď umí Zápisníky (papír + med). V záložce Výzkum vyber Elektřinu a nech vědce bádat.', hl: '[data-tab="research"]', ev: 'tech', coins: 300 },
   { era: 3, t: 'Postav elektrárnu nebo větrníky. Stroje v továrnách pak po výzkumu Automatizace pojedou samy.', ok: () => countB('elektrarna') + countB('vetrnik') > 0, coins: 200 },
-  { ch: 'Kapitola 7 · Ke hvězdám', era: 4, t: 'Poslední éra! Vyzkoumej Raketovou techniku a postav Kosmodrom.', ok: () => BLIST.some(b => b.type === 'kosmodrom'), coins: 500 },
-  { era: 4, t: 'Vyrob díly všech tří stupňů rakety a vyškol astronauta. Pak odpočítávání…', ok: () => !!G.flags.launched, coins: 2000 },
-  { era: 4, t: 'Kočka ve vesmíru! Drobečkov je nejslavnější osada široko daleko. Hraj dál, jak se ti líbí.', ev: 'next', coins: 500 }
+  { ch: 'Kapitola 7 · Ke hvězdám', era: 5, t: 'Poslední éra! Vyzkoumej Raketovou techniku a postav Kosmodrom.', ok: () => BLIST.some(b => b.type === 'kosmodrom'), coins: 500 },
+  { era: 5, t: 'Vyrob díly všech tří stupňů rakety a vyškol astronauta. Pak odpočítávání…', ok: () => !!G.flags.launched, coins: 2000 },
+  { era: 5, t: 'Kočka ve vesmíru! Drobečkov je nejslavnější osada široko daleko. Hraj dál, jak se ti líbí.', ev: 'next', coins: 500 }
 ];
 function tutStep() { if (!G || G.tut.skip || G.tut.step >= TUT.length) return null; const s = TUT[G.tut.step]; return (s.era || 0) <= eraOf() ? s : null; }
 function tutAdvance() {

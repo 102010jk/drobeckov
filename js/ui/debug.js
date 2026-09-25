@@ -51,6 +51,7 @@ function dbgPut(type, x, y, o) {
   if (o.lvl) b.lvl = o.lvl;
   if (o.line) dbgLine(b, o.line);
   if (o.rocket != null) b.stage = o.rocket;
+  if (type === 'depo') b.inp.bionafta = 16;
   rebuildLists();
   return b;
 }
@@ -203,6 +204,19 @@ function dbgTree(x, y) {
   t.tree = { g: 1, v: Math.random() * 0.75, k: Math.random() < 0.3 ? 'birch' : 'round', planted: true }; markMod(x, y); reachDirty = true;
   return true;
 }
+/* bus stops along the streets, traffic lights at the busiest crossings */
+function dbgStops(n) {
+  const [cx, cy] = dbgCenter(), c = [];
+  for (let k = -14; k <= 14; k++) { const y = cy + 4 * k + 1; for (let x = G.bb.x0; x <= G.bb.x1; x += 9) if (tile(x, y - 1).gr === 'asfalt') c.push([x, y, Math.abs(x - cx) + Math.abs(y - cy) + hashi(x, y, 5) * 20]); }
+  c.sort((a, b) => a[2] - b[2]);
+  const put = []; for (const [x, y] of c) { if (put.length >= n) break; if (put.some(([a, b]) => Math.abs(a - x) + Math.abs(b - y) < 11)) continue; if (canPlace('zastavka', x, y).ok) { place('zastavka', x, y); put.push([x, y]); } }
+}
+function dbgLights(n) {
+  const [cx, cy] = dbgCenter(), c = [];
+  for (let y = G.bb.y0; y <= G.bb.y1; y++) for (let x = G.bb.x0; x <= G.bb.x1; x++) if (JUNCTION(x, y)) c.push([x, y, Math.abs(x - cx) + Math.abs(y - cy)]);
+  c.sort((a, b) => a[2] - b[2]);
+  let k = 0; for (const [x, y] of c) { if (k >= n) break; for (const [a, b] of [[x + 1, y + 1], [x - 1, y + 1], [x + 1, y - 1], [x - 1, y - 1]]) if (canPlace('semafor', a, b).ok) { place('semafor', a, b); k++; break; } }
+}
 function dbgTrees(n) {
   const bb = G.bb;
   // a little wood for every lumber hut
@@ -289,6 +303,11 @@ const DBG_ERA = [
     stock: { drevo: 40, prkna: 30, cihly: 30, kamen: 20, uhli: 24, zelezo: 14, medkov: 10, ocel: 12, plech: 8, drat: 10, hrebiky: 12, papir: 16, zapisnik: 6, chleb: 30, ryby: 20, susenky: 14, mouka: 14, psenice: 24, mleko: 10, syr: 6, sklo: 10 },
     plan: [['tovarna', 1, { line: 'tovarna' }], ['dilna', 1, { line: 'drat' }], ['skola'], ['laborator'], ['dul', 1, { sp: 1, ore: 'zelezo' }], ['dul', 1, { sp: 1, ore: 'uhli' }],
       ['slevarna'], ['tavirna'], ['domek', 3], ['sklad'], ['socha'], ['pole', 2], ['pekarna'], ['mlyn'], ['kravin'], ['cukrarna', 1, { recipe: 'cokoladovy_dort' }], ['kocici_strom'], ['mestsky_dum', 4, { row: 1 }]], asf: 1 },
+  { cats: 40, land: 62, day: 19, coins: 16000, hearts: [8, 7, 7, 7, 6], lamps: ['kovova_lampa', 'kvetiny', 'zahon_ruzi', 'lampiony', 'kvetiny', 'kasna'], trees: 20,
+    tech: ['elektrina', 'inzenyri', 'optika', 'automatizace'], research: ['hlinik', { vykres: 4 }], profs: { vedec: 2, inzenyr: 3 }, power: 20, asf: 2, stops: 14, lights: 5,
+    stats: { earned: 32000, orders: 70, fests: 5, techs: 4, made: { cihly: 300, ocel: 120, plech: 60, zelezo: 200, motor: 6, bionafta: 40 } },
+    stock: { drevo: 40, prkna: 30, cihly: 30, kamen: 20, uhli: 30, zelezo: 14, ocel: 16, plech: 12, drat: 12, hrebiky: 12, papir: 16, olej: 10, bionafta: 20, chleb: 30, ryby: 20, susenky: 14, mouka: 14, psenice: 24, mleko: 10, syr: 6, sklo: 10 },
+    plan: [['depo', 1], ['rafinerie', 1], ['lisovna', 1], ['pole', 2, { crop: 'slunecnice' }], ['mestsky_dum', 10, { row: 1 }], ['depo', 1], ['tovarna', 1, { line: 'tovarna' }], ['sklad'], ['pekarna'], ['mlyn']] },
   { cats: 50, land: 66, day: 21, coins: 22000, hearts: [8, 8, 8, 7, 7], lamps: ['kovova_lampa', 'kvetiny', 'zahon_ruzi', 'lampiony', 'kvetiny', 'mlyncek'], trees: 20,
     tech: Object.keys(TECH).filter(k => k !== 'raketa'), research: ['raketa', { hvezdna_mapa: 6, elektro: 4 }], profs: { vedec: 4, inzenyr: 3 }, power: 24,
     stats: { earned: 60000, orders: 90, fests: 6, techs: 9, made: { cihly: 400, ocel: 200, plech: 140, motor: 12, hlinik: 30, elektro: 20 } },
@@ -322,10 +341,11 @@ const DBG_WORLDS = {
   remesla: { n: 'Řemesla a obchod', d: 'Éra 2 · léto. Pila, cihelna, sklárna, tržní náměstí s karavanou, 22 koček.', era: 1 },
   hornictvi: { n: 'Hornictví a přístav', d: 'Éra 3 · podzim. Doly, tavírny, slévárna, přístav, maják a dílna s lisem.', era: 2 },
   prumysl: { n: 'Průmysl', d: 'Éra 4 · jaro 2. roku. Továrna s linkou, škola, laboratoř, vědci a inženýři.', era: 3 },
-  veda: { n: 'Věda a vesmír', d: 'Éra 5 · léto 2. roku. Elektrárna, větrníky, vzducholodě, zkoumá se raketa.', era: 4 },
-  endgame: { n: 'Endgame', d: 'Všechno odemčené, 62 koček, raketa stojí na rampě a astronaut čeká na odpočítávání.', era: 4, end: 1 },
-  mega: { n: 'Super-endgame: Kočičí velkoměsto', d: '300 koček, obří výroba všeho, stovky staveb v ulicích jako ve skutečném městě. Stavba chvíli trvá!', era: 4, end: 3 },
-  vesmir: { n: 'Po startu rakety', d: 'Konec hry za námi — raketa odletěla, satelit ukazuje celý svět.', era: 4, end: 2 },
+  mesto: { n: 'Město a doprava', d: 'Éra 5 · jaro 2. roku. Asfaltové ulice, nákladní depo s auty, rafinérie na bionaftu, zastávky, semafory.', era: 4 },
+  veda: { n: 'Věda a vesmír', d: 'Éra 6 · léto 2. roku. Elektrárna, větrníky, vzducholodě, zkoumá se raketa.', era: 5 },
+  endgame: { n: 'Endgame', d: 'Všechno odemčené, 62 koček, raketa stojí na rampě a astronaut čeká na odpočítávání.', era: 5, end: 1 },
+  mega: { n: 'Super-endgame: Kočičí velkoměsto', d: '300 koček, obří výroba všeho, stovky staveb v ulicích jako ve skutečném městě. Stavba chvíli trvá!', era: 5, end: 3 },
+  vesmir: { n: 'Po startu rakety', d: 'Konec hry za námi — raketa odletěla, satelit ukazuje celý svět.', era: 5, end: 2 },
   kreativ: { n: 'Kreativní pískoviště', d: 'Kreativní režim na velkém pozemku — neomezené mince, stavby hned hotové.', sandbox: 1 }
 };
 
@@ -340,7 +360,7 @@ function dbgMakeWorld(key) {
     const last = W.end === 3 ? DBG_MEGA : W.end ? DBG_END : DBG_ERA[W.era];
     // progression first — so every building of the era is unlocked
     G.era = W.era;
-    Object.assign(DBG_STYLE, W.end ? { gap: 1, jitter: 0 } : [{ gap: 2, jitter: 5 }, { gap: 2, jitter: 3 }, { gap: 1, jitter: 1.5 }, { gap: 1, jitter: 0.5 }, { gap: 1, jitter: 0 }][W.era]);
+    Object.assign(DBG_STYLE, W.end ? { gap: 1, jitter: 0 } : [{ gap: 2, jitter: 5 }, { gap: 2, jitter: 3 }, { gap: 1, jitter: 1.5 }, { gap: 1, jitter: 0.5 }, { gap: 1, jitter: 0 }, { gap: 1, jitter: 0 }][W.era]);
     G.t = last.day * DAY + 7 / 24 * DAY; G.morning = mornIdx(); G.lastSeason = seasonIdx();
     Object.keys(NEIGH).forEach((k, i) => { G.nb[k] = HEART_XP[last.hearts[i]] || 0; });
     for (const k of last.tech || []) G.tech[k] = true;
@@ -352,6 +372,7 @@ function dbgMakeWorld(key) {
     G.coins = 1e12; for (const k in ITEMS) G.stock[k] = 5000;
     const plans = DBG_ERA.slice(0, W.era + 1).map(e => e.plan); if (W.end) plans.push(DBG_END.plan); if (W.end === 3) plans.push(DBG_MEGA.plan);
     plans.forEach((plan, i) => {
+      if (i === ERA_MESTO) dbgStreets('road', 2);
       dbgGrow((i === plans.length - 1 ? last : DBG_ERA[i] || last).land);
       for (const [type, n, o] of plan) for (let j = 0; j < (n || 1); j++) { const b = o && o.sp ? dbgSpecial(type, o) : dbgBuild(type, o); if (b) DBG_BORN.set(b.id, i); }
     });
@@ -359,6 +380,7 @@ function dbgMakeWorld(key) {
     const upg = W.end === 3 ? 0.8 : W.end ? 0.5 : W.era >= 2 ? 0.2 : 0;
     for (const b of BLIST) if (canUpgradeType(b.type) && !(last.houseLvl && b.type === 'domek') && Math.random() < upg) b.lvl = W.end && Math.random() < 0.5 ? 3 : 2;
     dbgStreets(W.era >= 1 ? 'road' : 'path', last.asf || 0);
+    if (W.era >= ERA_MESTO) { dbgStops(last.stops || (W.end === 3 ? 40 : 20)); dbgLights(last.lights || 6); }
     dbgDecor(last.lamps, 3);
     dbgTrees(last.trees);
     // cats

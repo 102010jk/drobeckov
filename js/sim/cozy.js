@@ -38,7 +38,7 @@ STEP_HOOKS.push(dt => {
 MORNING_HOOKS.push(() => {
   if (G.cats.length < 4 || freeBeds() <= 0) return;
   for (const h of BLIST) {
-    if (h.type !== 'domek' || !h.built) continue;
+    if (!B[h.type].beds || !h.built) continue;
     const pair = G.cats.filter(c => c.home === h.id && !(c.kitten > G.t));
     if (pair.length < 2 || pair.some(c => c.mood < 72)) continue;
     if (Math.random() > 0.12 + (h.pillows ? 0.06 : 0)) continue;

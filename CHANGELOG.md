@@ -2,6 +2,15 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.8.0 „Velkoměsto“ — 2026-09-25
+- **Asfaltová silnice** (Stavět → Cesty, od éry Průmysl): obrubníky, přerušovaná čára uprostřed, přechody u křižovatek, v zimě zasněžená. Kočky po ní běhají 2,5× rychleji.
+- **Auta**: po silnicích jezdí osobní auta, taxíky, dodávky a autobusy (s kočičím řidičem). Jezdí vpravo, drží odstup, na křižovatkách zatáčejí, na konci silnice se otočí a v noci svítí. Vlastní pixelové sprity ve složce `assets/auta/`.
+- **Městský dům** (Domov, od éry Průmysl): třípatrový dům pro 4 kočky ve 4 barvách fasády. Stavěj je těsně vedle sebe a vznikne souvislá ulice.
+- **Letiště** (éra Věda a vesmír, výzkum Vzducholodě): obří stavba 10×6 s terminálem, věží, hangárem a dráhou. Letadla přistávají a startují, každé ráno přivezou turisty, kteří v osadě utratí mince. Kvůli velikosti si na něj většinou musíš koupit další pozemky.
+- Domov pro kočky teď zajišťuje každá stavba s pelíšky (nejen kočičí domek) — i koťata.
+- **Testovací světy**: vesnice na začátku jsou rozvolněnější a nepravidelné, od Průmyslu vede středem hlavní asfaltová třída, Endgame a Super-endgame jsou skutečná města — asfaltové ulice s auty, bloky městských domů a letiště.
+- Debug: tlačítka **+ Auta** a **Přílet turistů**. Příručka má novou stránku **Město**.
+
 ## 3.7.0 „Obrázky“ — 2026-09-25
 - Budovy můžou mít **vlastní obrázky** (PNG ve složce `assets/budovy/`). Když obrázek existuje, hra ho použije, jinak budovu nakreslí kódem jako dřív. Podle potřeby zvlášť pro sezóny (`.zima`), noc s rozsvícenými okny (`.noc`) a barevné varianty (`.v1`–`.v3`).
 - **Nový kočičí domek**: taškovou střechu s kočičíma ušima a kulatým vikýřem, okenice, truhlík s kytkami podle sezóny, dýně na podzim, sníh a rampouchy v zimě, kamenná podezdívka a stín na zemi. Ve 4 barvách.

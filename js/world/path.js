@@ -7,7 +7,7 @@ function walkable(x, y) {
   const t = tile(x, y);
   return t.gr !== 'water' && t.gr !== 'deep' && !t.tree && !t.b && !t.poi;
 }
-function walkCost(t) { return t.gr === 'road' ? 0.7 : t.gr === 'path' || t.gr === 'bridge' ? 1 : 2; }
+function walkCost(t) { return t.gr === 'road' || t.gr === 'asfalt' ? 0.7 : t.gr === 'path' || t.gr === 'bridge' ? 1 : 2; }
 /* scratch buffers sized to the owned bounding box (+margin) */
 let PFW = 0, PFH = 0, PFX = 0, PFY = 0, PFG = null, PFC = null, PFK = null;
 function pfEnsure() {

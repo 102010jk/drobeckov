@@ -14,7 +14,7 @@ function doorPos(type, x, y) {
   if (d.water) {
     for (const [a, c] of [[0, 1], [-1, 0], [1, 0], [0, -1]]) {
       const tx = x + a, ty = y + c, t = tile(tx, ty);
-      if (owned(tx, ty) && LAND.includes(t.gr) || (owned(tx, ty) && (t.gr === 'path' || t.gr === 'road' || t.gr === 'bridge'))) if (!t.b && !t.poi) return [tx, ty];
+      if (owned(tx, ty) && LAND.includes(t.gr) || (owned(tx, ty) && (t.gr === 'path' || t.gr === 'road' || t.gr === 'asfalt' || t.gr === 'bridge'))) if (!t.b && !t.poi) return [tx, ty];
     }
     return null;
   }
@@ -62,7 +62,7 @@ const lockText = lk => lk ? `${NEIGH[lk[0]].n} ♥${lk[1]}` : '';
 const clearable = t => !t.b || (G.bld[t.b] && B[G.bld[t.b].type].weak);
 function terrOK(d, t) {
   if (d.ground === 'bridge' || d.water) return t.gr === 'water';
-  if (d.ground) return t.gr === 'grass' || t.gr === 'sand' || t.gr === 'rock' || (d.ground === 'road' && t.gr === 'path');
+  if (d.ground) return t.gr === 'grass' || t.gr === 'sand' || t.gr === 'rock' || (d.ground === 'road' && t.gr === 'path') || (d.ground === 'asfalt' && (t.gr === 'path' || t.gr === 'road'));
   const allowed = d.terr || LAND;
   return allowed.includes(t.gr);
 }
@@ -84,7 +84,8 @@ function canPlace(type, x, y) {
     if (!clearable(t)) return { ok: false, why: 'Obsazeno' };
     if (d.ground === 'path' && t.gr === 'path') return { ok: false, why: '' };
     if (d.ground === 'road' && t.gr === 'road') return { ok: false, why: '' };
-    if (!terrOK(d, t)) return { ok: false, why: d.water || d.ground === 'bridge' ? 'Patří na mělkou vodu u břehu' : d.terr ? 'Tady se to stavět nedá (' + (d.terrTxt || 'špatný terén') + ')' : t.gr === 'path' || t.gr === 'road' ? 'Na cestě se nestaví' : 'Na vodu ne' };
+    if (d.ground === 'asfalt' && t.gr === 'asfalt') return { ok: false, why: '' };
+    if (!terrOK(d, t)) return { ok: false, why: d.water || d.ground === 'bridge' ? 'Patří na mělkou vodu u břehu' : d.terr ? 'Tady se to stavět nedá (' + (d.terrTxt || 'špatný terén') + ')' : t.gr === 'path' || t.gr === 'road' || t.gr === 'asfalt' ? 'Na cestě se nestaví' : 'Na vodu ne' };
     if (!d.ground && isDoorTile(tx, ty)) return { ok: false, why: 'Tady jsou něčí dveře' };
   }
   if (d.need && !d.need(x, y)) return { ok: false, why: d.needTxt || 'Nevhodné místo' };
@@ -129,7 +130,7 @@ function demolishAt(x, y) {
     demolish(b); return true;
   }
   if (t.tree) { t.tree = null; markMod(x, y); reachDirty = true; Sound.chop(); return true; }
-  if (t.gr === 'path' || t.gr === 'bridge' || t.gr === 'road') { t.gr = t.gr === 'bridge' ? 'water' : 'grass'; markMod(x, y); reachDirty = true; pathVersion++; return true; }
+  if (t.gr === 'path' || t.gr === 'bridge' || t.gr === 'road' || t.gr === 'asfalt') { t.gr = t.gr === 'bridge' ? 'water' : 'grass'; markMod(x, y); reachDirty = true; pathVersion++; return true; }
   return false;
 }
 function removeBld(b, silent) {
@@ -161,7 +162,7 @@ function onBuildingsChanged() { rebuildLists(); assignHomes(); UI.dirty = true; 
 /* ============ homes ============ */
 const bedsOf = b => (B[b.type].beds || 0) + ((b.lvl || 1) - 1);
 function assignHomes() {
-  const houses = BLIST.filter(b => b.type === 'domek' && b.built);
+  const houses = BLIST.filter(b => B[b.type].beds && b.built);
   const count = {}; for (const c of G.cats) if (c.home) count[c.home] = (count[c.home] || 0) + 1;
   for (const c of G.cats) {
     if (c.home && G.bld[c.home]) continue;
@@ -170,4 +171,4 @@ function assignHomes() {
     if (h) { c.home = h.id; count[h.id] = (count[h.id] || 0) + 1; }
   }
 }
-const freeBeds = () => { let n = 0; for (const b of BLIST) if (b.type === 'domek' && b.built) n += bedsOf(b); return n - G.cats.filter(c => c.home).length; };
+const freeBeds = () => { let n = 0; for (const b of BLIST) if (B[b.type].beds && b.built) n += bedsOf(b); return n - G.cats.filter(c => c.home).length; };

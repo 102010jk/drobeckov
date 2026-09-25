@@ -59,6 +59,7 @@ function buildChunkTerrain(ch, S) {
       if (t.ore === 'hlina' && S !== 3) { R(g, '#a8683c', X + 3 + (h(66) * 6 | 0), Y + 9 + (h(67) * 4 | 0), 5, 2); R(g, '#c48850', X + 4 + (h(66) * 6 | 0), Y + 9 + (h(67) * 4 | 0), 2, 1); }
       if (t.gr === 'path') drawPathTile(g, x, y, X, Y, S);
       else if (t.gr === 'road') drawRoadTile(g, x, y, X, Y, S);
+      else if (t.gr === 'asfalt') drawAsphaltTile(g, x, y, X, Y, S);
     }
   }
   return c;
@@ -81,7 +82,26 @@ function drawWaterTile(g, t, x, y, X, Y, S) {
   else for (let n = 0; n < 3; n++) R(g, frozen ? '#ffffff' : deep ? '#4a96d8' : '#8ac8f4', X + 3 + (h(n) * 9 | 0), Y + 2 + (h(n + 5) * 12 | 0), frozen ? 1 : 3, 1);
   if (frozen && h(20) < 0.5) { const cx = X + 4 + (h(21) * 6 | 0), cy = Y + 4 + (h(22) * 6 | 0); R(g, '#a8cfee', cx, cy, 4, 1); R(g, '#a8cfee', cx + 3, cy + 1, 1, 3); }
 }
-const pathLike = (x, y) => { const g = tile(x, y).gr; return g === 'path' || g === 'bridge' || g === 'road'; };
+const pathLike = (x, y) => { const g = tile(x, y).gr; return g === 'path' || g === 'bridge' || g === 'road' || g === 'asfalt'; };
+const asphaltAt = (x, y) => tile(x, y).gr === 'asfalt';
+/* asphalt road: kerbs where it ends, a dashed centre line along straight stretches, zebra crossings next to junctions */
+function drawAsphaltTile(g, x, y, X, Y, S) {
+  const L = asphaltAt(x - 1, y), Rr = asphaltAt(x + 1, y), U = asphaltAt(x, y - 1), D = asphaltAt(x, y + 1), snow = S === 3;
+  R(g, '#4a4658', X, Y, TS, TS);
+  for (let n = 0; n < 6; n++) R(g, hashi(x * 3 + n, y, 21) < 0.5 ? '#56526a' : '#403c4c', X + (hashi(x, y * 3 + n, 22) * 15 | 0), Y + (hashi(x + n, y, 23) * 15 | 0), 1, 1);
+  const kerb = snow ? '#e4ebf6' : '#b8bcc8', kd = snow ? '#c4d0e6' : '#8a8ea0';
+  if (!U) { R(g, kerb, X, Y, TS, 2); R(g, kd, X, Y + 2, TS, 1); }
+  if (!D) { R(g, kd, X, Y + 13, TS, 1); R(g, kerb, X, Y + 14, TS, 2); }
+  if (!L) { R(g, kerb, X, Y, 2, TS); R(g, kd, X + 2, Y, 1, TS); }
+  if (!Rr) { R(g, kd, X + 13, Y, 1, TS); R(g, kerb, X + 14, Y, 2, TS); }
+  const line = snow ? '#dbe6f8' : '#f6e3a0', horiz = (L || Rr) && !U && !D, vert = (U || D) && !L && !Rr;
+  if (horiz && (x & 1)) R(g, line, X + 4, Y + 7, 8, 2);
+  if (vert && (y & 1)) R(g, line, X + 7, Y + 4, 2, 8);
+  const junction = (a, b) => [[a - 1, b], [a + 1, b], [a, b - 1], [a, b + 1]].filter(([p, q]) => asphaltAt(p, q)).length >= 3;
+  if (horiz && (junction(x - 1, y) || junction(x + 1, y))) for (let i = 0; i < 4; i++) R(g, snow ? '#ffffff' : '#e8e8f0', X + 3 + i * 3, Y + 3, 2, 10);
+  if (vert && (junction(x, y - 1) || junction(x, y + 1))) for (let i = 0; i < 4; i++) R(g, snow ? '#ffffff' : '#e8e8f0', X + 3, Y + 3 + i * 3, 10, 2);
+  if (snow) for (let n = 0; n < 3; n++) R(g, '#ffffff', X + (hashi(x, y + n, 24) * 13 | 0), Y + (hashi(x + n, y, 25) * 14 | 0), 2, 1);
+}
 function drawPathTile(g, x, y, X, Y, S) {
   const col = S === 3 ? '#eef2f8' : '#d8b078', edge = S === 3 ? '#c4ccdc' : '#b08850', peb = S === 3 ? '#ffffff' : '#ecd0a0';
   const L = pathLike(x - 1, y), Rr = pathLike(x + 1, y), U = pathLike(x, y - 1), D = pathLike(x, y + 1);

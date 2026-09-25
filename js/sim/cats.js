@@ -217,7 +217,7 @@ function moveCat(c, dt) {
   else if (c.dest) { tx = c.dest[0]; ty = c.dest[1]; }
   else return true;
   const t = tile(Math.floor(c.x / TS), Math.floor(c.y / TS));
-  const ground = t.gr === 'road' ? 2.5 : t.gr === 'path' || t.gr === 'bridge' ? 1.9 : 1;
+  const ground = t.gr === 'road' || t.gr === 'asfalt' ? 2.5 : t.gr === 'path' || t.gr === 'bridge' ? 1.9 : 1;
   const sp = 28 * (c.trait === 'rychla' ? 1.3 : 1) * ground * (c.energy < 10 ? 0.8 : 1);
   const dx = tx - c.x, dy = ty - c.y, dd = Math.hypot(dx, dy), step = sp * dt;
   if (dd <= step) { c.x = tx; c.y = ty; if (c.path.length) c.path.shift(); else c.dest = null; }

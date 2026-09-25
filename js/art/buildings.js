@@ -299,11 +299,11 @@ const ANIM = {
   }
 };
 /* building sprite variant key: everything the static drawing depends on */
-const LIT = { domek: 1, pekarna: 1, zavarovna: 1, kuchynka: 1, cukrarna: 1, lucerna: 1 };
+const LIT = { mestsky_dum: 1, domek: 1, pekarna: 1, zavarovna: 1, kuchynka: 1, cukrarna: 1, lucerna: 1 };
 function bVariant(b) {
   switch (b.type) {
     case 'pole': case 'sklenik': return (b.crop || 'p') + (b.st || 0) + (b.st === 1 ? (b.g < 0.35 ? 'a' : b.g < 0.7 ? 'b' : 'c') : '');
-    case 'domek': case 'kvetiny': return (b.id || 0) % 4;
+    case 'domek': case 'kvetiny': case 'mestsky_dum': return (b.id || 0) % 4;
     case 'drevorubec': return Math.min(6, (b.out && b.out.drevo) || 0);
     case 'jablon': return (b.mature ? 'm' : Math.floor(Math.min(0.9, 0.3 + (b.age || 0) / (1.5 * DAY)) * 5)) + '' + ((b.out && b.out.jablka) || 0);
     case 'nastenka': return b.papers || 0;

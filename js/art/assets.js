@@ -23,6 +23,14 @@ function assetImg(type, S, lit, v) {
   }
   return best ? best.img : null;
 }
+/* other pictures (cars, the plane…): assets/<name>.png when listed in the manifest */
+ASSETS.spr = {};
+function spriteAsset(name) {
+  const L = ASSETS.list && ASSETS.list._sprites; if (!L || SET.noAssets) return null;
+  let e = ASSETS.spr[name];
+  if (!e) { if (!L.includes(name)) return null; e = ASSETS.spr[name] = { img: null }; const im = new Image(); im.onload = () => { e.img = im; }; im.src = 'assets/' + name + '.png'; }
+  return e.img;
+}
 const assetFor = (b, S, night) => assetImg(b.type, S, LIT[b.type] && night ? 1 : 0, String(bVariant(b)));
 const _bSpriteA = bSprite;
 bSprite = function (b, S, night) { return assetFor(b, S, night) || _bSpriteA(b, S, night); };

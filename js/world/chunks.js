@@ -1,7 +1,7 @@
 'use strict';
 /* ============ infinite chunked world ============
    Tiles are generated lazily from the world seed; only player changes are saved (G.mods). */
-const GR = ['grass', 'water', 'path', 'bridge', 'deep', 'sand', 'rock', 'road'];
+const GR = ['grass', 'water', 'path', 'bridge', 'deep', 'sand', 'rock', 'road', 'asfalt'];
 const TREE_K = ['round', 'pine', 'birch'];
 let CHUNKS = new Map(), lastCK = -1, lastCh = null, GEN = null;
 const BIDX = new Map();              // chunk key -> Set of building ids overlapping it

@@ -1,6 +1,6 @@
 'use strict';
 /* ============ input ============ */
-const DRAG_TOOLS = ['cesta', 'dlazba', 'plot', 'kvetiny', 'stromek', 'zbourat', 'lavka', 'zasyp', 'jezirko'];
+const DRAG_TOOLS = ['cesta', 'dlazba', 'plot', 'kvetiny', 'stromek', 'zbourat', 'lavka', 'zasyp', 'jezirko', 'silnice'];
 let ptr = null;            // active pointer gesture
 const KEYS = {};
 function tryPlace(hx, hy, fromDrag) {

@@ -34,6 +34,7 @@ function bIcon(type) {
   if (d.tool) { const s = SPR.hammer; return (BICON[type] = { url: iconURL('hammer'), w: s.w * 3, h: s.h * 3 }); }
   const w = (d.w || 1) * TS + 16, h = (d.h || 1) * TS + 20, [c, g] = mk(w, h), X = 8, Y = 18;
   if (d.ground === 'path') { shape(g, [[X + 1, Y + 1, 14, 14, '#d8b078']], '#b08850'); R(g, '#ecd0a0', X + 4, Y + 5, 1, 1); }
+  else if (d.ground === 'asfalt') { shape(g, [[X + 1, Y + 1, 14, 14, '#4a4658']]); R(g, '#f6e3a0', X + 4, Y + 7, 8, 2); }
   else if (d.ground === 'road') { shape(g, [[X + 1, Y + 1, 14, 14, '#b8b0a4']], '#6c6862'); for (let i = 0; i < 4; i++) R(g, '#8a847a', X + 1, Y + 4 + i * 3, 14, 1); }
   else if (d.ground === 'bridge') { R(g, '#5aa8e6', X - 2, Y, 20, 16); drawBridge(g, X, Y, 1); }
   else if (d.tree) drawTree(g, X + 8, Y + 15, { g: 1, v: 0.4 }, 1, 0);
@@ -63,7 +64,7 @@ function paneBuild() {
   h += '</div>';
   const sel = UI.tool && B[UI.tool];
   if (sel) {
-    const drag = ['cesta', 'dlazba', 'plot', 'kvetiny', 'stromek', 'zbourat', 'lavka', 'zasyp', 'jezirko'].includes(UI.tool);
+    const drag = ['cesta', 'dlazba', 'plot', 'kvetiny', 'stromek', 'zbourat', 'lavka', 'zasyp', 'jezirko', 'silnice'].includes(UI.tool);
     const rec = sel.recipes ? '<div class="reclist">' + sel.recipes.map(r => `<span class="rec ${recipeUnlocked(r) ? '' : 'locked'}">${recipeHTML(r)}</span>`).join('') + '</div>' : '';
     h += `<div class="hint"><b>${sel.n}</b> — ${sel.desc}${sel.workers ? ` Pracovníci: ${sel.workers}.` : ''}${sel.noise ? ` Ruch v okruhu ${sel.noise}.` : ''}${rec}<small>Klik = postavit${drag ? ' · můžeš táhnout' : ''} · pravé tlačítko nebo Esc = zrušit</small></div>`;
   } else h += `<div class="hint">Vyber stavbu a klikni do údolí. Stromy a záhony pod stavbou samy zmizí. Dřevo a materiál donesou kočky ze skladu.</div>`;

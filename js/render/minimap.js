@@ -9,6 +9,7 @@ function mmColor(t) {
   if (t.gr === 'water') return '#5aa8e6';
   if (t.gr === 'bridge' || t.gr === 'path') return '#d8b078';
   if (t.gr === 'road') return '#9a948a';
+  if (t.gr === 'asfalt') return '#4a4658';
   if (t.gr === 'sand') return '#ecd9a4';
   if (t.gr === 'rock') return t.ore && ORE_COL[t.ore] ? ORE_COL[t.ore][0] : t.bio === 'mountain' ? '#8a8580' : '#a39d90';
   if (t.tree) return '#2f6a3a';

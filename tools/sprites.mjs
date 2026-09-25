@@ -134,6 +134,9 @@ export function manifest() {
     for (const p of parts) { const s = SEASONS.indexOf(p); if (s > 0) e.s = s; else if (p === 'noc') e.n = 1; else if (p[0] === 'v') e.v = p.slice(1); }
     (m[type] = m[type] || []).push(e);
   }
+  const spr = [];
+  for (const d of readdirSync(join(ROOT, 'assets'), { withFileTypes: true })) if (d.isDirectory() && d.name !== 'budovy') for (const f of readdirSync(join(ROOT, 'assets', d.name)).sort()) if (f.endsWith('.png')) spr.push(d.name + '/' + f.slice(0, -4));
+  if (spr.length) m._sprites = spr;
   writeFileSync(join(ROOT, 'assets', 'manifest.json'), JSON.stringify(m, null, 0).replace(/\],"/g, '],\n"') + '\n');
   console.log(`manifest: ${Object.keys(m).length} staveb, ${Object.values(m).flat().length} obrázků`);
 }

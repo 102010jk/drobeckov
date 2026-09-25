@@ -124,7 +124,7 @@ function render(dt) {
     switch (e[1]) {
       case 0: { const b = e[2], d = B[b.type]; if (b.built && !d.nodoor && b.w > 1) { g.fillStyle = 'rgba(43,27,43,0.16)'; g.fillRect(b.x * TS + 3, (b.y + b.h) * TS - 1, b.w * TS - 5, 2); }
         if (b.built) drawBld(g, b, t, S, night); else drawSite(g, b, t, S, night);
-        if (b.type === 'domek' && G.cats.some(c => c.inside && c.home === b.id)) LATE.push(['z', b.x * TS + 24, b.y * TS + 12 - Math.round((t * 3) % 4), (t % 2) < 1 ? 'z' : 'Z']);
+        if (B[b.type].beds && G.cats.some(c => c.inside && c.home === b.id)) LATE.push(['z', b.x * TS + 24, b.y * TS + 12 - Math.round((t * 3) % 4), (t % 2) < 1 ? 'z' : 'Z']);
         break; }
       case 1: { const tr = tile(e[2], e[3]).tree; if (tr) g.drawImage(treeSprite(tr, S), e[2] * TS - 2, e[3] * TS - 10); break; }
       case 2: drawCatSprite(g, e[2], t); break;
@@ -196,6 +196,7 @@ function drawOverlay(g, t, S) {
   const X = ax * TS, Y = ay * TS;
   if (d.ground === 'path') R(g, '#d8b078', X + 2, Y + 2, 12, 12);
   else if (d.ground === 'road') R(g, '#b8b0a4', X + 1, Y + 1, 14, 14);
+  else if (d.ground === 'asfalt') R(g, '#4a4658', X + 1, Y + 1, 14, 14);
   else if (d.ground === 'bridge') drawBridge(g, X, Y, S);
   else if (d.tree) drawTree(g, X + 8, Y + 15, { g: 0.5, v: 0.4 }, S, t);
   else drawBuildingFull(g, { type: UI.tool, id: 0, w, h: hh, st: 2, crop: 'psenice', g: 1, inp: {}, out: {}, workers: [], mature: true }, X, Y, t, S, false);

@@ -2,6 +2,20 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.1.0 „Dopisy od sousedů“ — 2026-09-25
+### Dopisy
+- Sousedé ti posílají **dopisy s prosbami** (záložka Zakázky). Každý má svůj malý **příběh o 3–4 dopisech** — Babička Ježková chystá perník pro vnoučata, Sova píše knihu o hvězdách, Medvěd se chystá k zimnímu spánku…
+- Za dopisy dostaneš mince, hvězdičky, srdíčka u souseda a **5 jedinečných ozdob**, které se jinde nedají získat: **Sovina knihovna**, **Bylinková zahrádka**, **Rybníček s lodičkami**, **Medvědí včelí úl** a **Babiččina houpací lavice**.
+
+### Kočky
+- Každá kočka má **oblíbené jídlo** (po jeho snědení má radost) a **oblíbenou ozdobu** — když ji má blízko domku, je spokojenější. Najdeš to v detailu kočky.
+
+### Atmosféra
+- **Světlušky** za letních nocí (vypnou se v úsporném režimu).
+
+### Úspěchy
+- Pilný pisálek, Dárky od sousedů.
+
 ## 3.0.0 „Výpravy za obzor“ — 2026-09-25
 ### Výpravy
 - Nová stavba **Cestovatelský stan** (Domov, od éry Řemesla a obchod). Vysílej kočky na **výpravy za obzor**:

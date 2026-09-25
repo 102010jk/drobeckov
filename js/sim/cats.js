@@ -122,6 +122,7 @@ function arrive(c) {
         c.food = Math.min(100, c.food + ITEMS[k.item].food);
         if (k.raw) { c.mood = Math.max(0, c.mood - 2); if (!G.flags.rawTip) { G.flags.rawTip = true; banner('Kočky jedí syrovou úrodu', 'Nemají chleba ani ryby. Přiřaď kočku do pekárny, aby měly pořádné jídlo.'); } }
         if (!k.raw) c.mood = Math.min(100, c.mood + (c.trait === 'mlsoun' && k.item === 'susenky' ? 12 : 3));
+        if (c.fav && c.fav.food === k.item) c.mood = Math.min(100, c.mood + 6);
         emote(c, c.trait === 'mlsoun' && k.item === 'susenky' ? 'star' : 'heart', 1.4);
       }
       k.stage = 'done'; k.t = 1.2; c.anim = 'sit'; return;

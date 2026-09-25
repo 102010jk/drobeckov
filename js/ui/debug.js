@@ -456,6 +456,7 @@ const DBG_ACTS = {
   reveal: () => { G.flags.satelit = !G.flags.satelit; minimapDirty = true; toast(G.flags.satelit ? 'Mapa odkrytá.' : 'Mraky jsou zpátky.'); },
   land: () => { G.freeParcels = (G.freeParcels || 0) + 5; toast('+5 pozemků zdarma'); },
   bench: () => { DBG.bench = DK.bench(); },
+  art: () => { SET.noAssets = !SET.noAssets; saveSettings(); for (const k in BICON) delete BICON[k]; toast(SET.noAssets ? 'Budovy se kreslí jen kódem.' : 'Budovy z obrázků (assets/budovy).'); },
   off: () => { SET.debug = false; saveSettings(); dbgTabBtn(); UI.tab = 'build'; }
 };
 const DBG = { bench: null };
@@ -473,7 +474,7 @@ EXTRA_TABS.debug = () => {
   h += `<h4>Čas</h4><div class="row">${btn('hour', '+1 hodina')}${btn('morning', 'Do rána')}${btn('day', '+1 den')}${btn('season', 'Další sezóna')}${btn('speed', '8×', 8)}${btn('speed', '16×', 16)}</div>`;
   h += `<h4>Počasí</h4><div class="row">${btn('wx', 'Jasno', 'clear')}${btn('wx', 'Déšť', 'rain')}${btn('wx', 'Sníh', 'snow')}${btn('wx', 'Bouřka', 'storm')}${btn('wx', 'Duha', 'rainbow')}</div>`;
   h += `<h4>Události</h4><div class="row">${btn('order', 'Zakázka')}${btn('fest', 'Splnit slavnost')}${btn('caravan', 'Karavana')}${btn('meteor', 'Padající hvězdy')}${btn('eggs', 'Vajíčka')}${btn('ghosts', 'Strašidýlka')}${btn('xmas', 'Vánoce')}</div>`;
-  h += `<h4>Svět</h4><div class="row">${btn('reveal', G.flags.satelit ? 'Zakrýt mapu' : 'Odkrýt mapu')}${btn('bench', 'Změřit výkon')}</div>`;
+  h += `<h4>Svět</h4><div class="row">${btn('reveal', G.flags.satelit ? 'Zakrýt mapu' : 'Odkrýt mapu')}${btn('bench', 'Změřit výkon')}${btn('art', SET.noAssets ? 'Grafika: jen kód' : 'Grafika: obrázky')}</div>`;
   const bn = DBG.bench;
   h += `<div class="kv"><span>Semínko</span><b>${G.seed}</b></div><div class="kv"><span>Éra</span><b>${eraOf() + 1}/${ERAS.length} ${ERAS[eraOf()].n}</b></div>`;
   h += `<div class="kv"><span>Svět</span><small>${BLIST.length} staveb · ${G.cats.length} koček · ${G.owned.length} pozemků · ${CHUNKS.size} chunků · den ${dayIdx() + 1}</small></div>`;

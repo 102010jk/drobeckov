@@ -2,6 +2,13 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.7.0 „Obrázky“ — 2026-09-25
+- Budovy můžou mít **vlastní obrázky** (PNG ve složce `assets/budovy/`). Když obrázek existuje, hra ho použije, jinak budovu nakreslí kódem jako dřív. Podle potřeby zvlášť pro sezóny (`.zima`), noc s rozsvícenými okny (`.noc`) a barevné varianty (`.v1`–`.v3`).
+- **Nový kočičí domek**: taškovou střechu s kočičíma ušima a kulatým vikýřem, okenice, truhlík s kytkami podle sezóny, dýně na podzim, sníh a rampouchy v zimě, kamenná podezdívka a stín na zemi. Ve 4 barvách.
+- **Nová pekárna**: hrázděné zdi, pruhovaná markýza nad výlohou s pečivem, cedule s preclíkem, košík s chlebem.
+- Nástroj `tools/sprites.mjs`: převod budov z kódu do PNG, z PNG do textové mřížky a zpátky, zvětšené náhledy.
+- Debug → Svět: přepínač **Grafika: obrázky / jen kód** pro porovnání.
+
 ## 3.6.0 „Ladicí dílna“ — 2026-09-25
 ### Debug menu
 - Zapneš ho klávesou **F9** nebo klávesou **vlevo od 1** (na české klávesnici „;“), případně v **Menu → Nastavení → Debug menu**. Objeví se nová záložka **Debug**.

@@ -28,11 +28,20 @@ function showMenu(view) {
       <label class="chk"><input type="checkbox" id="sLow" ${SET.lowfx ? 'checked' : ''}> Úsporné efekty <small>(méně částic — pro slabší počítače)</small></label>
       <label class="chk"><input type="checkbox" id="sFps" ${SET.fps30 ? 'checked' : ''}> Omezit na 30 snímků/s <small>(šetří baterku a slabé počítače)</small></label>
       <div class="row"><button class="btn chamfer" data-m="back">Hotovo</button></div></div>`;
+  } else if (view === 'debug') {
+    h += `<h4>Rychlý start (Debug)</h4><div class="slots">
+      <div class="slot"><div class="st"><b>Start (Éra 0)</b><small>Klasický začátek s trochou mincí navíc.</small></div><div class="sb"><button class="link" data-m="debug:0">Spustit</button></div></div>
+      <div class="slot"><div class="st"><b>Éra 1: Řemesla a obchod</b><small>Základní suroviny, farma, startovní mince.</small></div><div class="sb"><button class="link" data-m="debug:1">Spustit</button></div></div>
+      <div class="slot"><div class="st"><b>Éra 2: Hornictví a přístav</b><small>Odemčené rudy, cihly, více mincí.</small></div><div class="sb"><button class="link" data-m="debug:2">Spustit</button></div></div>
+      <div class="slot"><div class="st"><b>Éra 3: Průmysl</b><small>Odemčené továrny, pásy, železo.</small></div><div class="sb"><button class="link" data-m="debug:3">Spustit</button></div></div>
+      <div class="slot"><div class="st"><b>Éra 4: Věda a vesmír</b><small>Odemčená elektřina a všechny výzkumy kromě vesmíru.</small></div><div class="sb"><button class="link" data-m="debug:4">Spustit</button></div></div>
+      <div class="slot"><div class="st"><b>Endgame (Vše odemčeno)</b><small>Neomezené suroviny, peníze a vše dostupné.</small></div><div class="sb"><button class="link" data-m="debug:5">Spustit</button></div></div>
+      </div><div class="row"><button class="btn alt chamfer" data-m="back">Zpět</button></div>`;
   } else {
     h += '<div class="row">';
     if (started) h += `<button class="btn chamfer" data-m="resume">Pokračovat</button><button class="btn alt chamfer" data-m="save">Uložit</button><button class="btn alt chamfer" data-m="saveas">Uložit jako novou</button>`;
     else if (idx.last && idx.slots.some(s => s.id === idx.last)) h += `<button class="btn big chamfer" data-m="load:${idx.last}">Pokračovat</button>`;
-    h += `<button class="btn ${started || idx.slots.length ? 'alt' : 'big'} chamfer" data-m="new">Nová hra</button></div>`;
+    h += `<button class="btn ${started || idx.slots.length ? 'alt' : 'big'} chamfer" data-m="new">Nová hra</button><button class="btn alt chamfer" data-m="debug">Debug Menu</button></div>`;
     if (idx.slots.length) {
       h += '<h4>Uložené hry</h4><div class="slots">';
       for (const s of idx.slots) {
@@ -71,6 +80,7 @@ function menuAction(m) {
   Sound.click();
   if (m === 'resume') return startPlaying();
   if (m === 'new') return showMenu('new');
+  if (m === 'debug') return showMenu('debug');
   if (m === 'back') return showMenu();
   if (m === 'import') return showMenu('import');
   if (m === 'settings') return showMenu('settings');
@@ -87,4 +97,50 @@ function menuAction(m) {
   if (m.startsWith('load:')) { if (started) saveGame(); if (loadSlot(m.slice(5))) startPlaying(); return; }
   if (m.startsWith('export:')) return showMenu(m);
   if (m.startsWith('del:')) { const id = m.slice(4); if (menuConfirm !== id) { menuConfirm = id; setTimeout(() => { menuConfirm = ''; }, 3000); return showMenu(); } menuConfirm = ''; deleteSlot(id); return showMenu(); }
+  if (m.startsWith('debug:')) {
+    const era = parseInt(m.slice(6), 10);
+    debugStart(era);
+    return;
+  }
+}
+
+function debugStart(era) {
+  newGame({ name: 'Debug ' + era });
+  G.era = Math.min(era, ERAS.length - 1);
+  G.coins += era * 5000 + 1000;
+
+  // give some generic resources
+  G.stock.drevo = 100 * (era + 1);
+  G.stock.kamen = 50 * (era + 1);
+  G.stock.chleb = 20 * (era + 1);
+
+  if (era >= 1) {
+    G.stock.cihly = 20;
+    G.stock.prkna = 20;
+  }
+  if (era >= 2) {
+    G.stock.zelezo = 20;
+    G.stock.uhli = 20;
+    G.stock.ocel = 10;
+  }
+  if (era >= 3) {
+    for (const t in TECH) if (TECH[t].era <= 3) G.tech[t] = true;
+    G.stock.plech = 20;
+    G.stock.soucastek = 20;
+  }
+  if (era >= 4) {
+    for (const t in TECH) G.tech[t] = true;
+  }
+  if (era >= 5) {
+    // Endgame state
+    G.era = ERAS.length - 1;
+    for (const t in B) if (B[t].bp) G.flags['bp_' + B[t].bp] = true;
+    for (const k in NEIGH) G.nb[k] = Math.max(G.nb[k] || 0, HEART_XP[10] || 999);
+    for (const c in CROPS) if (CROPS[c].seed) G.flags['seed_' + c] = true;
+    G.coins += 100000;
+  }
+
+  if (G.tut) G.tut.skip = true;
+  saveGame(true);
+  startPlaying();
 }

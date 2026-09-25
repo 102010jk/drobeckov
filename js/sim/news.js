@@ -12,13 +12,33 @@ const JOKES = [
   'Proč kočka nechodí do školy? Protože už umí všechno — hlavně spát.',
   'Poradna: Moje kočka mě ignoruje. Odpověď: To je v pořádku, to je láska.'
 ];
+const TIPS = [
+  'Klávesa Q vezme typ stavby pod myší — rychlé stavění stejných budov.',
+  'Ctrl+Z vrátí poslední stavbu i s mincemi (do 30 sekund).',
+  'Závodní dráha (Ozdoby) pořádá jednou denně kočičí závod — vsaď si!',
+  'U Rybářského mola můžeš chytat ryby sám. Občas zabere i zlatá rybka.',
+  'Kočičí salon umí přebarvit srst — i na růžovou nebo půlnoční.',
+  'Cestovatelský stan posílá kočky na výpravy za semínky nových plodin.',
+  'Sousedé posílají dopisy — za některé dostaneš jedinečnou ozdobu.',
+  'V Herně si zahraješ pexeso. Do 14 tahů je hvězdička!',
+  'Ohňostroj v záložce Kočky potěší všechny kočky. Jen za tmy!',
+  'Hvězdičky utratíš za vzácné kloboučky a plány ozdob (Osada → Kloboučky).',
+  'Budovy jde vylepšit až na úroveň 3 — rychlejší práce, víc pelíšků, víc místa.',
+  'Každá kočka má oblíbenou ozdobu. Postav ji blízko jejího domku!',
+  'Zatoulané koťátko na kraji osady zůstane, když máš volný pelíšek.',
+  'Za letních nocí padají hvězdy — klikni na ně.',
+  'V Nastavení je úsporný režim pro slabší počítače.',
+  'Kód osady pošli kamarádovi — v Menu si může tvou osadu prohlédnout.',
+  'Kočky se samy stěhují blíž k práci. Domky stav blízko dílen.',
+  'Zakázky se můžou doručovat samy — zaškrtni to v Zakázkách.'
+];
 function newsDay() {
   const today = dayIdx(), items = (G.log || []).filter(([d]) => d >= today - 1).map(([, t]) => t).filter((t, i, a) => a.indexOf(t) === i).slice(0, 5);
   const S = seasonIdx(), f = G.forecast || (Math.random() < SEASONS[S].rain ? (S === 3 ? 'snow' : 'rain') : 'clear');
   const wx = f === 'rain' ? 'déšť — pole se zalijí sama' : f === 'snow' ? 'sněžení — kočky zůstanou raději u kamen' : 'jasno — ideální den na práci';
   const best = G.cats.slice().sort((a, b) => b.mood - a.mood)[0];
   const trader = (G.traders || []).find(t => t.kind === 'karavana');
-  return { day: today, no: today + 1, items, wx, best: best ? best.name : '', trader: trader ? trader.name : '', joke: JOKES[today % JOKES.length], coins: Math.floor(G.coins), cats: G.cats.length };
+  return { day: today, no: today + 1, items, wx, best: best ? best.name : '', trader: trader ? trader.name : '', joke: JOKES[today % JOKES.length], tip: TIPS[(today * 7) % TIPS.length], coins: Math.floor(G.coins), cats: G.cats.length };
 }
 MORNING_HOOKS.push(() => { G.news = newsDay(); G.newsRead = false; UI.dirty = true; });
 function newsHTML() {
@@ -28,6 +48,7 @@ function newsHTML() {
     ${n.items.slice(n.items.length ? 1 : 0).map(t => `<p>• ${t}</p>`).join('') || '<p>V osadě se nic zvláštního nestalo. Kočky spokojeně předly.</p>'}
     <div class="ncols"><div><h4>Počasí</h4><p>Dnes: ${n.wx}.</p></div><div><h4>Osada</h4><p>${n.cats} ${n.cats === 1 ? 'kočka' : n.cats < 5 ? 'kočky' : 'koček'}, ${shortNum(n.coins)} mincí v pokladně.${n.best ? ` Nejšťastnější kočkou dne je <b>${n.best}</b>.` : ''}</p></div></div>
     ${n.trader ? `<p><b>Na náměstí je obchodník ${n.trader}!</b></p>` : ''}
+    ${n.tip ? `<h4>Tip dne</h4><p>${n.tip}</p>` : ''}
     <h4>Kočičí vtip</h4><p><i>${n.joke}</i></p></div>`;
 }
 HELP.push({ id: 'noviny', n: 'Noviny', t: '' });

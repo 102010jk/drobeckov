@@ -104,3 +104,21 @@ paneOrders = function () {
   h = h.replace(/(<button class="btn small chamfer[^"]*" data-act="deliver" data-arg="(\d+)">Doručit<\/button>)/g, '$1 <button class="link" data-act="decline" data-arg="$2" title="Odmítnout zakázku">odmítnout</button>');
   return h;
 };
+
+/* ---------- daily return gift (real calendar days, streak up to 7) ---------- */
+function realDay() { const d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
+function dailyGift() {
+  if (!G || G.visiting || G.mode === 'kreativ') return;
+  const today = realDay(); if (G.lastLogin === today) return;
+  const y = new Date(); y.setDate(y.getDate() - 1);
+  const yesterday = y.getFullYear() * 10000 + (y.getMonth() + 1) * 100 + y.getDate();
+  const first = !G.lastLogin;
+  G.loginStreak = G.lastLogin === yesterday ? Math.min(7, (G.loginStreak || 1) + 1) : 1;
+  G.lastLogin = today;
+  if (first) return;   // no gift on the very first day of a new town
+  const s = G.loginStreak, coins = 60 + s * 40 + eraOf() * 40;
+  G.coins += coins; G.stats.earned += coins; if (s >= 3) addStars(s >= 7 ? 2 : 1, 'za návrat');
+  setTimeout(() => banner(`Vítej zpět! ${s}. den v řadě`, `Kočky ti schovaly ${coins} mincí${s >= 3 ? ' a hvězdičku' : ''}. Přijď zase zítra — série roste až do 7 dnů.`), 1500);
+}
+const _startPlayingQ = startPlaying;
+startPlaying = function () { _startPlayingQ(); dailyGift(); };

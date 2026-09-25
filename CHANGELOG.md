@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.5.0 „Vítej zpět“ — 2026-09-25
+- **Dárek za návrat**: když osadu otevřeš nový den (podle skutečného kalendáře), kočky ti schovají mince. Za každý další den v řadě víc (až 7 dní), od 3. dne i hvězdička. Neplatí v kreativním režimu ani na návštěvě.
+- **Tip dne** v novinách: každý den jedna rada, co všechno hra umí (závody, rybaření, salon, výpravy, dopisy, klávesové zkratky…).
+
 ## 4.4.1 — 2026-09-25
 - **Spižírna** pojme 90 věcí (místo 60) — na začátku hry už sklad nepřetéká hned první den.
 - Věta kočky je v detailu pod hlavičkou, ne vmáčknutá vedle jména.

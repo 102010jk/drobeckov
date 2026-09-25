@@ -162,6 +162,9 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 .whatsnew .wn-body h3{margin:.6em 0 .2em;font-size:1.05em}
 .whatsnew .wn-body ul{margin:.2em 0 .4em 1.1em;padding:0}
 .whatsnew .wn-body li{margin:.15em 0}
+#aiBar{position:absolute;right:8px;top:8px;max-width:min(46%,22em);padding:.35em .6em;font-size:.8em;z-index:4;pointer-events:none}
+#aiBar b{color:#ffd23f;display:block}
+#aiBar .old{opacity:.55}
 .upg{display:flex;justify-content:space-between;align-items:center;gap:.5em;flex-wrap:wrap}
 #advice{position:absolute;left:8px;bottom:8px;max-width:min(62%,28em);display:flex;align-items:center;gap:.5em;padding:.35em .5em;font-size:.82em;z-index:3}
 #advice .adv-ic{flex:none;width:1.4em;height:1.4em;display:grid;place-items:center;background:var(--butter,#ffd23f);color:#2b1b2b;font-weight:700;border:2px solid var(--line)}
@@ -365,6 +368,7 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 <script src="js/sim/logic.js"></script>
 <script src="js/ui/insights.js"></script>
 <script src="js/ui/debug.js"></script>
+<script src="js/ai/bridge.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

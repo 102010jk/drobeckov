@@ -2,6 +2,12 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.7.0 „AI hraje“ — 2026-09-25
+- **MCP server** (`mcp/server.mjs`): hru teď může hrát umělá inteligence (Codex / ChatGPT, Antigravity / Gemini, Claude) živě v prohlížeči. Server otevře hru na `http://localhost:5191` a AI přes 27 nástrojů staví, přiřazuje kočky, mění recepty, plní zakázky, kupuje pozemky, zkoumá technologie a nechává plynout čas.
+- Ve hře je vpravo nahoře cedulka **„AI hraje“** s posledními akcemi, takže na obrazovce vidíš, co dělá.
+- Hra na portu 5191 má vlastní uložené hry — tvoje osada z GitHub Pages zůstane netknutá.
+- Skill `mcp/SKILL.md` říká AI, jak hrát a že smí jen na výslovný pokyn. Návod v `mcp/README.md`.
+
 ## 4.6.0 „Co je nového“ — 2026-09-25
 - Po aktualizaci hry se po spuštění ukáže okno **Co je nového** se všemi novinkami od tvé poslední návštěvy (čte se přímo z tohohle changelogu).
 - V hlavním menu je odkaz **Co je nového** — ukáže poslední tři verze přímo ve hře, bez GitHubu.

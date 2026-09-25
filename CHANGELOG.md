@@ -2,6 +2,11 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.2.0 „Sbírka“ — 2026-09-25
+- **Osada → Sbírka**: všech 87 věcí ve hře v jedné mřížce. Objevené (vyrobené, koupené, nalezené) jsou barevné se jménem, neobjevené jen jako tajemné siluety „???“.
+- **Barvy koček**: které z 13 barev srsti už ve tvé osadě žily (i ty ze salonu).
+- Úspěchy „Sběratel“ (polovina sbírky) a „Kompletní sbírka“.
+
 ## 4.1.0 „Zvuky přírody“ — 2026-09-25
 - **Ptáci** zpívají ráno (nejvíc na jaře), za letních a podzimních nocí **cvrčí cvrčci**, v dešti **šumí déšť** (v bouřce víc), v zimě **fouká vítr** a u moře je slyšet **příboj**.
 - Dá se vypnout v Menu → Nastavení → Zvuky přírody. Hlasitost řídí posuvník Zvuky.

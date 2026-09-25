@@ -417,6 +417,15 @@ function dbgFinishWorld(last) {
     if (countB('namesti')) { G.traders = [genTrader('karavana')]; G.caravanT = 2; }
   }
   G.pendingCats = 0; G.freeParcels = 0; G.res = {}; G.weather = 'clear';
+  if (last) {   // a believable past for the charts: the town grew from the starter village to today
+    G.hist = []; const days = dayIdx(), top = Object.entries(last.stats.made || {}).sort((a, b) => b[1] - a[1]).slice(0, 4);
+    for (let d = 0; d < days; d++) {
+      const k = (d + 1) / days, e = Math.pow(k, 1.6), wob = 1 + Math.sin(d * 1.7) * 0.08;
+      G.hist.push({ d, c: Math.max(3, Math.round(3 + (G.cats.length - 3) * e)), m: Math.round(400 + (last.coins - 400) * e * wob), e: Math.round((last.stats.earned || 0) * e), cz: Math.round(coziness() * e), md: Math.round(62 + 18 * k * wob), p: Math.round(40 + 600 * e * wob),
+        pi: Object.fromEntries(top.map(([it, n], i) => [it, Math.round(n / days * 2 * e * wob * (1 - i * 0.15))])), tl: Math.round((G.stats.truckLoads || 0) * e), br: Math.round((G.stats.busRides || 0) * e), er: eraOf() });
+    }
+    G.histPrev = Object.assign({}, G.stats.made);
+  }
   if (typeof ACH !== 'undefined') { G.ach = G.ach || {}; for (const [k, , ok] of ACH) if (ok()) G.ach[k] = G.t; }
   rebuildLists(); assignHomes(); recomputeCozy();
   reachDirty = true; pathVersion++; jobsDirty = true; minimapDirty = true; if (typeof terrainDirty !== 'undefined') terrainDirty = true;

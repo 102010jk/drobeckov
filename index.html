@@ -40,7 +40,8 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 .brand{font-weight:700;font-size:1.5em;line-height:1;color:var(--butter);margin-right:.2em;text-shadow:2px 0 0 var(--line),-2px 0 0 var(--line),0 2px 0 var(--line),0 -2px 0 var(--line),2px 2px 0 var(--line),-2px 2px 0 var(--line),2px -2px 0 var(--line),-2px -2px 0 var(--line),0 4px 0 var(--line)}
 #townName{color:var(--wood-muted);font-size:.9em;margin-right:.3em}
 @media (max-width:1700px){#townName{display:none}}
-@media (max-width:1350px){#hud .brand{display:none}}
+@media (max-width:1600px){#hud .brand{display:none}#hud{gap:.35em .4em;padding-left:1em;padding-right:1em}}
+@media (max-width:1300px){#hud{font-size:.86em}#hud .chip{padding-left:.25em;padding-right:.35em}}
 .chip{display:inline-flex;align-items:center;gap:.35em;background:var(--paper);color:var(--paper-ink);border:3px solid var(--line);padding:.05em .55em .1em .35em;font-weight:700;min-height:2em;box-shadow:inset 0 -.18em 0 rgba(0,0,0,.12);font-variant-numeric:tabular-nums}
 .chip.warn{background:var(--berry);color:#fff}
 #dateChip b{min-width:2.9em}
@@ -197,7 +198,15 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 .form input,.form textarea{font:inherit;border:3px solid var(--line);background:var(--paper);color:var(--paper-ink);padding:.3em .5em;user-select:text;-webkit-user-select:text}
 .form textarea{font-family:ui-monospace,Consolas,monospace;font-size:.75em;word-break:break-all}
 .form input[type=file]{font-size:.8em}
-.dbg .row{justify-content:flex-start;gap:.3em}.dbg .link-row small{margin:0}
+.dbg .row{justify-content:flex-start;gap:.3em}
+#heatBar{position:absolute;left:8px;top:8px;max-width:min(92%,34em);padding:.4em .5em;font-size:.8em;z-index:4}
+#heatBar .hchips{display:flex;flex-wrap:wrap;gap:.25em}#heatBar .chip-btn{font-size:.95em;color:var(--paper-ink)}
+#heatBar .hleg{display:flex;align-items:center;flex-wrap:wrap;gap:.5em;margin-top:.35em;color:var(--wood-ink)}
+#heatBar .hleg small{color:var(--wood-muted)}#heatBar .hleg i,.clegend i{display:inline-block;width:.9em;height:.9em;border:2px solid var(--line);vertical-align:middle;margin-right:.25em}
+#heatBar .ramp{display:inline-flex}#heatBar .ramp i{margin:0;border-width:2px 0;width:1.2em}#heatBar .ramp i:first-child{border-left-width:2px}#heatBar .ramp i:last-child{border-right-width:2px}
+.chart{margin:.6em 0 .9em}.ctitle{display:flex;justify-content:space-between;align-items:baseline;gap:.5em}.ctitle small{color:var(--paper-muted);font-size:.8em}
+.clegend{display:flex;gap:.8em;font-size:.82em;margin:.2em 0}.chartimg{width:100%;height:auto;image-rendering:auto;border:2px solid var(--line);background:#fff4dc}
+.ctable{width:100%;border-collapse:collapse;font-size:.85em;font-variant-numeric:tabular-nums}.ctable th,.ctable td{border-bottom:1px dashed #e0c8a4;padding:.15em .3em;text-align:right}.ctable th{color:var(--paper-muted);font-weight:600}.dbg .link-row small{margin:0}
 @media (max-width:900px){
   body{overflow:auto}
   #app{height:auto;min-height:100%}
@@ -225,6 +234,7 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
     <span class="chip" id="powerChip" title="Proud pro automatické stroje" hidden><img id="boltIco" class="ico" alt=""><b id="power">0</b></span>
     <span class="chip" id="fcChip" title="Předpověď na zítřek (satelit)" hidden>zítra <img id="fcIco" class="ico" alt=""></span>
     <button class="sq chamfer" id="landBtn" title="Kupovat pozemky (L)">Pozemky</button>
+    <button class="sq chamfer" id="heatBtn" title="Přehledy přes mapu (H)">Přehledy</button>
     <span class="sp"></span>
     <span id="speed" role="group" aria-label="Rychlost času">
       <button class="sq chamfer" data-speed="0" aria-label="Pauza"><svg viewBox="0 0 7 7"><rect x="1" y="1" width="2" height="5"/><rect x="4" y="1" width="2" height="5"/></svg></button>
@@ -320,6 +330,7 @@ img{image-rendering:pixelated;image-rendering:crisp-edges}
 <script src="js/sim/transport.js"></script>
 <script src="js/sim/perf.js"></script>
 <script src="js/sim/metro.js"></script>
+<script src="js/ui/insights.js"></script>
 <script src="js/ui/debug.js"></script>
 <script src="js/main.js"></script>
 </body>

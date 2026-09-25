@@ -2,6 +2,11 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.9.1 „Blíž k práci“ — 2026-09-25
+- Kočky se **samy stěhují blíž ke své práci**: nová kočka dostane nejbližší volný pelíšek u dílny, kde pracuje, a každé ráno se kočky přestěhují nebo prohodí domky, když tím zkrátí cestu. Balanční robot ukázal, že kočky někdy chodily do práce i 3 herní hodiny tam a 3 zpátky.
+- **Rádce** upozorní, když kočka dojíždí přes půl údolí, a poradí postavit domek blíž nebo cestu.
+- Balanční robot umí posílat dopisy, obchodovat s karavanou a zdobit osadu.
+
 ## 3.9.0 „Zábava“ — 2026-09-25
 - **Závodní dráha** (Ozdoby): jednou denně uspořádáš **kočičí závod**. Vsadíš 50 mincí na favoritku — když vyhraje, bereš 50 × počet závodnic. Rychlotlapky a odpočaté, veselé kočky běhají rychleji. Závod se odehraje v malém okně s běžícími kočkami.
 - **Kočičí salon** (Domov, Řemesla a obchod): v detailu kočky jí za 40 mincí změníš **barvu srsti** — včetně 4 nových salonních barev: růžová, mátová, nebeská a půlnoční.

@@ -23,6 +23,8 @@ function advProblems() {
     const d = B[b.type]; if (!b.built || !d.workers || staffOf(b) || d.nodoor) continue;
     if (G.cats.some(c => !c.job && !(c.kitten > G.t))) { P.push(['staff', `${d.n} nemá pracovníka, ale máš volnou kočku.`, 'Přiřadit', 'b:' + b.id]); break; }
   }
+  const far = G.cats.filter(c => c.job && c.home && G.bld[c.job] && G.bld[c.home] && typeof homeDist === 'function' && homeDist(c, G.bld[c.home]) > 24);
+  if (far.length) { const c = far[0]; P.push(['far', `${c.name} chodí do práce přes půl údolí (${Math.round(homeDist(c, G.bld[c.home]))} políček). Postav domek blíž k dílnám nebo cestu — po ní se běhá 2× rychleji.`, 'Ukázat', 'b:' + c.job]); }
   return P.filter(p => !(ADV_MUTE[p[0]] > G.t));
 }
 let advT = 0, advCur = null;
@@ -41,7 +43,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-adv]'); if (!b || !advCur || !G) return;
   const [kind, arg] = advCur[3].split(':');
   if (b.dataset.adv === 'mute') { ADV_MUTE[advCur[0]] = G.t + DAY; $('advice').hidden = true; advCur = null; return; }
-  if (kind === 'b') { const bl = G.bld[+arg]; if (bl) { UI.select({ kind: 'b', id: bl.id }); centerOn((bl.x + bl.w / 2) * TS, (bl.y + bl.h / 2) * TS); UI.pick = true; } }
+  if (kind === 'b') { const bl = G.bld[+arg]; if (bl) { UI.select({ kind: 'b', id: bl.id }); centerOn((bl.x + bl.w / 2) * TS, (bl.y + bl.h / 2) * TS); UI.pick = advCur[0] !== 'far'; } }
   else if (kind === 'tab') { UI.tab = arg; UI.sel = null; }
   else if (kind === 'bcat') { UI.tab = 'build'; UI.bcat = arg; UI.sel = null; }
   Sound.click(); renderPane(true);

@@ -32,7 +32,7 @@ function clickWorld(px, py, hx, hy) {
   UI.select(null); renderPane(true);
 }
 cvs.addEventListener('pointerdown', e => {
-  if (!G) return;
+  if (!G || pinch) return;
   Sound.init();
   cvs.setPointerCapture && cvs.setPointerCapture(e.pointerId);
   if (UI.interior) {
@@ -89,6 +89,14 @@ addEventListener('pointerup', e => {
 });
 cvs.addEventListener('pointerleave', () => { if (!ptr) { UI.hover = null; UI.hoverPx = null; UI.hoverT = null; } });
 cvs.addEventListener('contextmenu', e => e.preventDefault());
+const TOUCH = new Map(); let pinch = null;
+cvs.addEventListener('pointerdown', e => { if (e.pointerType !== 'touch') return; TOUCH.set(e.pointerId, [e.clientX, e.clientY]); if (TOUCH.size === 2) { const p = [...TOUCH.values()]; pinch = { d: Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]) }; ptr = null; } }, true);
+cvs.addEventListener('pointermove', e => {
+  if (!TOUCH.has(e.pointerId)) return; TOUCH.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pinch && TOUCH.size === 2) { const p = [...TOUCH.values()], d = Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]); if (d > pinch.d * 1.25) { zoomAt(1, 0.5, 0.5); pinch.d = d; } else if (d < pinch.d / 1.25) { zoomAt(-1, 0.5, 0.5); pinch.d = d; } }
+}, true);
+const touchEnd = e => { TOUCH.delete(e.pointerId); if (TOUCH.size < 2) pinch = null; };
+addEventListener('pointerup', touchEnd, true); addEventListener('pointercancel', touchEnd, true);
 cvs.addEventListener('wheel', e => {
   e.preventDefault();
   const r = cvs.getBoundingClientRect();

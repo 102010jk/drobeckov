@@ -39,19 +39,21 @@ function drawSite(g, b, t, S, night) {
 }
 
 /* ============ cats & visitors ============ */
+let catSprFor = c => catSpr(c.skin);
 function drawCatSprite(g, c, t) {
   if (c.inside) return;
-  const spr = catSpr(c.skin);
-  let s, bob = 0;
-  if (c.anim === 'walk') s = Math.floor(c.walkT * 8) % 2 ? spr.walk1 : spr.walk0;
-  else if (c.anim === 'sleep') s = spr.sleep;
-  else if (c.anim === 'work') { s = Math.floor(t * 3 + c.id) % 3 === 0 ? spr.walk0 : spr.sit; bob = Math.floor(t * 6 + c.id) % 2; }
+  const spr = catSprFor(c);
+  let s, bob = 0, key = 'sit';
+  if (c.anim === 'walk') { key = Math.floor(c.walkT * 8) % 2 ? 'walk1' : 'walk0'; s = spr[key]; }
+  else if (c.anim === 'sleep') { key = 'sleep'; s = spr.sleep; }
+  else if (c.anim === 'work') { key = Math.floor(t * 3 + c.id) % 3 === 0 ? 'walk0' : 'sit'; s = spr[key]; bob = Math.floor(t * 6 + c.id) % 2; }
   else s = spr.sit;
   const cx = Math.round(c.x), y = Math.round(c.y - s.h + 1 - bob);
   g.fillStyle = 'rgba(43,27,43,0.22)'; g.fillRect(cx - 4, Math.round(c.y), 9, 1);
   const x = cx - (s.w >> 1);
   if (c.face < 0) { g.save(); g.translate(cx * 2 + 1, 0); g.scale(-1, 1); g.drawImage(s.c, x, y); g.restore(); }
   else g.drawImage(s.c, x, y);
+  if (typeof drawHat === 'function') drawHat(g, c, s, cx, y, key);
   if (c.carry && SPR[c.carry.item]) {
     const it = SPR[c.carry.item];
     if (c.carry.n > 1) g.drawImage(it.c, cx - (it.w >> 1) - 2, y - it.h + 1);
@@ -135,6 +137,7 @@ function render(dt) {
   drawFX(g);
   drawAmb(g);
   drawLighting(g);
+  if (typeof drawWeatherFX === 'function') drawWeatherFX(g, dt);
   g.setTransform(1, 0, 0, 1, -VX, -VY);
   for (const b of VIS_BLD) {
     if (!b.alert) continue;

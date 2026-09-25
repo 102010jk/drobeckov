@@ -2,6 +2,21 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.5.0 „Útulné maličkosti“ — 2026-09-25
+### Kočky
+- **Koťátka** — když spolu v domku bydlí dvě spokojené kočky (nálada 72+) a je volná postel, ráno se může narodit koťátko. Dva dny je malé a jen si hraje, pak začne pomáhat.
+- **Zkušenosti** — kočky se učí prací: farmaření, pečení, řemeslo, hutnictví, věda… Každá úroveň (až ★5) = +8 % rychlost v daném oboru. Hvězdičky jsou vidět v detailu kočky.
+- **Kloboučky** — 7 kloboučků (klobouk, mašle, korunka, čepice, helma, cylindr, květina) za mince v detailu kočky. Čistě pro radost.
+- **Přejmenování** koček i osady.
+
+### Osada
+- **Deník osady** (Příručka → Deník) — všechny důležité události na jednom místě.
+- **Statistiky** (Příručka → Statistiky) — graf mincí, koček a útulnosti za poslední dny.
+- **Počasí**: občas přijde **bouřka** s blesky (kočky jsou trochu nesvé), po dešti se někdy ukáže **duha** (+nálada).
+
+### Ovládání
+- **Dotykový zoom** dvěma prsty (tablety, telefony, školní Chromebooky).
+
 ## 2.4.0 „Věda a vesmír“ — 2026-09-25
 ### Věda
 - **Škola** — vyškolí kočku na **Vědce**, **Inženýra** (+40 % v továrnách a hutích) nebo **Astronauta**. Učí se z papíru.

@@ -370,7 +370,7 @@ function dbgMakeWorld(key) {
     if (last.power) G.power = last.power;
     if (W.end === 2) {
       G.flags.launched = G.flags.satelit = true; G.stats.launches = 1;
-      const a = G.cats.find(c => c.prof === 'astronaut'); if (a) a.space = true;
+      const a = G.cats.find(c => c.prof === 'astronaut'); if (a) { a.space = true; flyAway(); }
     }
     const made = {}; for (const e of DBG_ERA.slice(0, W.era + 1).concat(W.end ? [DBG_END] : [], W.end === 3 ? [DBG_MEGA] : [])) for (const k in e.stats.made) made[k] = Math.max(made[k] || 0, e.stats.made[k]);
     G.stats = Object.assign(G.stats, last.stats, { made, parcels: G.owned.length });

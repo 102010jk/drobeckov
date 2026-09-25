@@ -15,13 +15,13 @@ const UNDO = [];
 const _place = place;
 place = function (type, x, y) {
   const b = _place(type, x, y);
-  if (b) { UNDO.push({ id: b.id, type, at: performance.now() }); if (UNDO.length > 20) UNDO.shift(); }
+  if (b) { UNDO.push({ id: b.id, type, at: performance.now(), g: G }); if (UNDO.length > 20) UNDO.shift(); }
   return b;
 };
 function undoPlace() {
   while (UNDO.length) {
     const u = UNDO.pop(), b = G.bld[u.id];
-    if (!b || b.type !== u.type || performance.now() - u.at > 30000) continue;
+    if (u.g !== G || G.visiting || !b || b.type !== u.type || performance.now() - u.at > 30000) continue;
     const d = B[b.type];
     if (b.built && !d.instant) { toast('Tahle stavba už je hotová — zbourej ji klávesou X.'); return; }
     G.coins += d.cost;

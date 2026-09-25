@@ -11,7 +11,12 @@ function facAccept(b, f, x, y, item, dir) {
   if (c.k === 'split') { if (c.it) return false; c.it = item; c.p = 0; return true; }
   if (c.k === 'm') {
     const r = FRECIPES[c.r];
-    if (r && r.in[item]) { if ((c.inp[item] || 0) < r.in[item] * 2) { c.inp[item] = (c.inp[item] || 0) + 1; return true; } return false; }
+    if (r && r.in[item]) {
+      if ((c.inp[item] || 0) < r.in[item] * 2) { c.inp[item] = (c.inp[item] || 0) + 1; return true; }
+      // full of this ingredient: let it ride on instead of blocking the belt for everything behind it
+      if (!c.pass && c.d !== (dir + 2) % 4) { c.pass = item; return true; }
+      return false;
+    }
     if (!c.pass && c.d !== (dir + 2) % 4) { c.pass = item; return true; }
     return false;
   }
@@ -48,7 +53,7 @@ function facTick(b, dt) {
       busy++;
       c.p = Math.min(1, c.p + dt * BELT_SPEED);
       if (c.p < 1) continue;
-      if (c.k === 'belt') { if (facAccept(b, f, x + FDX[c.d], y + FDY[c.d], c.it, c.d)) c.it = null; }
+      if (c.k === 'belt') { if (facAccept(b, f, x + FDX[c.d], y + FDY[c.d], c.it, c.d)) { c.it = null; c.stuck = 0; } else c.stuck = (c.stuck || 0) + dt; }
       else {
         const dirs = c.flip ? [(c.d + 1) % 4, (c.d + 3) % 4] : [(c.d + 3) % 4, (c.d + 1) % 4];
         for (const d of dirs) if (facAccept(b, f, x + FDX[d], y + FDY[d], c.it, d)) { c.it = null; c.flip = !c.flip; break; }
@@ -73,6 +78,7 @@ function facTick(b, dt) {
     }
   }
   f.busy = busy;
+  f.jam = f.cells.some(c => c && c.stuck > 5);
   if (crew) b.lastWork = G.t;
 }
 STEP_HOOKS.push(dt => { for (const b of BLIST) if (b.fac && b.built) facTick(b, dt); });

@@ -156,10 +156,20 @@ function launchUpdate() {
   if (t > 12 && !LAUNCH.done) {
     LAUNCH.done = true; G.flags.launched = true; G.stats.launches = (G.stats.launches || 0) + 1;
     const astro = G.cats.find(c => c.id === LAUNCH.cat); if (astro) astro.space = true;
+    flyAway();
     showEnding();
   }
   if (t > 14) LAUNCH = null;
   return t;
+}
+/* the astronaut really leaves: out of the town, into the stats */
+function flyAway() {
+  for (const c of G.cats.filter(x => x.space)) {
+    if (c.job) unassign(c.id);
+    (G.spaceCats = G.spaceCats || []).push({ name: c.name, skin: c.skin, t: G.t });
+    G.cats = G.cats.filter(x => x !== c);
+  }
+  assignHomes(); jobsDirty = true; UI.dirty = true;
 }
 const rocketLift = t => t < 3 ? 0 : Math.pow(t - 3, 2.2) * 6;
 function showEnding() {

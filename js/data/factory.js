@@ -55,8 +55,8 @@ function facDef(type) {
     canWork: b => !!b.fac && facSlots(b) > 0 && (sumObj(b.inp) > 0 || b.fac.busy > 0) && sumObj(b.out) < 40,
     produce: (b, amt) => { b._crew = (b._crew || 0) + 1; b._mul = (b._mul || 0) + amt; },
     inspect: b => `<button class="btn chamfer" data-act="enter" data-arg="${b.id}">Vstoupit dovnitř</button> <small class="muted">${b.fac ? b.fac.w + '×' + b.fac.h : ''} · pracovních míst ${facSlots(b)}</small>`,
-    status: b => { if (!b.fac) return null; if (!facSlots(b)) return ['Uvnitř chybí pracovní místo — vstup a postav ho', 'bad']; if (!b.fac.cells.some(c => c && c.k === 'm')) return ['Uvnitř nejsou stroje — vstup a postav je', 'wait']; return [b.working ? 'Továrna jede' : sumObj(b.inp) ? 'Čeká na pracovníky' : 'Čeká na suroviny', b.working ? 'ok' : 'wait']; },
-    alert: b => !b.fac || !facSlots(b) || !b.fac.cells.some(c => c && c.k === 'm') ? 'bang' : null
+    status: b => { if (!b.fac) return null; if (b.fac.jam) return ['Pás je ucpaný — věc na pásu nemá kam jet', 'bad']; if (!facSlots(b)) return ['Uvnitř chybí pracovní místo — vstup a postav ho', 'bad']; if (!b.fac.cells.some(c => c && c.k === 'm')) return ['Uvnitř nejsou stroje — vstup a postav je', 'wait']; return [b.working ? 'Továrna jede' : sumObj(b.inp) ? 'Čeká na pracovníky' : 'Čeká na suroviny', b.working ? 'ok' : 'wait']; },
+    alert: b => b.fac && b.fac.jam ? 'bang' : !b.fac || !facSlots(b) || !b.fac.cells.some(c => c && c.k === 'm') ? 'bang' : null
   };
 }
 Object.assign(B, {

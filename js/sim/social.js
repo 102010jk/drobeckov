@@ -130,7 +130,7 @@ MORNING_HOOKS.push(() => {
     for (const h of houses) { if (h.id === c.home || (count[h.id] || 0) >= bedsOf(h)) continue; const d = homeDist(c, h); if (d < bd) { bd = d; best = h; } }
     if (best) { count[c.home]--; c.home = best.id; count[best.id] = (count[best.id] || 0) + 1; moved++; }
   }
-  const swap = workers.length > 300 ? workers.slice().sort((p, q) => homeDist(q, G.bld[q.home]) - homeDist(p, G.bld[p.home])).slice(0, 300) : workers;   // big towns: only the longest walks
+  const swap = workers.length > 150 ? workers.slice().sort((p, q) => homeDist(q, G.bld[q.home]) - homeDist(p, G.bld[p.home])).slice(0, 150) : workers;   // big towns: only the longest walks
   for (let i = 0; i < swap.length; i++) for (let j = i + 1; j < swap.length; j++) {   // swap homes when both win
     const a = swap[i], b = swap[j]; if (a.home === b.home) continue;
     const ha = G.bld[a.home], hb = G.bld[b.home]; if (!ha || !hb) continue;

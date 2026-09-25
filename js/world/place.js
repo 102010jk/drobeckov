@@ -159,14 +159,15 @@ function demolish(b) {
 function onBuildingsChanged() { rebuildLists(); assignHomes(); UI.dirty = true; if (typeof jobsDirty !== 'undefined') jobsDirty = true; minimapDirty = true; }
 
 /* ============ homes ============ */
+const bedsOf = b => (B[b.type].beds || 0) + ((b.lvl || 1) - 1);
 function assignHomes() {
   const houses = BLIST.filter(b => b.type === 'domek' && b.built);
   const count = {}; for (const c of G.cats) if (c.home) count[c.home] = (count[c.home] || 0) + 1;
   for (const c of G.cats) {
     if (c.home && G.bld[c.home]) continue;
     c.home = 0;
-    const h = houses.find(b => (count[b.id] || 0) < B.domek.beds);
+    const h = houses.find(b => (count[b.id] || 0) < bedsOf(b));
     if (h) { c.home = h.id; count[h.id] = (count[h.id] || 0) + 1; }
   }
 }
-const freeBeds = () => countB('domek') * B.domek.beds - G.cats.filter(c => c.home).length;
+const freeBeds = () => { let n = 0; for (const b of BLIST) if (b.type === 'domek' && b.built) n += bedsOf(b); return n - G.cats.filter(c => c.home).length; };

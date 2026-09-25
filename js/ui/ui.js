@@ -234,7 +234,7 @@ function bStatus(b) {
   if (d.bees) return [b.active ? 'Včely pracují · květin v okolí: ' + flowersNear(b) : 'Včely spí', b.active ? 'ok' : 'wait'];
   if (d.orchard) return [!b.mature ? 'Roste' : (seasonIdx() === 1 || seasonIdx() === 2) ? 'Plodí jablka' : 'Plodí v létě a na podzim', 'ok'];
   if (d.store) return [`Sklady ${stockTotal()}/${capacity()}`, stockTotal() >= capacity() ? 'bad' : 'ok'];
-  if (d.beds) return [`Bydlí tu ${G.cats.filter(c => c.home === b.id).length}/${d.beds}`, 'ok'];
+  if (d.beds) return [`Bydlí tu ${G.cats.filter(c => c.home === b.id).length}/${bedsOf(b)}`, 'ok'];
   if (d.board) return [`${G.orders.length} zakázek`, 'ok'];
   if (d.cozy) return [`+${d.cozy} útulnost`, 'ok'];
   return ['', 'ok'];

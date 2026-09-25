@@ -2,6 +2,21 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.9.0 „Vylepšení budov“ — 2026-09-25
+### Vylepšování
+- Hotové dílny, domky, spižírny a sklady jde **vylepšit až na úroveň 3** (tlačítko v detailu budovy):
+  - dílny a doly pracují o **25 % rychleji** za úroveň,
+  - domky mají **pelíšek navíc**,
+  - spižírny a sklady pojmou o **50 % víc**.
+- Úroveň 2 stojí dřevo (první éra) nebo prkna, úroveň 3 cihly a prkna. Vylepšené budovy mají nad střechou zlaté hvězdičky.
+
+### Přehled
+- V záložce **Sklad** je nově seznam **budov s problémem** (chybí pracovník, nemá z čeho vyrábět…) a **všech budov** — kliknutím na ni skočíš.
+
+### Opravy
+- Tutoriál: krok s novou kočkou odpovídá novému výpočtu útulnosti.
+- Nový úspěch „Stavitel“ a stránka Příručky „Vylepšení budov“.
+
 ## 2.8.0 „Pohodlné ovládání“ — 2026-09-25
 ### Ovládání
 - **Ctrl+Z** vrátí poslední postavenou stavbu (do 30 s) — i s mincemi a materiálem.

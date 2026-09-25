@@ -12,7 +12,7 @@ const TUT = [
   { t: 'Otevři Zakázky a doruč první zakázku sousedům. Zakázky jsou hlavní příjem.', hl: '[data-tab="orders"]', ok: () => G.stats.orders > 0, coins: 60 },
   { t: 'Dřevo roste jen u dřevorubce. Postav Dřevorubeckou chatu u stromů a dej jí kočku.', hl: '[data-arg="drevorubec"]', ok: () => hasB('drevorubec', true), coins: 40, wood: 10 },
   { ch: 'Kapitola 2 · Pozemky a zima', t: 'Údolí je nekonečné. Klikni na Pozemky (nahoře) a kup sousední kousek země.', hl: '#landBtn', ok: () => (G.stats.parcels || 0) > 0, coins: 50 },
-  { t: 'Postav další Kočičí domek a zvyš útulnost na 9 — pak ráno přijde nová kočka.', ok: () => countB('domek') >= 3 && coziness() >= 9, coins: 60 },
+  { t: 'Postav další Kočičí domek a pár Záhonů květin (Ozdoby). Nová kočka přijde ráno, když má volný pelíšek a osada je dost útulná.', ok: () => countB('domek') >= 3 && coziness() >= 6, coins: 60 },
   { t: 'V zimě nic neroste. Nasbírej do skladu aspoň 20 jídla (chléb, ryby, mléko…).', ok: () => foodTotal() >= 20, coins: 80 },
   { t: 'Skvělá práce! Až osada vyroste (víc koček, víc mincí), otevře se nová éra a já se ozvu.', ev: 'next', coins: 100 },
   { ch: 'Kapitola 3 · Řemesla a obchod', era: 1, t: 'Nová éra! Postav Pilu — prkna jsou potřeba na lepší stavby.', hl: '[data-arg="pila"]', ok: () => BLIST.some(b => b.type === 'pila'), coins: 60 },

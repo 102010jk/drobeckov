@@ -13,7 +13,7 @@ let VIS = [];
 
 /* ============ stock ============ */
 const stockTotal = () => sumObj(G.stock);
-function capacity() { let c = 0; for (const b of BLIST) if (b.built && B[b.type].store) c += B[b.type].store; return c; }
+function capacity() { let c = 0; for (const b of BLIST) if (b.built && B[b.type].store) c += Math.round(B[b.type].store * (1 + 0.5 * ((b.lvl || 1) - 1))); return c; }
 const avail = k => (G.stock[k] || 0) - (G.res[k] || 0);
 function addStock(k, n) { if (n > 0) G.stock[k] = (G.stock[k] || 0) + n; }
 function takeStock(k, n) { G.stock[k] = Math.max(0, (G.stock[k] || 0) - n); if (!G.stock[k]) delete G.stock[k]; }

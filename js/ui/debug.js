@@ -307,7 +307,7 @@ const DBG_ERA = [
     tech: ['elektrina', 'inzenyri', 'optika', 'automatizace'], research: ['hlinik', { vykres: 4 }], profs: { vedec: 2, inzenyr: 3 }, power: 20, asf: 2, stops: 14, lights: 5,
     stats: { earned: 32000, orders: 70, fests: 5, techs: 4, made: { cihly: 300, ocel: 120, plech: 60, zelezo: 200, motor: 6, bionafta: 40 } },
     stock: { drevo: 40, prkna: 30, cihly: 30, kamen: 20, uhli: 30, zelezo: 14, ocel: 16, plech: 12, drat: 12, hrebiky: 12, papir: 16, olej: 10, bionafta: 20, chleb: 30, ryby: 20, susenky: 14, mouka: 14, psenice: 24, mleko: 10, syr: 6, sklo: 10 },
-    plan: [['depo', 1], ['rafinerie', 1], ['lisovna', 1], ['pole', 2, { crop: 'slunecnice' }], ['mestsky_dum', 10, { row: 1 }], ['depo', 1], ['tovarna', 1, { line: 'tovarna' }], ['sklad'], ['pekarna'], ['mlyn']] },
+    plan: [['radnice', 1], ['depo', 1], ['rafinerie', 1], ['lisovna', 1], ['pole', 2], ['mestsky_dum', 10, { row: 1 }], ['obchodni_dum', 1], ['kino', 1], ['knihovna', 1], ['veterina', 1], ['park', 3], ['hotel', 1], ['tovarna', 1, { line: 'tovarna' }], ['sklad'], ['pekarna'], ['mlyn']], policies: { trh: 1, klid: 1 } },
   { cats: 50, land: 66, day: 21, coins: 22000, hearts: [8, 8, 8, 7, 7], lamps: ['kovova_lampa', 'kvetiny', 'zahon_ruzi', 'lampiony', 'kvetiny', 'mlyncek'], trees: 20,
     tech: Object.keys(TECH).filter(k => k !== 'raketa'), research: ['raketa', { hvezdna_mapa: 6, elektro: 4 }], profs: { vedec: 4, inzenyr: 3 }, power: 24,
     stats: { earned: 60000, orders: 90, fests: 6, techs: 9, made: { cihly: 400, ocel: 200, plech: 140, motor: 12, hlinik: 30, elektro: 20 } },
@@ -321,7 +321,7 @@ const DBG_END = {
   stats: { earned: 150000, orders: 160, fests: 10, techs: Object.keys(TECH).length, made: { cihly: 800, ocel: 600, plech: 400, motor: 40, hlinik: 120, elektro: 60, raketovy_motor: 4 } },
   stock: { drevo: 50, prkna: 40, cihly: 40, kamen: 30, uhli: 40, ocel: 30, plech: 20, drat: 20, trubky: 12, hlinik: 16, dural: 12, baterie: 6, raketove_palivo: 10, chleb: 40, konzervy: 30, susenky: 20, pizza: 10, mouka: 16, psenice: 30, mleko: 14, sklo: 16, jahodovy_dort: 4, cokoladovy_dort: 4 },
   asf: 2, houseType: 'mestsky_dum',
-  plan: [['kosmodrom', 1, { rocket: 3 }], ['letiste', 1, { sp: 1 }], ['mestsky_dum', 14, { row: 1 }], ['domek', 2], ['fontana'], ['kocici_strom'], ['altan'], ['sklad'], ['pole', 2], ['elektrarna'], ['vetrnik', 2], ['cukrarna'], ['pizzerie']]
+  plan: [['kosmodrom', 1, { rocket: 3 }], ['letiste', 1, { sp: 1 }], ['park', 4], ['kino', 1], ['veterina', 1], ['hotel', 1], ['mestsky_dum', 14, { row: 1 }], ['domek', 2], ['fontana'], ['kocici_strom'], ['altan'], ['sklad'], ['pole', 2], ['elektrarna'], ['vetrnik', 2], ['cukrarna'], ['pizzerie']]
 };
 /* super-endgame: a whole city — 300 cats, every chain many times over, industry in the outer districts */
 const DBG_MEGA = {
@@ -329,7 +329,7 @@ const DBG_MEGA = {
   tech: Object.keys(TECH), profs: { vedec: 12, inzenyr: 24, astronaut: 3 }, power: 200, houseLvl: 3, houseType: 'mestsky_dum', asf: 2,
   stats: { earned: 2500000, orders: 900, fests: 22, techs: Object.keys(TECH).length, made: { chleb: 9000, cihly: 12000, ocel: 8000, plech: 6000, motor: 600, hlinik: 2000, elektro: 900, pizza: 1500, raketovy_motor: 12 } },
   stock: { drevo: 400, prkna: 300, cihly: 300, kamen: 200, uhli: 300, ocel: 250, plech: 200, drat: 150, trubky: 120, hlinik: 120, dural: 80, baterie: 40, raketove_palivo: 60, chleb: 400, konzervy: 300, susenky: 250, pizza: 120, mouka: 200, psenice: 300, mleko: 150, syr: 100, sklo: 150, jahodovy_dort: 40, cokoladovy_dort: 40, polstar: 60, hracky: 50 },
-  plan: [['mestsky_dum', 50, { row: 1 }], ['pole', 36], ['mlyn', 8], ['pekarna', 10], ['kuchynka', 6, { recipe: 'susenky' }], ['molo', 5, { sp: 1 }], ['kravin', 6], ['slepicarna', 4], ['syrarna', 3],
+  plan: [['mestsky_dum', 50, { row: 1 }], ['obchodni_dum', 3], ['kino', 3], ['knihovna', 3], ['veterina', 3], ['park', 10], ['hotel', 2], ['depo', 3], ['rafinerie', 2], ['pole', 36], ['mlyn', 8], ['pekarna', 10], ['kuchynka', 6, { recipe: 'susenky' }], ['molo', 5, { sp: 1 }], ['kravin', 6], ['slepicarna', 4], ['syrarna', 3],
     ['pizzerie', 4], ['cukrarna', 4], ['zavarovna', 3], ['sklenik', 6], ['trziste', 6], ['sklad', 8], ['fontana', 4], ['kocici_socha', 3], ['altan', 4], ['kocici_strom', 3],
     ['drevorubec', 6], ['pila', 4], ['hliniste', 3, { sp: 1 }], ['cihelna', 4], ['lom', 3, { sp: 1 }], ['piskovna', 2, { sp: 1 }], ['sklarna', 3], ['papirna', 3], ['tkalcovna', 2, { recipe: 'polstar' }],
     ['dul', 4, { sp: 1, ore: 'uhli' }], ['dul', 4, { sp: 1, ore: 'zelezo' }], ['dul', 3, { sp: 1, ore: 'med' }], ['dul', 2, { sp: 1, ore: 'bauxit' }], ['rybarna', 3, { sp: 1 }],
@@ -390,6 +390,7 @@ function dbgMakeWorld(key) {
     // research, rocket, economy
     if (last.research) { G.research = last.research[0]; G.rprog = { [last.research[0]]: Object.assign({}, last.research[1]) }; }
     if (last.power) G.power = last.power;
+    G.policies = Object.assign({}, (DBG_ERA[ERA_MESTO] || {}).policies && W.era >= ERA_MESTO ? DBG_ERA[ERA_MESTO].policies : {});
     if (W.end === 2) {
       G.flags.launched = G.flags.satelit = true; G.stats.launches = 1;
       const a = G.cats.find(c => c.prof === 'astronaut'); if (a) { a.space = true; flyAway(); }

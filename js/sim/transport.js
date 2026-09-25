@@ -168,7 +168,7 @@ function nearestStop(x, y, max) { let best = null, bd = max; for (const s of sto
 const _startTaskT = startTask;
 startTask = function (c, k) {
   const ok = _startTaskT(c, k);
-  if (!ok || !c.path || c.path.length < 26 || c.bus || eraOf() < ERA_MESTO) return ok;
+  if (!ok || !c.path || c.path.length < (typeof policy === 'function' && policy('mhd') ? 18 : 26) || c.bus || eraOf() < ERA_MESTO) return ok;
   const [cx, cy] = ctile(c), end = c.path[c.path.length - 1];
   const A = nearestStop(cx, cy, 12), Bs = A && nearestStop(end.x, end.y, 12);
   if (!A || !Bs || A === Bs) return ok;

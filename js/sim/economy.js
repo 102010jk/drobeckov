@@ -23,7 +23,7 @@ function moveVis(v, dt) {
   return !v.path.length && !v.dest;
 }
 function updateVisitors(dt) {
-  const stalls = BLIST.filter(b => b.type === 'trziste' && b.built);
+  const stalls = BLIST.filter(b => B[b.type].market && b.built);
   const h = hour();
   if (stalls.length && h >= 8 && h < 19) { G.visT -= dt; if (G.visT <= 0) { G.visT = rand(7, 13) / (1 + coziness() / 40); if (VIS.length < 6 + stalls.length) spawnVisitor(pick(stalls)); } }
   for (let i = VIS.length - 1; i >= 0; i--) {
@@ -38,7 +38,7 @@ function updateVisitors(dt) {
         for (let j = 0; j < n; j++) {
           const keys = Object.keys(s.inp).filter(k => s.inp[k] > 0); if (!keys.length) break;
           const k = pick(keys); s.inp[k]--; if (s.inp[k] <= 0) delete s.inp[k];
-          got += Math.max(1, Math.round(ITEMS[k].v * priceMul() * (typeof marketMul === 'function' ? marketMul(k) : 1))); G.stats.sold++; if (typeof marketSold === 'function') marketSold(k, 1);
+          got += Math.max(1, Math.round(ITEMS[k].v * priceMul() * (typeof marketMul === 'function' ? marketMul(k) : 1) * (typeof stallMul === 'function' ? stallMul(s) : 1))); G.stats.sold++; if (typeof marketSold === 'function') marketSold(k, 1);
         }
         G.coins += got; G.stats.earned += got;
         popText('+' + got, v.x, v.y - 14, '#ffd23f'); Sound.coin();

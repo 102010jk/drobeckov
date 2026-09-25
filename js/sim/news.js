@@ -68,19 +68,22 @@ function contestHTML() {
 ACH.push(['soutez', 'Nejútulnější osada', () => (G.stats.bestContest || 0) >= 5]);
 
 /* ---------- "Osada" tab: live pages moved out of the handbook ---------- */
-const OSADA_PAGES = ['noviny', 'denik', 'stats', 'uspechy', 'hats'];
+const OSADA_PAGES = ['noviny', 'grafy', 'denik', 'stats', 'uspechy', 'hats'];
 let osadaPage = 'noviny';
 ACTIONS.opage = id => { osadaPage = id; };
 function osadaChips() { return '<div class="chips">' + OSADA_PAGES.map(id => { const p = HELP.find(x => x.id === id); return p ? `<button class="chip-btn ${osadaPage === id ? 'on' : ''}" data-act="opage" data-arg="${id}">${p.n}</button>` : ''; }).join('') + '</div>'; }
-const _helpTabO = EXTRA_TABS.help;
-EXTRA_TABS.help = () => {
-  if (OSADA_PAGES.includes(helpPage)) helpPage = 'zaklady';
-  return _helpTabO().replace(/<div class="chips">[\s\S]*?<\/div>/, m => m.replace(new RegExp(`<button class="chip-btn[^"]*" data-act="help" data-arg="(${OSADA_PAGES.join('|')})">[^<]*</button>`, 'g'), ''));
-};
+/* installed after every script has wrapped the handbook, so this filter is the outermost layer */
+let helpInner = null;
+addEventListener('load', () => {
+  helpInner = EXTRA_TABS.help;
+  EXTRA_TABS.help = () => {
+    if (OSADA_PAGES.includes(helpPage)) helpPage = 'zaklady';
+    return helpInner().replace(/<div class="chips">[\s\S]*?<\/div>/, m => m.replace(new RegExp(`<button class="chip-btn[^"]*" data-act="help" data-arg="(${OSADA_PAGES.join('|')})">[^<]*</button>`, 'g'), ''));
+  };
+});
 EXTRA_TABS.osada = () => {
   const keep = helpPage; helpPage = osadaPage;
-  let h = _helpTabO();
-  helpPage = keep;
+  let h; try { h = (helpInner || EXTRA_TABS.help)(); } finally { helpPage = keep; }
   return h.replace(/<div class="chips">[\s\S]*?<\/div>/, osadaChips());
 };
 { const tabs = document.getElementById('tabs'); if (tabs && !tabs.querySelector('[data-tab="osada"]')) { const b = document.createElement('button'); b.dataset.tab = 'osada'; b.textContent = 'Osada'; tabs.appendChild(b); } }

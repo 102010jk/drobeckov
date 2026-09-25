@@ -64,3 +64,23 @@ B.cedulka.top = 1;
 
 /* ---------- help: new keys ---------- */
 { const ov = HELP.find(p => p.id === 'ovladani'); if (ov) ov.t += `<p><b>Q</b> = kapátko (vezme typ stavby pod myší) · <b>Ctrl+Z</b> = vrátit poslední stavbu (do 30 s, vrátí mince i materiál).</p><p>U rozestavěné budovy můžeš zapnout <b>Stavět přednostně</b> — kočky na ni donesou materiál jako první.</p>`; }
+
+/* ---------- terraforming: fill shallow water, dig a pond ---------- */
+Object.assign(B, {
+  zasyp: { n: 'Zasypat vodu', cat: 'cesty', w: 1, h: 1, cost: 12, ground: 'grass', dig: 'fill', terr: ['water'], terrTxt: 'jen mělká voda', desc: 'Zasype mělkou vodu hlínou — vznikne louka. Táhni myší.' },
+  jezirko: { n: 'Vykopat jezírko', cat: 'cesty', w: 1, h: 1, cost: 8, ground: 'water', dig: 'dig', terr: ['grass', 'sand'], terrTxt: 'jen louka nebo písek', desc: 'Vykope mělkou vodu — na rybníček, molo nebo jen pro krásu. Táhni myší.',
+    need: (x, y) => !keepsAccess(x, y, 1, 1, null), needTxt: 'Odřízlo by to kočkám cestu' }
+});
+const _terrOKQ = terrOK;
+terrOK = function (d, t) { if (d.dig) return d.terr.includes(t.gr); return _terrOKQ(d, t); };
+const _placeQ = place;
+place = function (type, x, y) {
+  const r = _placeQ(type, x, y);
+  if (B[type] && B[type].dig) { reachDirty = true; pathVersion++; if (typeof terrainDirty !== 'undefined') terrainDirty = true; minimapDirty = true; for (let i = 0; i < 3; i++) addPart(x * TS + 8 + rand(-4, 4), y * TS + 8, rand(-15, 15), rand(-30, -10), B[type].dig === 'fill' ? '#8a5a2a' : '#a8d4f8', 0.5, { g: 120 }); }
+  return r;
+};
+{ const ov = HELP.find(p => p.id === 'pozemky'); if (ov) ov.t += `<p><b>Terén:</b> ve Stavět → Cesty můžeš <b>zasypat mělkou vodu</b> nebo <b>vykopat jezírko</b> (obojí jde táhnout myší).</p>`; }
+Object.assign(DRAW, {
+  zasyp(g, X, Y) { R(g, '#5aa8e6', X + 1, Y + 1, 14, 7); R(g, '#72c850', X + 1, Y + 8, 14, 7); R(g, '#a8d4f8', X + 3, Y + 3, 4, 1); shape(g, [[X + 10, Y - 2, 2, 9, '#8a5230'], [X + 8, Y + 6, 6, 4, '#9aa0b4']]); },
+  jezirko(g, X, Y) { R(g, '#72c850', X + 1, Y + 1, 14, 14); odisc(g, X + 8, Y + 9, 5, '#5aa8e6'); R(g, '#a8d4f8', X + 5, Y + 7, 3, 1); shape(g, [[X + 12, Y - 3, 2, 9, '#8a5230'], [X + 10, Y + 5, 6, 3, '#9aa0b4']]); }
+});

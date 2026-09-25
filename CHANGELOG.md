@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.2.1 „Lopata“ — 2026-09-25
+- **Terén**: ve Stavět → Cesty můžeš **zasypat mělkou vodu** (vznikne louka) nebo **vykopat jezírko**. Obojí jde táhnout myší. Jezírko nejde vykopat tam, kde by kočkám odřízlo cestu.
+- Tutoriál má nový krok o **Cestovatelském stanu a výpravách**.
+
 ## 3.2.0 „Herní režimy“ — 2026-09-25
 Při zakládání nové osady si vybereš **herní režim**:
 - **Klidný** — kočky méně hladoví, začínáš se 700 mincemi, zakázky platí o 20 % víc a pozemky jsou levnější.

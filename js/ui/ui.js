@@ -63,7 +63,7 @@ function paneBuild() {
   h += '</div>';
   const sel = UI.tool && B[UI.tool];
   if (sel) {
-    const drag = ['cesta', 'dlazba', 'plot', 'kvetiny', 'stromek', 'zbourat', 'lavka'].includes(UI.tool);
+    const drag = ['cesta', 'dlazba', 'plot', 'kvetiny', 'stromek', 'zbourat', 'lavka', 'zasyp', 'jezirko'].includes(UI.tool);
     const rec = sel.recipes ? '<div class="reclist">' + sel.recipes.map(r => `<span class="rec ${recipeUnlocked(r) ? '' : 'locked'}">${recipeHTML(r)}</span>`).join('') + '</div>' : '';
     h += `<div class="hint"><b>${sel.n}</b> — ${sel.desc}${sel.workers ? ` Pracovníci: ${sel.workers}.` : ''}${sel.noise ? ` Ruch v okruhu ${sel.noise}.` : ''}${rec}<small>Klik = postavit${drag ? ' · můžeš táhnout' : ''} · pravé tlačítko nebo Esc = zrušit</small></div>`;
   } else h += `<div class="hint">Vyber stavbu a klikni do údolí. Stromy a záhony pod stavbou samy zmizí. Dřevo a materiál donesou kočky ze skladu.</div>`;

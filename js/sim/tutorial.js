@@ -21,6 +21,7 @@ const TUT = [
   { era: 1, t: 'Postav Tržní náměstí — budou sem jezdit karavany obchodníků.', hl: '[data-arg="namesti"]', ok: () => hasB('namesti'), coins: 100 },
   { era: 1, t: 'Až přijede karavana, v záložce Obchod klikni „připravit“ a pak „prodat“.', hl: '[data-tab="trade"]', ev: 'trade', coins: 120 },
   { era: 1, t: 'Polož kamennou Dlažbu (Stavět → Cesty) — kočky po ní běhají 2,5× rychleji.', ok: () => Object.values(G.mods).some(m => Object.values(m).some(v => v[0] === 7)), coins: 60 },
+  { era: 1, t: 'Postav Cestovatelský stan (Stavět → Domov) a vyšli krátkou výpravu. Kočky přinesou semínka nových plodin!', hl: '[data-arg="stan"]', ok: () => (G.stats.expeditions || 0) > 0 || !!G.expedition, coins: 100 },
   { era: 1, t: 'Hotovo! Tkalcovna šije polštáře do domků a sběratelé prodávají plánky ozdob. Další éra: Hornictví a přístav.', ev: 'next', coins: 150 },
   { ch: 'Kapitola 4 · Hornictví a přístav', era: 2, t: 'Nová éra! Barevné kamínky ve skalách jsou ložiska. Postav na nich Důl (Stavět → Výroba).', hl: '[data-arg="dul"]', ok: () => BLIST.some(b => b.type === 'dul'), coins: 120 },
   { era: 2, t: 'Kov se taví s uhlím. Když nemáš uhelný důl, postav Milíř — pálí dřevo na uhlí.', ok: () => (G.stats.made.uhli || 0) >= 1, coins: 80 },

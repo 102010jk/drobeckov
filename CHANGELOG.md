@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.5.1 — 2026-09-25
+- Oprava: **první výprava vždy přinese semínka** (slunečnice), jak bylo slíbeno — dřív to byla jen náhoda.
+- Ověřeno uložení a načtení osady se vším novým (výprava na cestě, dopisy, přání koček, kamarádi, kloboučky) — nic se neztratí.
+
 ## 4.5.0 „Vítej zpět“ — 2026-09-25
 - **Dárek za návrat**: když osadu otevřeš nový den (podle skutečného kalendáře), kočky ti schovají mince. Za každý další den v řadě víc (až 7 dní), od 3. dne i hvězdička. Neplatí v kreativním režimu ani na návštěvě.
 - **Tip dne** v novinách: každý den jedna rada, co všechno hra umí (závody, rybaření, salon, výpravy, dopisy, klávesové zkratky…).

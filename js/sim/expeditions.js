@@ -130,7 +130,7 @@ function expLoot(e) {
   const k = e.kind, era = eraOf(), out = [], g = G.flags;
   const coins = Math.round(randi(60, 140) * (k + 1) * (1 + era * 0.5)); G.coins += coins; G.stats.earned += coins; out.push(coins + ' mincí');
   const newSeed = EXP_SEEDS.find(s => !g['seed_' + s]);
-  if (newSeed && (G.stats.expeditions === 0 || k >= 1 || Math.random() < 0.5)) { g['seed_' + newSeed] = true; out.push('semínka: ' + CROPS[newSeed].n + '!'); }
+  if (newSeed && (!G.stats.expeditions || k >= 1 || Math.random() < 0.5)) { g['seed_' + newSeed] = true; out.push('semínka: ' + CROPS[newSeed].n + '!'); }
   const pool = ['koreni', 'kakao', 'med', 'jablka', 'vlna', 'mapa'].concat(era >= 2 ? ['zlato', 'mapa'] : []).filter(i => ITEMS[i]);
   for (let i = 0; i < 1 + k; i++) { const it = pick(pool), n = it === 'mapa' || it === 'zlato' ? 1 + (k > 1 ? 1 : 0) : randi(3, 6) * (k + 1); addStock(it, n); out.push(n + '× ' + itemName(it).toLowerCase()); }
   if (k === 2) addStars(2, 'z výpravy'); else if (k === 1 && Math.random() < 0.35) addStars(1, 'z výpravy');

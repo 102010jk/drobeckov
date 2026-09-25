@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.6.0 „Co je nového“ — 2026-09-25
+- Po aktualizaci hry se po spuštění ukáže okno **Co je nového** se všemi novinkami od tvé poslední návštěvy (čte se přímo z tohohle changelogu).
+- V hlavním menu je odkaz **Co je nového** — ukáže poslední tři verze přímo ve hře, bez GitHubu.
+
 ## 4.5.1 — 2026-09-25
 - Oprava: **první výprava vždy přinese semínka** (slunečnice), jak bylo slíbeno — dřív to byla jen náhoda.
 - Ověřeno uložení a načtení osady se vším novým (výprava na cestě, dopisy, přání koček, kamarádi, kloboučky) — nic se neztratí.

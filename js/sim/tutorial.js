@@ -27,7 +27,14 @@ const TUT = [
   { era: 2, t: 'Postav Tavírnu a vytav první železo nebo měď.', hl: '[data-arg="tavirna"]', ok: () => (G.stats.made.zelezo || 0) + (G.stats.made.medkov || 0) >= 1, coins: 150 },
   { era: 2, t: 'Ve Slévárně vyrob ocel (železo + uhlí). Hutní cech za ni dobře platí.', hl: '[data-arg="slevarna"]', ok: () => (G.stats.made.ocel || 0) >= 1, coins: 200 },
   { era: 2, t: 'Najdi moře a postav Přístav u hluboké vody. Lodě vozí kakao, koření a vzácné rudy.', ok: () => hasB('pristav'), coins: 300 },
-  { era: 2, t: 'Výborně! Další éra — Průmysl — přinese továrny, do kterých se dá vejít.', ev: 'next', coins: 200 }
+  { era: 2, t: 'Výborně! Další éra — Průmysl — přinese továrny, do kterých se dá vejít.', ev: 'next', coins: 200 },
+  { ch: 'Kapitola 5 · Továrny', era: 2, t: 'Postav Dílnu (Stavět → Výroba). Do dílen a továren se dá VEJÍT.', hl: '[data-arg="dilna"]', ok: () => hasB('dilna') || hasB('tovarna'), coins: 150 },
+  { era: 2, t: 'Klikni na dílnu a dej „Vstoupit dovnitř“.', ev: 'enter', coins: 50 },
+  { era: 2, t: 'Postav Lis (dole v nabídce stroj Lis) — lisuje ocel na plech.', ev: 'fac_machine', coins: 60 },
+  { era: 2, t: 'Vedle stroje postav Pracovní místo — tam bude stát kočka.', ev: 'fac_station', coins: 60 },
+  { era: 2, t: 'Pásy vedou zboží od vstupní brány (vlevo) přes stroj k výstupní bráně (vpravo). Polož pás (táhni, R otočí).', ev: 'fac_belt', coins: 60 },
+  { era: 2, t: 'Přiřaď dílně kočku (v panelu vpravo) a nech kočky přinést ocel. Vyrob první plech.', ok: () => (G.stats.made.plech || 0) >= 1, coins: 200 },
+  { era: 2, t: 'Máš vlastní výrobní linku! Zkus Montážní stůl a rybí konzervy — jídlo, které vydrží zimu.', ev: 'next', coins: 150 }
 ];
 function tutStep() { if (!G || G.tut.skip || G.tut.step >= TUT.length) return null; const s = TUT[G.tut.step]; return (s.era || 0) <= eraOf() ? s : null; }
 function tutAdvance() {

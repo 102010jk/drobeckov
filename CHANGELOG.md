@@ -2,6 +2,21 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 2.3.0 „Továrny“ — 2026-09-25
+### Továrny, do kterých se dá vejít
+- **Dílna** (na mapě 3×2, uvnitř 8×4) a **Továrna** (na mapě 6×2, uvnitř 12×6, rozšiřitelná až na 20×6).
+- Klikni na továrnu → **Vstoupit dovnitř**. Uvnitř se staví:
+  - **Pásy** (táhni myší, R otočí) a **rozbočovače**,
+  - **Stroje**: Lis (ocel → plech, plech → trubky), Tažírna drátu (měď → drát), Soustruh (ozubená kola, šrouby), Montážní stůl (motory, **rybí konzervy**, plechové hračky), Průmyslová pec (2× rychlejší tavení),
+  - **Pracovní místa** — kočka tu stojí a obsluhuje sousední stroje. Počet pracovních míst = počet pracovníků továrny.
+- Zboží přichází **vstupní branou** (kočky ho nosí zvenku), hotové výrobky odchází **výstupní branou** a kočky je odnesou.
+- Stroj zadrží suroviny, které potřebuje, a nepotřebné propustí dál — jednoduché třídění na lince.
+- Interiér má okna do venku (den, noc, sníh) a kočky jsou vidět při práci.
+- Nové zboží: plech, trubky, měděný drát, ozubená kola, šrouby, motor, **rybí konzervy** (jídlo na zimu, +60), plechové hračky.
+
+### Tutoriál
+- Kapitola 5 *Továrny* — krok za krokem první výrobní linka.
+
 ## 2.2.0 „Hornictví a přístav“ — 2026-09-25
 ### Nová éra: Hornictví a přístav
 - **Důl** — staví se na ložisko ve skalách a těží, co pod ním je: uhlí, železnou, měděnou, cínovou nebo zlatou rudu, bauxit.

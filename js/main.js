@@ -35,6 +35,13 @@ cvs.addEventListener('pointerdown', e => {
   if (!G) return;
   Sound.init();
   cvs.setPointerCapture && cvs.setPointerCapture(e.pointerId);
+  if (UI.interior) {
+    const [tx, ty] = interiorTile(e.clientX, e.clientY);
+    if (e.button === 2) { if (FUI.tool) FUI.tool = null; else leaveFactory(); UI.dirty = true; return; }
+    interiorClick(tx, ty, true);
+    ptr = { id: e.pointerId, btn: e.button, sx: e.clientX, sy: e.clientY, cx: CAM.x, cy: CAM.y, moved: false, drag: ['belt', 'fdel', 'split'].includes(FUI.tool), last: [tx, ty], interior: true };
+    return;
+  }
   const [px, py, hx, hy] = screenToWorld(e.clientX, e.clientY);
   ptr = { id: e.pointerId, btn: e.button, sx: e.clientX, sy: e.clientY, cx: CAM.x, cy: CAM.y, moved: false, drag: false, last: [hx, hy] };
   if (e.button === 0 && UI.tool && !UI.landMode) {
@@ -44,6 +51,15 @@ cvs.addEventListener('pointerdown', e => {
 });
 cvs.addEventListener('pointermove', e => {
   if (!G) return;
+  if (UI.interior) {
+    const [tx, ty] = interiorTile(e.clientX, e.clientY); UI.hoverT = [tx, ty];
+    if (ptr && ptr.interior && ptr.drag && (ptr.last[0] !== tx || ptr.last[1] !== ty)) {
+      const [lx, ly] = ptr.last;
+      if (FUI.tool === 'belt' && Math.abs(tx - lx) + Math.abs(ty - ly) === 1) { const d = FDX.findIndex((v, i) => v === tx - lx && FDY[i] === ty - ly); const b = G.bld[UI.interior]; const c = b && fcell(b.fac, lx, ly); if (c && c.k === 'belt') c.d = d; FUI.rot = d; }
+      interiorClick(tx, ty, false); ptr.last = [tx, ty];
+    }
+    return;
+  }
   const [px, py, hx, hy] = screenToWorld(e.clientX, e.clientY);
   UI.hoverPx = [px, py]; UI.hover = [hx, hy];
   if (!ptr || ptr.id !== e.pointerId) return;
@@ -66,12 +82,12 @@ cvs.addEventListener('pointermove', e => {
 addEventListener('pointerup', e => {
   if (!ptr || ptr.id !== e.pointerId) return;
   const p = ptr; ptr = null;
-  if (p.moved || p.drag) return;
+  if (p.interior || p.moved || p.drag) return;
   const [px, py, hx, hy] = screenToWorld(e.clientX, e.clientY);
   if (p.btn === 2) { if (UI.tool) UI.tool = null; else if (UI.landMode) UI.landMode = false; else UI.select(null); UI.dirty = true; return; }
   if (p.btn === 0 && !(UI.tool && !UI.landMode)) clickWorld(px, py, hx, hy);
 });
-cvs.addEventListener('pointerleave', () => { if (!ptr) { UI.hover = null; UI.hoverPx = null; } });
+cvs.addEventListener('pointerleave', () => { if (!ptr) { UI.hover = null; UI.hoverPx = null; UI.hoverT = null; } });
 cvs.addEventListener('contextmenu', e => e.preventDefault());
 cvs.addEventListener('wheel', e => {
   e.preventDefault();
@@ -82,6 +98,10 @@ cvs.addEventListener('wheel', e => {
 addEventListener('keydown', e => {
   if (!G || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
   KEYS[e.key.toLowerCase()] = true;
+  if (UI.interior) {
+    if (e.key === 'Escape') { if (FUI.tool) FUI.tool = null; else leaveFactory(); UI.dirty = true; return; }
+    if (e.key === 'r' || e.key === 'R') { FUI.rot = (FUI.rot + 1) % 4; UI.dirty = true; return; }
+  }
   if (e.key === 'Escape') { if (!$('menu').hidden && started) { hideMenu(); return; } if (UI.tool) UI.tool = null; else if (UI.landMode) UI.landMode = false; else if (UI.sel) UI.select(null); else showMenu(); UI.dirty = true; }
   else if (e.key === ' ') { e.preventDefault(); UI.speed = UI.speed ? 0 : (UI.prevSpeed || 1); }
   else if (e.key === '1') UI.speed = 1; else if (e.key === '2') UI.speed = 2; else if (e.key === '3') UI.speed = 4;
@@ -92,6 +112,7 @@ addEventListener('keydown', e => {
 });
 addEventListener('keyup', e => { KEYS[e.key.toLowerCase()] = false; });
 function keyPan(dt) {
+  if (UI.interior) return;
   let dx = 0, dy = 0;
   if (KEYS.a || KEYS.arrowleft) dx--; if (KEYS.d || KEYS.arrowright) dx++;
   if (KEYS.w || KEYS.arrowup) dy--; if (KEYS.s || KEYS.arrowdown) dy++;

@@ -97,3 +97,36 @@ Object.assign(ANIM, {
 });
 Object.assign(LIT, { majak: 1 });
 for (const [k, v] of [['tavirna', 7], ['slevarna', 5], ['kovarna', 3], ['majak', 24], ['dul', 0], ['pristav', 5]]) if (B[k]) B[k].top = v;
+/* factories on the map */
+addSprites({
+  plech: ['WWWWWWWW', 'WwwwwwwK', 'WwWWWWwK', 'WwwwwwwK', 'KKKKKKKK'],
+  trubky: ['.kkkkkk.', 'kwkkkkkK', '.KKKKKK.', '.kkkkkk.', 'kwkkkkkK', '.KKKKKK.'],
+  drat: ['..nnnn..', '.nN..Nn.', 'nN....Nn', 'n..nn..n', 'nN....Nn', '.nN..Nn.', '..nnnn..'],
+  ozubena_kola: ['.k.k.k.', 'kkkkkkk', '.kK.Kk.', 'kk...kk', '.kK.Kk.', 'kkkkkkk', '.k.k.k.'],
+  srouby: ['.KKK...', 'KkkkK..', '.KkK...', '..k....', '..k.k..', '..k....', '..k....'],
+  motor: ['.KKKKK..', 'KkkkkkK.', 'KkrrrkKK', 'KkrrrkKk', 'KkkkkkKK', '.KKKKK..', '.k...k..'],
+  konzervy: ['.kkkkk.', 'kwwwwwk', 'kuuuuuk', 'kuMMMuk', 'kuuuuuk', 'kwwwwwk', '.kkkkk.'],
+  hracky: ['...r...', '..rrr..', '.kkkkk.', 'kwkkkwk', 'kkkkkkk', '.k...k.', '.K...K.']
+});
+function factoryBody(g, X, Y, w, S, night) {
+  const W = w * TS;
+  shape(g, [[X + 2, Y + 12, W - 4, 19, '#b85a48']]);
+  for (let r = 0; r < 6; r++) for (let c = 0; c < W / 6; c++) R(g, '#a04a3a', X + 2 + c * 6 + (r % 2 ? 3 : 0), Y + 13 + r * 3, 1, 2);
+  // sawtooth roof
+  const teeth = Math.floor((W - 4) / 12);
+  for (let i = 0; i < teeth; i++) {
+    const x = X + 2 + i * 12, parts = [];
+    for (let k = 0; k < 8; k++) parts.push([x + k, Y + 11 - k, 12 - k, 1, '#5d6480']);
+    shape(g, parts); R(g, night ? '#ffd86b' : '#bfe4f4', x + 1, Y + 4, 2, 7);
+    if (S === 3) R(g, '#ffffff', x + 3, Y + 4, 9, 2);
+  }
+  for (let i = 0; i < Math.floor(W / 20); i++) winGlass(g, X + 6 + i * 20, Y + 17, 8, 6, night, true);
+  shape(g, [[X + W / 2 - 6, Y + 21, 12, 10, '#5d6480']]); R(g, '#8a92aa', X + W / 2 - 5, Y + 22, 10, 9); for (let i = 0; i < 4; i++) R(g, '#5d6480', X + W / 2 - 5, Y + 23 + i * 2, 10, 1);
+}
+Object.assign(DRAW, {
+  dilna(g, X, Y, b, S, night) { shape(g, [[X + 6, Y - 3, 5, 12, '#9aa0b4']]); factoryBody(g, X, Y, 3, S, night); },
+  tovarna(g, X, Y, b, S, night) { shape(g, [[X + 10, Y - 11, 5, 20, '#8a8590'], [X + 70, Y - 7, 5, 16, '#8a8590']]); R(g, '#e8484e', X + 10, Y - 9, 5, 2); R(g, '#e8484e', X + 70, Y - 5, 5, 2); factoryBody(g, X, Y, 6, S, night); }
+});
+Object.assign(LIT, { dilna: 1, tovarna: 1 });
+B.dilna.top = 4; B.tovarna.top = 12;
+B.dilna.windowLight = [24, 20, 16]; B.tovarna.windowLight = [48, 20, 22];

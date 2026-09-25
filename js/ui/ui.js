@@ -248,7 +248,8 @@ function renderPane(force) {
     if (!valid) UI.sel = null;
   }
   let h;
-  if (UI.sel) h = `<div class="insp">${paneInspect()}</div>`;
+  if (UI.interior) h = `<div class="insp">${paneFactory()}</div>`;
+  else if (UI.sel) h = `<div class="insp">${paneInspect()}</div>`;
   else h = UI.tab === 'build' ? paneBuild() : UI.tab === 'orders' ? paneOrders() : UI.tab === 'cats' ? paneCats() : UI.tab === 'store' ? paneStore() : (EXTRA_TABS[UI.tab] ? EXTRA_TABS[UI.tab]() : '');
   if (force || h !== UI.lastPane) { const st = pane.scrollTop; pane.innerHTML = h; pane.scrollTop = st; UI.lastPane = h; renderTut(); }
   document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', !UI.sel && b.dataset.tab === UI.tab));
@@ -373,5 +374,6 @@ UI.frame = function (dt) {
   if (UI.hudT <= 0) { UI.hudT = 0.2; renderHUD(); }
   if (UI.dirty || UI.paneT <= 0) { UI.paneT = 0.5; UI.dirty = false; renderPane(false); }
   renderTip();
-  drawMinimap(dt);
+  $('minimap').hidden = !!UI.interior;
+  if (!UI.interior) drawMinimap(dt);
 };

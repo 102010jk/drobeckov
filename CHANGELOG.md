@@ -20,6 +20,7 @@ Hotové osady, které se postaví během chvilky a uloží jako nová hra (tvoje
 - **Průmysl** — továrna s výrobní linkou, škola, laboratoř, vědci a inženýři.
 - **Věda a vesmír** — elektrárna, větrníky, přistávací věž, zkoumá se raketa.
 - **Endgame** — všechno odemčené, 62 koček, raketa na rampě a astronaut připravený k odpočítávání.
+- **Super-endgame: Kočičí velkoměsto** — 300 koček, asi 750 staveb, obří výroba všeho (desítky polí, pekáren, dolů, továren) a husté ulice s křižovatkami jako ve skutečném městě. Stavba trvá pár sekund.
 - **Po startu rakety** — konec hry za námi, satelit ukazuje celý svět.
 - **Kreativní pískoviště** — kreativní režim na velkém pozemku.
 

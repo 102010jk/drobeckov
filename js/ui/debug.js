@@ -210,13 +210,16 @@ function dbgTrees(n) {
 }
 
 /* ---------- cats, homes and jobs ---------- */
-function dbgBeds(n) { let tries = 0; while (freeBedsTotal() < n && tries++ < 20) dbgBuild('domek'); }
+function dbgBeds(n, lvl) {
+  if (lvl) for (const b of BLIST) if (b.type === 'domek') b.lvl = lvl;
+  let tries = 0; while (freeBedsTotal() < n && tries++ < 200) { const b = dbgBuild('domek'); if (!b) break; if (lvl) b.lvl = lvl; }
+}
 const freeBedsTotal = () => BLIST.reduce((a, b) => a + (b.type === 'domek' && b.built ? bedsOf(b) : 0), 0);
 function dbgCats(n, o) {
   o = o || {};
   const [cx, cy] = dbgCenter(), skins = [0, 1, 2, 3, 4, 6, 7, 8], hats = typeof HATS !== 'undefined' ? Object.keys(HATS) : [];
   while (G.cats.length < n) {
-    const sp = randomSpot(cx, cy, 12) || randomSpot(cx, cy, 24) || [cx, cy];
+    const r = 12 + (n >> 3), sp = randomSpot(cx, cy, r) || randomSpot(cx, cy, r * 2) || [cx, cy];
     const c = newCat(pick(skins), pick(Object.keys(TRAITS)), null, (sp[0] + 0.5) * TS, (sp[1] + 0.7) * TS);
     c.food = randi(70, 95); c.energy = randi(65, 95); c.mood = randi(65, 90);
     if (o.xp) { c.xp = {}; for (const s of ['farm', 'build', 'carry', 'craft']) c.xp[s] = randi(0, o.xp); }
@@ -294,6 +297,19 @@ const DBG_END = {
   stock: { drevo: 50, prkna: 40, cihly: 40, kamen: 30, uhli: 40, ocel: 30, plech: 20, drat: 20, trubky: 12, hlinik: 16, dural: 12, baterie: 6, raketove_palivo: 10, chleb: 40, konzervy: 30, susenky: 20, pizza: 10, mouka: 16, psenice: 30, mleko: 14, sklo: 16, jahodovy_dort: 4, cokoladovy_dort: 4 },
   plan: [['kosmodrom', 1, { rocket: 3 }], ['domek', 4], ['fontana'], ['kocici_strom'], ['altan'], ['sklad'], ['pole', 2], ['elektrarna'], ['vetrnik', 2], ['cukrarna'], ['pizzerie']]
 };
+/* super-endgame: a whole city — 300 cats, every chain many times over, industry in the outer districts */
+const DBG_MEGA = {
+  cats: 300, land: 240, day: 70, coins: 1000000, hearts: [10, 10, 10, 10, 10], lamps: ['kovova_lampa', 'kvetiny', 'hvezdna_lampa', 'zahon_ruzi', 'lampiony', 'kvetiny', 'kasna', 'zvonkohra'], trees: 80,
+  tech: Object.keys(TECH), profs: { vedec: 12, inzenyr: 24, astronaut: 3 }, power: 200, houseLvl: 3,
+  stats: { earned: 2500000, orders: 900, fests: 22, techs: Object.keys(TECH).length, made: { chleb: 9000, cihly: 12000, ocel: 8000, plech: 6000, motor: 600, hlinik: 2000, elektro: 900, pizza: 1500, raketovy_motor: 12 } },
+  stock: { drevo: 400, prkna: 300, cihly: 300, kamen: 200, uhli: 300, ocel: 250, plech: 200, drat: 150, trubky: 120, hlinik: 120, dural: 80, baterie: 40, raketove_palivo: 60, chleb: 400, konzervy: 300, susenky: 250, pizza: 120, mouka: 200, psenice: 300, mleko: 150, syr: 100, sklo: 150, jahodovy_dort: 40, cokoladovy_dort: 40, polstar: 60, hracky: 50 },
+  plan: [['pole', 36], ['mlyn', 8], ['pekarna', 10], ['kuchynka', 6, { recipe: 'susenky' }], ['molo', 5, { sp: 1 }], ['kravin', 6], ['slepicarna', 4], ['syrarna', 3],
+    ['pizzerie', 4], ['cukrarna', 4], ['zavarovna', 3], ['sklenik', 6], ['trziste', 6], ['sklad', 8], ['fontana', 4], ['kocici_socha', 3], ['altan', 4], ['kocici_strom', 3],
+    ['drevorubec', 6], ['pila', 4], ['hliniste', 3, { sp: 1 }], ['cihelna', 4], ['lom', 3, { sp: 1 }], ['piskovna', 2, { sp: 1 }], ['sklarna', 3], ['papirna', 3], ['tkalcovna', 2, { recipe: 'polstar' }],
+    ['dul', 4, { sp: 1, ore: 'uhli' }], ['dul', 4, { sp: 1, ore: 'zelezo' }], ['dul', 3, { sp: 1, ore: 'med' }], ['dul', 2, { sp: 1, ore: 'bauxit' }], ['rybarna', 3, { sp: 1 }],
+    ['tavirna', 5], ['tavirna', 2, { recipe: 'medkov' }], ['slevarna', 4], ['kovarna', 3], ['tovarna', 4, { line: 'tovarna' }], ['dilna', 4, { line: 'plech' }], ['dilna', 2, { line: 'drat' }],
+    ['tovarna', 2, { line: 'hlinik' }], ['laborator', 3], ['skola', 2], ['elektrarna', 3], ['vetrnik', 12], ['dalekohled', 4]]
+};
 const DBG_WORLDS = {
   farma: { n: 'Farma', d: 'Éra 1 · jaro, pár dní po založení. Pekárna, mlýn, molo a první 4 kočky.', era: 0 },
   remesla: { n: 'Řemesla a obchod', d: 'Éra 2 · léto. Pila, cihelna, sklárna, tržní náměstí s karavanou, 22 koček.', era: 1 },
@@ -301,6 +317,7 @@ const DBG_WORLDS = {
   prumysl: { n: 'Průmysl', d: 'Éra 4 · jaro 2. roku. Továrna s linkou, škola, laboratoř, vědci a inženýři.', era: 3 },
   veda: { n: 'Věda a vesmír', d: 'Éra 5 · léto 2. roku. Elektrárna, větrníky, vzducholodě, zkoumá se raketa.', era: 4 },
   endgame: { n: 'Endgame', d: 'Všechno odemčené, 62 koček, raketa stojí na rampě a astronaut čeká na odpočítávání.', era: 4, end: 1 },
+  mega: { n: 'Super-endgame: Kočičí velkoměsto', d: '300 koček, obří výroba všeho, stovky staveb v ulicích jako ve skutečném městě. Stavba chvíli trvá!', era: 4, end: 3 },
   vesmir: { n: 'Po startu rakety', d: 'Konec hry za námi — raketa odletěla, satelit ukazuje celý svět.', era: 4, end: 2 },
   kreativ: { n: 'Kreativní pískoviště', d: 'Kreativní režim na velkém pozemku — neomezené mince, stavby hned hotové.', sandbox: 1 }
 };
@@ -313,7 +330,7 @@ function dbgMakeWorld(key) {
     DBG_BORN.clear();
     G.tut.skip = true;
     if (W.sandbox) { dbgGrow(40); dbgFinishWorld(); return; }
-    const last = W.end ? DBG_END : DBG_ERA[W.era];
+    const last = W.end === 3 ? DBG_MEGA : W.end ? DBG_END : DBG_ERA[W.era];
     // progression first — so every building of the era is unlocked
     G.era = W.era;
     G.t = last.day * DAY + 7 / 24 * DAY; G.morning = mornIdx(); G.lastSeason = seasonIdx();
@@ -325,14 +342,14 @@ function dbgMakeWorld(key) {
     for (let s = 0; s < 4; s++) if (s < seasonIdx() || yearIdx() > 1) G.festFirst[s] = true;
     // build era by era, so the oldest part of town sits around the main street
     G.coins = 1e12; for (const k in ITEMS) G.stock[k] = 5000;
-    const plans = DBG_ERA.slice(0, W.era + 1).map(e => e.plan); if (W.end) plans.push(DBG_END.plan);
+    const plans = DBG_ERA.slice(0, W.era + 1).map(e => e.plan); if (W.end) plans.push(DBG_END.plan); if (W.end === 3) plans.push(DBG_MEGA.plan);
     plans.forEach((plan, i) => {
       dbgGrow((i === plans.length - 1 ? last : DBG_ERA[i] || last).land);
       for (const [type, n, o] of plan) for (let j = 0; j < (n || 1); j++) { const b = o && o.sp ? dbgSpecial(type, o) : dbgBuild(type, o); if (b) DBG_BORN.set(b.id, i); }
     });
-    dbgBeds(last.cats + 2);
-    const upg = W.end ? 0.5 : W.era >= 2 ? 0.2 : 0;
-    for (const b of BLIST) if (canUpgradeType(b.type) && Math.random() < upg) b.lvl = W.end && Math.random() < 0.5 ? 3 : 2;
+    dbgBeds(last.cats + 2, last.houseLvl);
+    const upg = W.end === 3 ? 0.8 : W.end ? 0.5 : W.era >= 2 ? 0.2 : 0;
+    for (const b of BLIST) if (canUpgradeType(b.type) && !(last.houseLvl && b.type === 'domek') && Math.random() < upg) b.lvl = W.end && Math.random() < 0.5 ? 3 : 2;
     dbgStreets(W.era >= 1 ? 'road' : 'path');
     dbgDecor(last.lamps, 3);
     dbgTrees(last.trees);
@@ -347,7 +364,7 @@ function dbgMakeWorld(key) {
       G.flags.launched = G.flags.satelit = true; G.stats.launches = 1;
       const a = G.cats.find(c => c.prof === 'astronaut'); if (a) a.space = true;
     }
-    const made = {}; for (const e of DBG_ERA.slice(0, W.era + 1).concat(W.end ? [DBG_END] : [])) for (const k in e.stats.made) made[k] = Math.max(made[k] || 0, e.stats.made[k]);
+    const made = {}; for (const e of DBG_ERA.slice(0, W.era + 1).concat(W.end ? [DBG_END] : [], W.end === 3 ? [DBG_MEGA] : [])) for (const k in e.stats.made) made[k] = Math.max(made[k] || 0, e.stats.made[k]);
     G.stats = Object.assign(G.stats, last.stats, { made, parcels: G.owned.length });
     if (W.era >= 1) G.stats.traded = 3;
     if (W.era >= 1) G.stats.expeditions = W.era;

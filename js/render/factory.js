@@ -60,13 +60,15 @@ function renderInterior(dt) {
   for (let i = 0; i < f.cells.length; i++) {
     const c = f.cells[i]; if (!c) continue;
     const x = i % f.w, y = (i / f.w) | 0, X = fx + x * TS, Y = fy + y * TS;
-    if (c.k === 'belt' || c.k === 'split') {
+    if (c.k === 'belt' || c.k === 'split' || c.k === 'sort') {
       g.save(); g.translate(X + 8, Y + 8); g.rotate(c.d * Math.PI / 2);
-      R(g, '#3b302b', -8, -7, 16, 14); R(g, c.k === 'split' ? '#4a5a6a' : '#5a4a42', -8, -5, 16, 10); R(g, '#ffd23f', -8, -7, 16, 1); R(g, '#ffd23f', -8, 6, 16, 1);
+      R(g, '#3b302b', -8, -7, 16, 14); R(g, c.k === 'split' ? '#4a5a6a' : c.k === 'sort' ? '#5a4a6e' : '#5a4a42', -8, -5, 16, 10); R(g, '#ffd23f', -8, -7, 16, 1); R(g, '#ffd23f', -8, 6, 16, 1);
       const off = (t * BELT_SPEED * 16) % 8;
       for (let k = -1; k < 3; k++) { const cx = Math.floor(-8 + k * 8 + off); for (const [a, bb] of [[0, -3], [1, -2], [2, -1], [2, 0], [1, 1], [0, 2]]) if (cx + a >= -8 && cx + a < 8) R(g, c.k === 'split' ? '#9ab4d0' : '#7d6a5c', cx + a, bb, 1, 1); }
       if (c.k === 'split') { R(g, '#fff3dc', -1, -5, 2, 10); }
+      if (c.k === 'sort') { R(g, '#b89ae8', -2, -7, 4, 5); R(g, '#b89ae8', -1, -8, 2, 1); }
       g.restore();
+      if (c.k === 'sort' && c.f && SPR[c.f]) { const s = SPR[c.f]; g.globalAlpha = 0.85; g.drawImage(s.c, X + 8 - (s.w >> 1), Y + 1); g.globalAlpha = 1; }
     } else if (c.k === 'm') {
       drawMachine(g, c.t, X, Y, c.on, t, c.d);
       if (c.cyc) { R(g, OUT, X + 1, Y + 15, 14, 2); R(g, '#7bd6b0', X + 2, Y + 15, Math.round(12 * c.p), 1); }
@@ -80,7 +82,7 @@ function renderInterior(dt) {
   }
   // items riding belts
   for (let i = 0; i < f.cells.length; i++) {
-    const c = f.cells[i]; if (!c || !c.it || (c.k !== 'belt' && c.k !== 'split')) continue;
+    const c = f.cells[i]; if (!c || !c.it || (c.k !== 'belt' && c.k !== 'split' && c.k !== 'sort')) continue;
     const x = i % f.w, y = (i / f.w) | 0, X = fx + x * TS + 8, Y = fy + y * TS + 8;
     const s = SPR[c.it]; if (!s) continue;
     const px = c.k === 'belt' ? X + FDX[c.d] * (c.p - 0.5) * TS : X, py = c.k === 'belt' ? Y + FDY[c.d] * (c.p - 0.5) * TS : Y;

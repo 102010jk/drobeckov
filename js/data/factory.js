@@ -36,6 +36,7 @@ const MACHINES = {
 const FTOOLS = {
   belt: { n: 'Pás', cost: 4, mat: {}, desc: 'Posouvá věci ve směru šipky. Táhni myší, R otočí.' },
   split: { n: 'Rozbočovač', cost: 20, mat: {}, desc: 'Posílá věci střídavě doleva a doprava.' },
+  sort: { n: 'Třídička', cost: 40, mat: {}, desc: 'Vybraná věc odbočí doleva od šipky, ostatní jedou rovně. Po postavení na ni klikni a vyber, co třídit.' },
   station: { n: 'Pracovní místo', cost: 30, mat: {}, desc: 'Tady stojí kočka a obsluhuje stroje vedle sebe (nahoře, dole, vlevo, vpravo).' },
   fdel: { n: 'Odstranit', cost: 0, mat: {}, desc: 'Odstraní pás nebo stroj (vrátí polovinu).' }
 };

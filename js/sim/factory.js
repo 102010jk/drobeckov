@@ -8,7 +8,7 @@ function facAccept(b, f, x, y, item, dir) {
   if (x === f.w && y === f.gate) { b.out[item] = (b.out[item] || 0) + 1; f.stats[item] = (f.stats[item] || 0) + 1; G.stats.made[item] = (G.stats.made[item] || 0) + (f.src === item ? 0 : 0); return true; }
   const c = fcell(f, x, y); if (!c) return false;
   if (c.k === 'belt') { if (c.it || c.d === (dir + 2) % 4) return false; c.it = item; c.p = 0; return true; }
-  if (c.k === 'split') { if (c.it) return false; c.it = item; c.p = 0; return true; }
+  if (c.k === 'split' || c.k === 'sort') { if (c.it) return false; c.it = item; c.p = 0; return true; }
   if (c.k === 'm') {
     const r = FRECIPES[c.r];
     if (r && r.in[item]) {
@@ -48,12 +48,13 @@ function facTick(b, dt) {
   for (let i = 0; i < f.cells.length; i++) {
     const c = f.cells[i]; if (!c) continue;
     const x = i % f.w, y = (i / f.w) | 0;
-    if (c.k === 'belt' || c.k === 'split') {
+    if (c.k === 'belt' || c.k === 'split' || c.k === 'sort') {
       if (!c.it) continue;
       busy++;
       c.p = Math.min(1, c.p + dt * BELT_SPEED);
       if (c.p < 1) continue;
       if (c.k === 'belt') { if (facAccept(b, f, x + FDX[c.d], y + FDY[c.d], c.it, c.d)) { c.it = null; c.stuck = 0; } else c.stuck = (c.stuck || 0) + dt; }
+      else if (c.k === 'sort') { const d = c.f && c.it === c.f ? (c.d + 3) % 4 : c.d; if (facAccept(b, f, x + FDX[d], y + FDY[d], c.it, d)) { c.it = null; c.stuck = 0; } else c.stuck = (c.stuck || 0) + dt; }
       else {
         const dirs = c.flip ? [(c.d + 1) % 4, (c.d + 3) % 4] : [(c.d + 3) % 4, (c.d + 1) % 4];
         for (const d of dirs) if (facAccept(b, f, x + FDX[d], y + FDY[d], c.it, d)) { c.it = null; c.flip = !c.flip; break; }
@@ -98,6 +99,7 @@ function facPlace(b, x, y) {
   G.coins -= def.cost; for (const k in (def.mat || {})) takeStock(k, def.mat[k]);
   if (t === 'belt') f.cells[i] = { k: 'belt', d: FUI.rot, it: null, p: 0 };
   else if (t === 'split') f.cells[i] = { k: 'split', d: FUI.rot, it: null, p: 0 };
+  else if (t === 'sort') { f.cells[i] = { k: 'sort', d: FUI.rot, it: null, p: 0, f: null }; FUI.sel = i; FUI.tool = null; }
   else if (t === 'station') f.cells[i] = { k: 'st' };
   else f.cells[i] = { k: 'm', t, d: FUI.rot, r: MACHINES[t].recipes.find(r => typeof FREC_TECH === 'undefined' || !FREC_TECH[r] || hasTech(FREC_TECH[r])) || MACHINES[t].recipes[0], inp: {}, out: null, outN: 0, p: 0, pass: null };
   Sound.place(); jobsDirty = true; UI.dirty = true;
@@ -128,6 +130,7 @@ ACTIONS.ftool = t => { FUI.tool = FUI.tool === t ? null : t; FUI.sel = -1; };
 ACTIONS.frot = () => { FUI.rot = (FUI.rot + 1) % 4; };
 ACTIONS.frec = r => { const b = G.bld[UI.interior]; if (!b) return; const c = b.fac.cells[FUI.sel]; if (c && c.k === 'm') { if (c.cyc) { const o = FRECIPES[c.r]; for (const k in o.in) c.inp[k] = (c.inp[k] || 0) + o.in[k]; c.cyc = false; } c.r = r; jobsDirty = true; } };
 ACTIONS.fauto = () => { const b = G.bld[UI.interior]; if (!b) return; const c = b.fac.cells[FUI.sel]; if (c && c.k === 'm') c.auto = !c.auto; };
+ACTIONS.fsort = k => { const b = G.bld[UI.interior]; if (!b) return; const c = b.fac.cells[FUI.sel]; if (c && c.k === 'sort') c.f = c.f === k ? null : k; };
 ACTIONS.fexpand = () => { const b = G.bld[UI.interior]; if (b) facExpand(b); };
 function paneFactory() {
   const b = G.bld[UI.interior]; if (!b) { UI.interior = null; return ''; }
@@ -142,6 +145,10 @@ function paneFactory() {
   const t = FUI.tool && (MACHINES[FUI.tool] || FTOOLS[FUI.tool]);
   if (t) h += `<div class="hint"><b>${t.n}</b> — ${t.desc}${MACHINES[FUI.tool] ? '<div class="reclist">' + MACHINES[FUI.tool].recipes.map(r => `<span class="rec">${frecipeHTML(r)}</span>`).join('') + '</div>' : ''}</div>`;
   const c = FUI.sel >= 0 ? f.cells[FUI.sel] : null;
+  if (c && c.k === 'sort') {
+    const seen = new Set([...facItemsWanted(b), ...Object.keys(f.stats || {}), ...Object.keys(b.inp)]);
+    h += `<h4>Třídička</h4><p class="muted">Vybraná věc odbočí doleva od šipky, všechno ostatní jede rovně.</p><div class="lines">` + [...seen].filter(k => ITEMS[k]).map(k => `<button class="line ${c.f === k ? 'ok' : ''}" data-act="fsort" data-arg="${k}">${itemIcon(k)}<small>${itemName(k)}</small></button>`).join('') + `</div>`;
+  }
   if (c && c.k === 'm') {
     const m = MACHINES[c.t];
     h += `<h4>${m.n}</h4><div class="reclist">` + m.recipes.map(r => { const lk = typeof FREC_TECH !== 'undefined' && FREC_TECH[r] && !hasTech(FREC_TECH[r]); return `<button class="rec ${c.r === r ? 'on' : ''} ${lk ? 'locked' : ''}" data-act="${lk ? 'noop' : 'frec'}" data-arg="${r}">${frecipeHTML(r)}${lk ? '<small>Výzkum: ' + TECH[FREC_TECH[r]].n + '</small>' : ''}${FRECIPES[r].power ? '<small>potřebuje proud</small>' : ''}</button>`; }).join('') + '</div>';

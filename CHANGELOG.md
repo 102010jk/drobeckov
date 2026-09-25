@@ -2,6 +2,10 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 4.4.1 — 2026-09-25
+- **Spižírna** pojme 90 věcí (místo 60) — na začátku hry už sklad nepřetéká hned první den.
+- Věta kočky je v detailu pod hlavičkou, ne vmáčknutá vedle jména.
+
 ## 4.4.0 „Kočičí řeči“ — 2026-09-25
 - **Kočky mluví**: v detailu kočky je její věta podle toho, jak se má — hlad, únava, nálada, práce, nejlepší kamarádka, oblíbené jídlo, přání, klobouček, počasí, sezóna (a astronautka vypráví o vesmíru).
 - **Narozeniny koček**: každá kočka má svůj den v roce (v jejím detailu). Když je ten den ve skladu dort, koláč, perník nebo palačinky, slaví celá osada.

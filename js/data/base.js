@@ -101,7 +101,7 @@ const B = {
   jablon: { n: 'Jabloň', cat: 'priroda', w: 1, h: 1, cost: 40, wood: 0, instant: 1, orchard: 1, cozy: 1, nodoor: 1, lock: ['med', 3], desc: 'Za 1,5 dne vyroste. V létě a na podzim plodí jablka.' },
   stromek: { n: 'Stromek', cat: 'priroda', w: 1, h: 1, cost: 5, wood: 0, instant: 1, tree: 1, desc: 'Vyroste za 2 dny. +1 útulnost, dřevo pro dřevorubce.' },
   domek: { n: 'Kočičí domek', cat: 'domov', w: 2, h: 2, cost: 70, wood: 8, work: 8, beds: 2, cozy: 1, desc: 'Pelíšky pro 2 kočky. Bez domova se špatně spí.' },
-  spizirna: { n: 'Spižírna', cat: 'domov', w: 2, h: 2, cost: 60, wood: 8, work: 8, store: 60, desc: 'Společný sklad (+60 místa). Kočky si tu berou jídlo.' },
+  spizirna: { n: 'Spižírna', cat: 'domov', w: 2, h: 2, cost: 60, wood: 8, work: 8, store: 90, desc: 'Společný sklad (+90 míst). Kočky si tu berou jídlo.' },
   nastenka: { n: 'Nástěnka', cat: 'domov', w: 1, h: 1, cost: 0, fixed: 1, board: 1, desc: 'Zakázky od sousedů.' },
   kvetiny: { n: 'Záhon květin', cat: 'ozdoby', w: 1, h: 1, cost: 8, instant: 1, cozy: 1, flower: 1, nodoor: 1, weak: 1, desc: '+1 útulnost. Včely je milují. Stavby ho samy odstraní.' },
   plot: { n: 'Plůtek', cat: 'ozdoby', w: 1, h: 1, cost: 3, instant: 1, cozy: 0.5, nodoor: 1, desc: 'Napojuje se na sousední plůtky.' },

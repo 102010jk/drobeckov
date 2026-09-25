@@ -23,7 +23,8 @@ function catSays(c) {
 const _inspectCatT = inspectCat;
 inspectCat = function (c) {
   const h = _inspectCatT(c); if (!c) return h;
-  return h.replace(/(<\/div>)/, `$1<p class="says">„${catSays(c)}“</p>`);
+  const says = `<p class="says">„${catSays(c)}“</p>`, at = h.indexOf('<div class="kv">');
+  return at < 0 ? h + says : h.slice(0, at) + says + h.slice(at);
 };
 
 /* ---------- birthdays: one day of the year per cat ---------- */

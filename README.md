@@ -11,7 +11,12 @@ Nic se neinstaluje — funguje v každém moderním prohlížeči (i ve škole).
 - Kočky s povahami, náladou, spánkem a jídlem, které samy nosí suroviny mezi dílnami
 - Farmářské řetězce: pšenice → mouka → chléb, džemy, perník, dorty…
 - Sousedé se srdíčky, zakázky, tržní stánek, sezóny se slavnostmi, zima bez úrody
-- Zajímavá místa k objevení, tutoriál, kočičí příručka, více uložených her
+- Pět ér: Farma → Řemesla a obchod → Hornictví a přístav → Průmysl → Věda a vesmír
+- Továrny, do kterých se dá vejít (pásy, stroje, pracovní místa), elektřina a automatizace
+- Výzkum, vzducholodě, raketa ve třech stupních a vesmírná stanice
+- Výpravy za obzor, nové plodiny, vylepšování budov, koťátka, kamarádství, kloboučky
+- Přání dne, hvězdičky, divoká zvířátka, padající hvězdy, bouřky a duha
+- Rádce, tutoriál, kočičí příručka, úspěchy, statistiky, více uložených her, nastavení výkonu pro slabší počítače
 
 ## Ovládání
 | Akce | Klávesa / myš |
@@ -23,6 +28,9 @@ Nic se neinstaluje — funguje v každém moderním prohlížeči (i ve škole).
 | pauza / rychlost | mezerník, 1–3 |
 | bourání | X |
 | pozemky | L |
+| kapátko (stejná stavba) | Q |
+| vrátit poslední stavbu | Ctrl+Z |
+| fotka osady | P |
 
 ## Spuštění lokálně
 ```bash

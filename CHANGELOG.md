@@ -2,6 +2,22 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.0.0 „Výpravy za obzor“ — 2026-09-25
+### Výpravy
+- Nová stavba **Cestovatelský stan** (Domov, od éry Řemesla a obchod). Vysílej kočky na **výpravy za obzor**:
+  - **krátká** (půl dne, 1 kočka), **dlouhá** (1 den, 2 kočky), **velká** (2 dny, 3 kočky, od éry Hornictví).
+  - Na cestu si vezmou jídlo ze skladu, doma musí zůstat aspoň dvě kočky.
+  - Vrátí se s mincemi, zbožím (koření, kakao, med, zlato, **staré mapy**…), **semínky nových plodin**, plánky ozdob, hvězdičkami — a občas s **novou kočkou**.
+  - Kočky získávají zkušenost **Cestování** a po návratu mají skvělou náladu.
+
+### Nové plodiny a zboží
+- **Slunečnice** (léto, podzim) → **Lisovna oleje** → slunečnicový olej.
+- **Levandule** (jaro, léto) + olej → **Mýdlárna** → **levandulové mýdlo** (drahé zboží, chtějí ho sousedé i obchodníci).
+- **Kočičí lázně** — s mýdlem +8 útulnost a lepší nálada všech koček (spotřebují 1 mýdlo denně).
+
+### Ostatní
+- 3 nové úspěchy, stránka Příručky „Výpravy“, aktualizované README.
+
 ## 2.9.0 „Vylepšení budov“ — 2026-09-25
 ### Vylepšování
 - Hotové dílny, domky, spižírny a sklady jde **vylepšit až na úroveň 3** (tlačítko v detailu budovy):

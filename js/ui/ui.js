@@ -165,7 +165,7 @@ function inspectBld(b) {
     h += `<h4>Plodina</h4><div class="crops">`;
     for (const k in CROPS) {
       const cr = CROPS[k], un = cropUnlocked(k), sn = cr.s.map((v, i) => `<i class="sd ${v ? 'on' : ''}">${SEASONS[i].name[0]}</i>`).join('');
-      h += `<button class="cropb ${b.crop === k ? 'on' : ''} ${un ? '' : 'locked'}" data-act="crop" data-arg="${k}">${itemIcon(k)}<span>${cr.n}<small>${un ? sn : lockText(cr.lock)}</small></span></button>`;
+      h += `<button class="cropb ${b.crop === k ? 'on' : ''} ${un ? '' : 'locked'}" data-act="crop" data-arg="${k}">${itemIcon(k)}<span>${cr.n}<small>${un ? sn : cr.seed ? 'semínka z výpravy' : lockText(cr.lock)}</small></span></button>`;
     }
     h += '</div>';
     if (b.st === 1) h += `<div class="kv"><span>Růst</span>${bar(b.g * 100)}</div>`;
@@ -331,7 +331,7 @@ function uiAction(act, arg) {
     }
     case 'close': UI.sel = null; UI.pick = false; UI.confirm = 0; break;
     case 'recipe': { const b = G.bld[UI.sel.id]; if (b) { if (!recipeUnlocked(arg)) { toast('Zatím zamčeno'); Sound.nope(); } else setRecipe(b, arg); } break; }
-    case 'crop': { const b = G.bld[UI.sel.id]; if (b) { if (!cropUnlocked(arg)) { toast('Odemkne ' + lockText(CROPS[arg].lock)); Sound.nope(); } else setCrop(b, arg); } break; }
+    case 'crop': { const b = G.bld[UI.sel.id]; if (b) { if (!cropUnlocked(arg)) { toast(CROPS[arg].seed ? 'Semínka přinese výprava (Cestovatelský stan).' : 'Odemkne ' + lockText(CROPS[arg].lock)); Sound.nope(); } else setCrop(b, arg); } break; }
     case 'pick': UI.pick = true; break;
     case 'assign': { const b = G.bld[UI.sel.id]; if (b) assignWorker(b, +arg); UI.pick = false; break; }
     case 'unassign': unassign(+arg); break;

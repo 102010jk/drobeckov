@@ -176,3 +176,5 @@ deserialize = function (s) {
 };
 const _newGameM2 = newGame;
 newGame = function (o) { _newGameM2(o); G.eraV = 2; if (G.mode === 'kreativ') G.era = ERAS.length - 1; };
+/* windows light up at night in the pictures of the city buildings */
+for (const k of ['radnice', 'hotel', 'obchodni_dum', 'kino', 'knihovna', 'veterina', 'depo', 'rafinerie']) LIT[k] = 1;

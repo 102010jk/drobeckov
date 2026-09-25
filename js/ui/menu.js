@@ -43,7 +43,7 @@ function showMenu(view) {
       h += '</div>';
     }
     h += `<div class="row"><button class="link" data-m="import">Importovat kód</button><button class="link" data-m="help">Nápověda</button><button class="link" data-m="settings">Nastavení</button><a class="link" href="https://github.com/102010jk/drobeckov/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Co je nového</a></div>`;
-    h += `<p class="help">Táhni myší = posun · kolečko = zoom · klik = vybrat/postavit · pravé tlačítko/Esc = zrušit · mezerník = pauza · 1–3 = rychlost · X = zbourat · L = pozemky</p>`;
+    h += `<p class="help">Táhni myší = posun · kolečko = zoom · klik = vybrat/postavit · pravé tlačítko/Esc = zrušit · mezerník = pauza · 1–3 = rychlost · X = zbourat · L = pozemky · Q = kapátko · Ctrl+Z = zpět · P = fotka</p>`;
   }
   el.innerHTML = h + '</div>';
   if (view === 'settings') {

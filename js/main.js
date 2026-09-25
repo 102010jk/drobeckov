@@ -164,6 +164,9 @@ const DK = {
   }
 };
 
+/* ============ offline support (installable app on https) ============ */
+if ('serviceWorker' in navigator && location.protocol === 'https:') addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+
 /* ============ boot ============ */
 function boot(data) {
   let ok = false;

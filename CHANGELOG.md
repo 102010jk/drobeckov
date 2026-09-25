@@ -2,6 +2,12 @@
 
 Všechny změny hry. Nejnovější nahoře.
 
+## 3.1.1 „Hra i bez internetu“ — 2026-09-25
+- **Offline režim**: po prvním načtení hra funguje i bez připojení (třeba ve škole na slabé Wi-Fi). Nové verze se stáhnou samy, když je internet.
+- **Instalace jako aplikace**: v Chromu/Edgi ikonka „Nainstalovat“ v adresním řádku → Drobečkov se otevře ve vlastním okně s kočičí ikonkou.
+- Nová pixelová ikonka hry.
+- V menu je nápověda i k novým klávesám (Q, Ctrl+Z, P).
+
 ## 3.1.0 „Dopisy od sousedů“ — 2026-09-25
 ### Dopisy
 - Sousedé ti posílají **dopisy s prosbami** (záložka Zakázky). Každý má svůj malý **příběh o 3–4 dopisech** — Babička Ježková chystá perník pro vnoučata, Sova píše knihu o hvězdách, Medvěd se chystá k zimnímu spánku…
